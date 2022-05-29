@@ -1,0 +1,41 @@
+diff --git a/libagent/device/onlykey.py b/libagent/device/onlykey.py
+index 4894377..cdcb129 100644
+--- a/libagent/device/onlykey.py
++++ b/libagent/device/onlykey.py
+@@ -13,6 +13,7 @@ import nacl.signing
+ import unidecode
+ 
+ from . import interface
++from os import system
+ 
+ # import pgpy
+ # from pgpy import PGPKey
+@@ -309,8 +310,7 @@ class OnlyKey(interface.Device):
+         assert len(d) == 32
+         b1, b2, b3 = get_button(self, d[0]), get_button(self, d[15]), get_button(self, d[31])
+         log.info('Key Slot =%s', this_slot_id)
+-        print('Enter the 3 digit challenge code on OnlyKey to authorize '+identity.to_string())
+-        print('{} {} {}'.format(b1, b2, b3))
++        show_challenge_code(b1, b2, b3)
+         t_end = time.time() + 22
+         if 'rsa' not in curve_name:
+             self.ok.send_large_message2(msg=self._defs.Message.OKSIGN, payload=raw_message,
+@@ -412,8 +412,7 @@ class OnlyKey(interface.Device):
+         b1, b2, b3 = get_button(self, d[0]), get_button(self, d[15]), get_button(self, d[31])
+         self.ok.send_large_message2(msg=self._defs.Message.OKDECRYPT, payload=raw_message,
+                                     slot_id=this_slot_id)
+-        print('Enter the 3 digit challenge code on OnlyKey to authorize ' + identity.to_string())
+-        print('{} {} {}'.format(b1, b2, b3))
++        show_challenge_code(b1, b2, b3)
+         t_end = time.time() + 22
+         if 'rsa' not in curve_name:
+             while time.time() < t_end:
+@@ -460,3 +459,8 @@ def convert_keyslot (self, s):
+             return int(s[3:4]) + 100
+     elif 'RSA' in s:
+         return int(s[3:4])
++
++def show_challenge_code(b1, b2, b3):
++    print('Enter the 3 digit challenge code on OnlyKey to authorize GPG operation')
++    print(f'{b1} {b2} {b3}')
++    system(f'notify-send -t 7500 "GPG Challenge Code: {b1} {b2} {b3}" "Enter the challenge code {b1} {b2} {b3} on OnlyKey to authorize GPG operation"')
