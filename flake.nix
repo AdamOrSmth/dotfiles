@@ -6,8 +6,7 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
-      commonConfig =
-        [ ({ ... }: { nixpkgs.overlays = [ import ./packages ]; }) ];
+      commonConfig = [ (import ./overlay.nix) ];
       hosts = [ "AdPC" "AdLaptop" ];
       modules = [ ];
       inherit (nixpkgs) lib;
@@ -15,7 +14,8 @@
       nixosConfigurations = lib.attrsets.genAttrs hosts (host:
         lib.nixosSystem {
           inherit system;
-          modules = commonConfig ++ modules ++ [ import ./hosts/${host}.nix ];
+          modules = commonConfig ++ modules
+            ++ lib.singleton (import ./hosts/${host}.nix);
         });
     };
 }
