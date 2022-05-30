@@ -12,12 +12,26 @@
       # I found of this method was in hlissner's dotfiles, which I basically stole the entire
       # line from.
       lib = nixpkgs.lib.extend (self: super: { my = import ./lib.nix self; });
-      inherit (lib) id genAttrs singleton;
+      inherit (lib) getName id genAttrs singleton;
       inherit (lib.my) mapModules mapModulesRec mapModulesRec';
-      inherit (builtins) attrNames split;
+      inherit (builtins) elem attrNames split;
 
       pkgs = import nixpkgs {
         inherit system;
+        # Forgive me, oh merciful lords of FOSS, for I have committed a sin.
+        # Curse you, Nvidia, for leaving me no other option. Only time will
+        # tell if your open source drivers become anything close to good, and if
+        # so, I shall forgive you.
+        # Oh yeah also I use Steam and Discord. I think that's it though. They,
+        # too, can go on the unholy list of shame.
+        config.allowUnfreePredicate = pkg:
+          elem (getName pkg) [
+            "nvidia-x11"
+            "nvidia-settings"
+            "steam"
+            "discord"
+          ];
+
         # Add custom library functions here, there's probably a better way and place
         # to do this, but I'm not about to turn my dotfiles into an
         # over-engineered setup like hlissner, even though I kinda already
