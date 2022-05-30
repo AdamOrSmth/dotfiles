@@ -3,9 +3,11 @@ path:
 { config, lib, pkgs, ... }:
 
 let inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
-in lib.setAttrByPath ([ "options" ] ++ path) {
-  enable = mkEnableOption "root file system management using labels";
-} // {
+in {
+  options = setAttrByPath path {
+    enable = mkEnableOption "root file system management using labels";
+  };
+
   config = mkIf (getAttrFromPath path config).enable {
     fileSystems = {
       "/" = {
