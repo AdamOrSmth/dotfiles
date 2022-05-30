@@ -8,10 +8,18 @@
       # Bootstrap custom library functions here, since the overlay
       # isn't loaded until later
       lib = nixpkgs.lib.extend (self: super: { my = import ./lib.nix self; });
-      inherit (lib.my) mapModules mapModulesRec';
+      inherit (lib.my) mapModules mapModulesRec mapModulesRec';
       system = "x86_64-linux";
       hosts = builtins.attrNames (mapModules ./hosts lib.id);
-      modules = mapModulesRec' ./modules lib.id;
+      # Import each module, passing it its relative path,
+      # which is used to define options. Engineering completely over-complicated solutions
+      # for not-very-problematic problems is great, isn't it? Automation go brr.
+      # There's probably a better way to do this, but I'm working on this way too late at night,
+      # so I really don't feel like finding it.
+      modules = mapModulesRec' ./modules (p:
+        let inherit (lib) drop flatten removeSuffix;
+        in import p ([ "my" ]
+          ++ (drop 4 (flatten (builtins.split "/" (removeSuffix ".nix" p))))));
     in {
       nixosConfigurations = lib.genAttrs hosts (host:
         let

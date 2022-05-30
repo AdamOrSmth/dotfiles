@@ -1,11 +1,12 @@
+path:
+
 { config, lib, pkgs, ... }:
 
-let inherit (lib) mkEnableOption mkIf;
-in {
-  options.my.hardware.filesystem.enable =
-    mkEnableOption "root file system management using labels";
-
-  config = mkIf config.my.hardware.filesystem.enable {
+let inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
+in lib.setAttrByPath ([ "options" ] ++ path) {
+  enable = mkEnableOption "root file system management using labels";
+} // {
+  config = mkIf (getAttrFromPath path config).enable {
     fileSystems = {
       "/" = {
         device = "/dev/disk/by-label/root";
