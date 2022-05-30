@@ -5,11 +5,13 @@
 
   outputs = { self, nixpkgs, ... }@inputs:
     let
-      inherit (nixpkgs) lib;
+      # Bootstrap custom library functions here, since the overlay
+      # isn't loaded until later
+      lib = nixpkgs.lib.extend (self: super: { my = import ./lib.nix self; });
+      inherit (lib.my) mapModules mapModulesRec';
       system = "x86_64-linux";
-      modules = [ ];
-      hosts = lib.mapAttrsToList (n: _: lib.removeSuffix ".nix" n)
-        (builtins.readDir ./hosts);
+      hosts = builtins.attrNames (mapModules ./hosts lib.id);
+      modules = mapModulesRec' ./modules lib.id;
     in {
       nixosConfigurations = lib.genAttrs hosts (host:
         let

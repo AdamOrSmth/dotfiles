@@ -6,15 +6,13 @@ let
   inherit (lib) mapAttrs' nameValuePair removeSuffix filterAttrs hasSuffix;
 in {
   nixpkgs.overlays = [
+    # Custom library functions
+    (self: super: { lib = super.lib // { my = import ./lib.nix super.lib; }; })
+
     # Custom derivations
     # Generate a list of files in `packages` sub-directory, filter to only .nix files,
     # and then add each one to the overlay
     (self: super:
-      let
-        files = readDir ./packages;
-        nixFiles = filterAttrs (n: _: hasSuffix ".nix" n) files;
-      in mapAttrs' (n: _:
-        nameValuePair (removeSuffix ".nix" n)
-        (super.callPackage (import ./packages/${n}) { })) nixFiles)
+      super.lib.my.mapModules ./packages (p: super.callPackage p { }))
   ];
 }

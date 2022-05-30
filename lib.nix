@@ -2,9 +2,9 @@
 lib:
 let
   inherit (lib)
-    readDir filterAttrs hasSuffix hasPrefix mapAttrs' nameValuePair removeSuffix
+    filterAttrs hasSuffix hasPrefix mapAttrs' nameValuePair removeSuffix
     mapAttrsToList id concatLists;
-  inherit (builtins) attrValues;
+  inherit (builtins) readDir attrValues;
 
   # Run a function on every `.nix` file in a directory, non-recursively,
   # and return the resulting attribute set in the format
@@ -49,4 +49,4 @@ let
       files = mapModules' dir id;
       paths = files ++ concatLists (map (d: mapModulesRec' d id) dirs);
     in map fn paths;
-in { inherit mapModules mapModules' mapModulesRec; }
+in { inherit mapModules mapModules' mapModulesRec mapModulesRec'; }
