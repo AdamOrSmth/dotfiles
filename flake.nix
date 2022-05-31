@@ -1,3 +1,14 @@
+# Ad/dotfiles --- flake.nix
+#
+# URL:     https://git.adamorsomething.xyz/Ad/dotfiles
+# License: MIT
+#
+# Welcome to the main brains of the operation. Suit up, soldier. You
+# have a long mission ahead of you.
+#
+# Yes, this file is way too long and bloated for what it should be doing,
+# but I'm too lazy to properly split it up, so here we are. Enjoy your stay.
+
 {
   description = "My NixOS configuration";
 
