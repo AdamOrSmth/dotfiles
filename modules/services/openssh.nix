@@ -12,8 +12,7 @@ in {
     user = mkOption {
       description = "User to allow SSH access as";
       type = types.nonEmptyStr;
-      default =
-        if config.my.user.enable then config.my.user.username else "root";
+      default = config.my.user.username;
     };
     key = mkOption {
       description = "Key to allow access with";

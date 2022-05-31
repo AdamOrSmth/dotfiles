@@ -19,8 +19,8 @@ in {
     };
     enabledFolders = mkOption {
       description = "List of folders to enable on this device";
-      type =
-        types.addCheck (types.listOf types.str) (l: all (f: elem f folders) l);
+      type = types.addCheck (types.listOf types.nonEmptyStr)
+        (l: all (f: elem f folders) l);
       default = folders;
     };
     folderLocations = mkOption {
