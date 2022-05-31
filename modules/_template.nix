@@ -2,11 +2,13 @@ path:
 
 { config, lib, pkgs, ... }:
 
-let inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
+let
+  inherit (lib) getAttrFromPath setAttrByPath mkEnableOption mkIf;
+  cfg = getAttrFromPath path config;
 in {
-  options = setAttrByPath path { enable = throw "Create some options here!"; };
-
-  config = mkIf (getAttrFromPath path config).enable {
-    setting = throw "Set some options here!";
+  options = setAttrByPath path {
+    enable = mkEnableOption throw "Create some options here!";
   };
+
+  config = mkIf cfg.enable { setting = throw "Set some options here!"; };
 }
