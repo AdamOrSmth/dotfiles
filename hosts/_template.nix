@@ -2,7 +2,48 @@
 
 {
   # Options for the various modules
-  my.hardware.filesystem.enable = null;
+  my = {
+    user = {
+      username = null;
+      extraGroups = null;
+    };
+    home.enable = false;
+    hardware = {
+      filesystem.enable = false;
+      mouse.enable = false;
+      networking = {
+        interface = null;
+        wireless = false;
+        mullvad = false;
+      };
+      sound = {
+        enable = false;
+        bluetooth = false;
+      };
+    };
+    services = {
+      caddy.enable = false;
+      gitea.enable = false;
+      lokinet.enable = false;
+      navidrome = {
+        enable = false;
+        musicFolder = null;
+      };
+      onlykey.enable = false;
+      openssh = {
+        enable = false;
+        user = null;
+        key = null;
+      };
+      printing.enable = false;
+      syncthing = {
+        enable = false;
+        dataDir = null;
+        enabledFolders = null;
+        folderLocations = null;
+      };
+    };
+  };
 
   # Custom per-host configuration options
 
