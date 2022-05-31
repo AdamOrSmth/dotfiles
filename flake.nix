@@ -69,9 +69,7 @@
       nixosConfigurations = genAttrs hosts (host:
         let
           common = [
-            # Hostname should always be the same, so it's only bootstrapped once during
-            # initial setup.
-            ({ ... }: { networking.hostName = host; })
+            (import ./host/_common.nix host)
             # `home-manager` provides a module to use with a full NixOS configuration
             # that we need to import to use. I can't think of a way to add it conditionally
             # depending on whether the configuration is enabled, and I can't be bothered to
