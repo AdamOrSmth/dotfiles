@@ -1,9 +1,15 @@
 {
   description = "My NixOS configuration";
 
-  inputs = { nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; };
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follow = "nixpkgs";
+    };
+  };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -66,6 +72,11 @@
             # Hostname should always be the same, so it's only bootstrapped once during
             # initial setup.
             ({ ... }: { networking.hostName = host; })
+            # `home-manager` provides a module to use with a full NixOS configuration
+            # that we need to import to use. I can't think of a way to add it conditionally
+            # depending on whether the configuration is enabled, and I can't be bothered to
+            # think harder, and the input exists anyway, so I'm just gonna import it unconditionally.
+            home-manager.nixosModules.home-manager
           ];
         in lib.nixosSystem {
           inherit system;
