@@ -49,12 +49,13 @@
             "discord"
           ];
 
-        # Add custom library functions here, there's probably a better way and place
-        # to do this, but I'm not about to turn my dotfiles into an
-        # over-engineered setup like hlissner, even though I kinda already
-        # have. Just keep telling yourself that Ad, and eventually you'll have a config
-        # that's just as monkey-patched and hacky as before! Who needs clean code, as long
-        # as I understand the mess, it's fine right? Humans clearly never forget anything!
+        # Add custom library functions into top-level `pkgs` here, there's
+        # probably a better way and place to do this, but I'm not about to
+        # turn my dotfiles into an over-engineered setup like hlissner, even
+        # though I kinda already have. Just keep telling yourself that Ad,
+        # and eventually you'll have a config that's just as monkey-patched
+        # and hacky as before! Who needs clean code, as long as I understand
+        # the mess, it's fine right? Humans clearly never forget anything!
         overlays = singleton (self: super: { inherit lib; })
           ++ import ./overlay.nix;
       };
