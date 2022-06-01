@@ -20,14 +20,11 @@ in {
     };
   };
 
-  config = mkMerge [
-    {
-      users.users.${cfg.username} = {
-        isNormalUser = true;
-        extraGroups = [ "wheel" ] ++ cfg.extraGroups;
-        home = "/home/${cfg.username}";
-      };
-    }
-    (mkIf config.my.cli.fish.enable { shell = pkgs.fish; })
-  ];
+  config = mkMerge [{
+    users.users.${cfg.username} = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ] ++ cfg.extraGroups;
+      home = "/home/${cfg.username}";
+    };
+  }];
 }

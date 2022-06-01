@@ -1,13 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Options for the various modules
+  # Options for my various modules
   my = {
     user = {
       username = null;
       extraGroups = null;
     };
     home.enable = false;
+    cli = {
+      fish = {
+        enable = false;
+        extraInit = "";
+        aliases = { };
+      };
+    };
     hardware = {
       filesystem.enable = false;
       mouse.enable = false;
