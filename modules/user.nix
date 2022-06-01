@@ -16,7 +16,7 @@ in {
     extraGroups = mkOption {
       description = "Extra groups for personal user";
       type = types.listOf types.nonEmptyStr;
-      default = [ ];
+      default = [ "wheel" ];
     };
     home = mkOption {
       description = "Home directory of personal user";
@@ -28,7 +28,7 @@ in {
   config = mkMerge [{
     users.users.${cfg.username} = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ] ++ cfg.extraGroups;
+      extraGroups = cfg.extraGroups;
       home = cfg.home;
     };
   }];
