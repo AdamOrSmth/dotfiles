@@ -9,14 +9,19 @@ let
 in {
   options = setAttrByPath path {
     username = mkOption {
-      description = "Username of personal account";
+      description = "Username of personal user";
       type = types.nonEmptyStr;
       default = "ad";
     };
     extraGroups = mkOption {
-      description = "Extra groups for personal account";
+      description = "Extra groups for personal user";
       type = types.listOf types.nonEmptyStr;
       default = [ ];
+    };
+    home = mkOption {
+      description = "Home directory of personal user";
+      type = types.path;
+      default = "/home/${cfg.username}";
     };
   };
 
@@ -24,7 +29,7 @@ in {
     users.users.${cfg.username} = {
       isNormalUser = true;
       extraGroups = [ "wheel" ] ++ cfg.extraGroups;
-      home = "/home/${cfg.username}";
+      home = cfg.home;
     };
   }];
 }

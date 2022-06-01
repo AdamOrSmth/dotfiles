@@ -1,8 +1,28 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Options for the various modules
-  my.hardware.filesystem.enable = true;
+  # Options for my various modules
+  my = {
+    home.enable = true;
+    hardware = {
+      filesystem.enable = true;
+      mouse.enable = true;
+      networking = {
+        interface = "enp37s0";
+        mullvad = true;
+      };
+      sound = { enable = true; };
+    };
+    services = {
+      lokinet.enable = true;
+      onlykey.enable = true;
+      printing.enable = true;
+      syncthing = {
+        enable = true;
+        dataDir = "/home/ad/BigBoiStorage";
+      };
+    };
+  };
 
   # Custom per-host configuration options
   services.xserver.videoDrivers = [ "nvidia" ];

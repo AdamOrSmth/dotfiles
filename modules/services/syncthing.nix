@@ -31,15 +31,13 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let
-    user =
-      if config.my.user.enable then config.my.user.username else "syncthing";
+  config = mkIf cfg.enable (let user = config.my.user.username;
   in {
     services.syncthing = {
       enable = true;
       openDefaultPorts = true;
       inherit (cfg) dataDir;
-      configDir = config.users.users.${user}.home + "/.config/syncthing";
+      configDir = config.my.user.home + "/.config/syncthing";
       devices = {
         pc = {
           id =
@@ -63,11 +61,11 @@ in {
         # Generate a list of devices from the devices attribute
         devices =
           (lib.mapAttrsToList (n: _: n) config.services.syncthing.devices);
-      in genAttrs (n: {
+      in genAttrs folders (n: {
         inherit devices;
         path = mkPath n;
         enable = elem n cfg.enabledFolders;
-      }) folders;
+      });
     };
   });
 }

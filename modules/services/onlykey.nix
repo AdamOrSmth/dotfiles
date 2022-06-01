@@ -6,8 +6,7 @@ let
   inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
   cfg = getAttrFromPath path config;
   # `libfido2` provides CLI commands
-  inherit (pkgs) libfido2 gnupg onlykey-agent onlykey-bin onlykey-cli;
-  gpgEnabled = config.my.cli.gnupg.enable;
+  inherit (pkgs) libfido2 gnupg my-onlykey-agent onlykey-bin my-onlykey-cli;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "OnlyKey packages and agent service";
@@ -17,11 +16,13 @@ in {
     hardware.onlykey.enable = true;
 
     environment = {
-      systemPackages = [ onlykey-bin onlykey-cli onlykey-agent libfido2 gnupg ];
-    } // mkIf gpgEnabled { variables.GNUPGHOME = "~/.gnupg/onlykey"; };
+      systemPackages =
+        [ onlykey-bin my-onlykey-cli my-onlykey-agent libfido2 gnupg ];
+      variables.GNUPGHOME = "~/.gnupg/onlykey";
+    };
 
     # See https://github.com/romanz/trezor-agent/blob/master/doc/README-GPG.md
-    systemd.user = mkIf gpgEnabled {
+    systemd.user = {
       services.onlykey-gpg-agent = {
         description = "onlykey-gpg-agent";
         requires = [ "onlykey-gpg-agent.socket" ];
@@ -31,7 +32,7 @@ in {
         serviceConfig = {
           Type = "simple";
           Environment = [ "GNUPGHOME=%h/.gnupg/onlykey" ];
-          ExecStart = "${onlykey-agent}/bin/onlykey-gpg-agent";
+          ExecStart = "${my-onlykey-agent}/bin/onlykey-gpg-agent";
         };
 
         wantedBy = [ "onlykey-gpg-agent.socket" ];

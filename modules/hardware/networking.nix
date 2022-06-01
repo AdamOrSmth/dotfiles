@@ -16,14 +16,14 @@ in {
     mullvad = mkEnableOption "Mullvad VPN";
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = (mkMerge [
     {
       networking.useDHCP = false; # Deprecated flag
       networking.interfaces.${cfg.interface}.useDHCP = true;
       networking.wireless.enable = cfg.wireless;
     }
     (mkIf cfg.mullvad {
-      services.mullvad-vpn.enable = !config.ad.isServer;
+      services.mullvad-vpn.enable = true;
       environment.systemPackages = [ pkgs.mullvad ];
     })
   ]);
