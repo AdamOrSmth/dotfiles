@@ -1,1 +1,4 @@
+# Results of testing with `nixos-rebuild`
 /result
+# Drives of tester virtual machines (`nixos-rebuild build-vm`)
+/*.qcow2
