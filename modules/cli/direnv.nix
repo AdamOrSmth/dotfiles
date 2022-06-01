@@ -22,7 +22,7 @@ in {
     environment.pathsToLink = [ "/share/nix-direnv" ];
 
     my = {
-      fish.extraInit = "direnv hook fish | source";
+      cli.fish.extraInit = "direnv hook fish | source";
       home.configFiles."direnv/direnvrc" = {
         text = "source /run/current-system/sw/share/nix-direnv/direnvrc";
       };
