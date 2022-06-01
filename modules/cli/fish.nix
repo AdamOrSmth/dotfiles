@@ -12,7 +12,6 @@ in {
     extraInit = mkOption {
       description = "Extra lines to add to Fish configuration";
       type = types.lines;
-      default = "starship init fish | source";
     };
     aliases = mkOption {
       description = "Aliases for Fish";
@@ -37,8 +36,7 @@ in {
       shellAliases = cfg.aliases;
     };
     users.defaultUserShell = pkgs.fish;
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) bat coreutils exa htop lsof starship;
-    };
+    environment.systemPackages =
+      builtins.attrValues { inherit (pkgs) bat coreutils exa htop lsof; };
   }]);
 }

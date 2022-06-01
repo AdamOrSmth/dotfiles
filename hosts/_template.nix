@@ -9,11 +9,17 @@
     };
     home.enable = false;
     cli = {
+      direnv.enable = false;
       fish = {
         enable = false;
         extraInit = "";
         aliases = { };
       };
+      nix = {
+        autoGc = false;
+        autoOptimise = false;
+      };
+      starship.enable = false;
     };
     hardware = {
       filesystem.enable = false;
