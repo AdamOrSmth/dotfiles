@@ -4,6 +4,15 @@
   # Options for my various modules
   my = {
     home.enable = true;
+    cli = {
+      direnv.enable = true;
+      fish.enable = true;
+      nix = {
+        autoGc = true;
+        autoOptimise = true;
+      };
+      starship.enable = true;
+    };
     hardware = {
       filesystem.enable = true;
       mouse.enable = true;
@@ -11,7 +20,7 @@
         interface = "enp37s0";
         mullvad = true;
       };
-      sound = { enable = true; };
+      sound.enable = true;
     };
     services = {
       lokinet.enable = true;
