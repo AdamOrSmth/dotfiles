@@ -1,0 +1,63 @@
+# Run launcher & terminal
+super + {_,shift} + Return
+    {rofi -show drun,alacritty}
+
+# Quit/restart bspwm
+super + shift + {q,r}
+	bspc {quit,wm -r}
+
+# Restart sxhkd
+super + alt + r
+    pkill -USR1 -x sxhkd
+
+# Toggle floating/fullscreen
+super + {_,shift} + f
+    bspc node -t ~{fullscreen,floating}
+
+# Open applications
+super + o; {e,b,B}
+    {emacsclient -c,qutebrowser,brave}
+
+# Focus & swap windows directionally
+super + {_,shift} + {h,j,k,l}
+	bspc node -{f,s} {west,south,north,east} --follow
+
+# Music control
+XF86Audio{Play,Prev,Next}
+    playerctl {play-pause,previous,next}
+
+# Close/kill window
+super + {_,shift} + c
+    bspc node -{c,k}
+
+# Switch & move windows between desktops
+super + {_,shift} + {0-9}
+    bspc {desktop -f,node -d} {0-9}
+
+# Switch & move windows between monitors
+super + {_,shift} + {s,d}
+    bspc {monitor -f,node -m} ^{1,2} --follow
+
+# Move desktops between windows
+super + alt + {s,d}
+    bspc desktop -m ^{1,2}
+
+# Switch between tiled & monocle layouts
+super + t
+    bspc desktop -l next
+
+# Switch windows via rofi
+super + space
+    rofi -show window
+
+# Lock
+super + {_,shift} + grave
+    {light-locker-command -l,systemctl suspend}
+
+# Also lock, OnlyKey's lock button seems to send this keystroke (along with C-l) for some reason
+super + ctrl + q
+    light-locker-command -l
+
+# Screenshot
+Print
+    flameshot gui

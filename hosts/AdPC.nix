@@ -6,12 +6,21 @@
     home.enable = true;
     cli = {
       direnv.enable = true;
+      doas.enable = true;
       fish.enable = true;
       nix = {
         autoGc = true;
         autoOptimise = true;
       };
+      pass.enable = true;
       starship.enable = true;
+    };
+    desktop = {
+      bspwm.enable = true;
+      communication.enable = true;
+      emacs.enable = true;
+      gaming.enable = true;
+      gimp.enable = true;
     };
     hardware = {
       filesystem.enable = true;
@@ -20,6 +29,7 @@
         interface = "enp37s0";
         mullvad = true;
       };
+      pam-u2f.enable = true;
       sound.enable = true;
     };
     services = {

@@ -23,9 +23,8 @@ in {
 
     my = {
       cli.fish.extraInit = "direnv hook fish | source";
-      home.configFiles."direnv/direnvrc" = {
-        text = "source /run/current-system/sw/share/nix-direnv/direnvrc";
-      };
+      home.configFiles."direnv/direnvrc".text =
+        "source /run/current-system/sw/share/nix-direnv/direnvrc";
     };
   }]);
 }

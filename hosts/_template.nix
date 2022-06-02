@@ -10,6 +10,7 @@
     home.enable = false;
     cli = {
       direnv.enable = false;
+      doas.enable = false;
       fish = {
         enable = false;
         extraInit = "";
@@ -19,7 +20,15 @@
         autoGc = false;
         autoOptimise = false;
       };
+      pass.enable = false;
       starship.enable = false;
+    };
+    desktop = {
+      bspwm.enable = false;
+      communication.enable = false;
+      emacs.enable = false;
+      gaming.enable = false;
+      gimp.enable = false;
     };
     hardware = {
       filesystem.enable = false;
@@ -29,6 +38,7 @@
         wireless = false;
         mullvad = false;
       };
+      pam-u2f.enable = false;
       sound = {
         enable = false;
         bluetooth = false;

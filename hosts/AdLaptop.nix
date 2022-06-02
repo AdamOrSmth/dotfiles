@@ -6,7 +6,7 @@
     home.enable = true;
     cli = {
       direnv.enable = true;
-      fish = { enable = true; };
+      fish.enable = true;
       nix = {
         autoGc = true;
         autoOptimise = true;
@@ -41,6 +41,8 @@
   };
 
   # Custom per-host configuration options
+  # CapsLock to Escape
+  services.xserver.xkbOptions = "caps:escape";
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)

@@ -4,11 +4,23 @@
 # for the time being.
 
 host: {
-  # Hostname should always be the same, so it's only bootstrapped once during
-  # initial setup.
-  networking.hostName = host;
-  # I'm pretty sure I want the same time zone for every system I have,
-  # and I can't think of anywhere better to put this, so I'm just
-  # gonna keep it here until it starts causing me problems.
-  time.timeZone = "America/New_York";
+  options.my = let srcDir = ../.;
+  in {
+    # I need a way to refer to the top-level paths of my Flakes directory
+    # from individual modules, but I didn't feel like adding an entire module
+    # for the sole purpose of exporting paths, so let's do it here instead.
+    # I'm gonna forget this is here and then be like "where the hell are
+    # these variables getting initialized".
+    inherit srcDir;
+    configDir = "${srcDir}/config";
+  };
+  config = {
+    # Hostname should always be the same, so it's only bootstrapped once during
+    # initial setup.
+    networking.hostName = host;
+    # I'm pretty sure I want the same time zone for every system I have,
+    # and I can't think of anywhere better to put this, so I'm just
+    # gonna keep it here until it starts causing me problems.
+    time.timeZone = "America/New_York";
+  };
 }

@@ -18,6 +18,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -90,7 +94,7 @@
           ];
         in lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit lib pkgs; };
+          specialArgs = { inherit lib pkgs inputs; };
           modules = common ++ modules ++ singleton (import ./hosts/${host}.nix);
         });
     };
