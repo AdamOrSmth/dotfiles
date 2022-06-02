@@ -17,7 +17,7 @@ in {
       doas = {
         enable = true;
         extraRules = [{
-          users = config.my.user.username;
+          users = [ config.my.user.username ];
           keepEnv = true;
           persist = true;
         }];

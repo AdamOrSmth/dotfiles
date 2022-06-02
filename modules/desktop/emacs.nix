@@ -1,6 +1,6 @@
 path:
 
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, system, ... }:
 
 let
   inherit (lib)
@@ -18,15 +18,15 @@ in {
     services.emacs = {
       enable = true;
       defaultEditor = true;
-      package = with pkgs;
-      # Install Emacs 28 from the bleeding-edge overlay with native
-      # compilation support and the `alpha-background` patch, and include
-      # the `Vterm` package as it doesn't compile on NixOS
-        ((emacsPackagesFor
-          (inputs.emacs-overlay.packages.emacsNativeComp.overrideAttrs
+      package =
+        # Install Emacs 28 from the bleeding-edge overlay with native
+        # compilation support and the `alpha-background` patch, and include
+        # the `Vterm` package as it doesn't compile on NixOS
+        ((pkgs.emacsPackagesFor
+          (inputs.emacs-overlay.packages.${system}.emacsNativeComp.overrideAttrs
             (oldAttrs: {
               patches = [
-                (fetchurl {
+                (pkgs.fetchurl {
                   url =
                     "https://raw.githubusercontent.com/TheVaffel/emacs/master/emacs_background_transparency.patch";
                   sha256 = "yt4NC1CYbq3FhIRnoUZ/YHmEu5KoHVAdLssB/nStVfk=";

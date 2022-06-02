@@ -1,6 +1,6 @@
 path:
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   inherit (lib)
@@ -16,6 +16,9 @@ in {
     nix = {
       # Enable Flakes
       extraOptions = "experimental-features = nix-command flakes";
+      # Pin `nixpkgs` in Flake registry to version used to build the system
+      # (eliminates unnecessary dependencies)
+      registry.nixpkgs.flake = inputs.nixpkgs;
 
       # Automatically collect garbage
       gc = {

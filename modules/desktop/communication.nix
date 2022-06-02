@@ -25,7 +25,7 @@ in {
       };
     };
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) element-desktop session-desktop signal-desktop;
+      inherit (pkgs) element-desktop session-desktop-appimage signal-desktop;
     };
   }]);
 }

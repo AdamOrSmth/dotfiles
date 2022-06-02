@@ -50,6 +50,7 @@
             "nvidia-x11"
             "nvidia-settings"
             "steam"
+            "steam-original"
             "discord"
           ];
 
@@ -85,7 +86,7 @@
       nixosConfigurations = genAttrs hosts (host:
         let
           common = [
-            (import ./hosts/_common.nix host)
+            (import ./hosts/_common.nix { inherit host lib; })
             # `home-manager` provides a module to use with a full NixOS configuration
             # that we need to import to use. I can't think of a way to add it conditionally
             # depending on whether the configuration is enabled, and I can't be bothered to
@@ -94,7 +95,7 @@
           ];
         in lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit lib pkgs inputs; };
+          specialArgs = { inherit lib pkgs inputs system; };
           modules = common ++ modules ++ singleton (import ./hosts/${host}.nix);
         });
     };
