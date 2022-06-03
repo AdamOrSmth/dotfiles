@@ -6,6 +6,7 @@ let
   inherit (lib)
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
+  inherit (config.my) binDir;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Fish as default shell";
@@ -14,7 +15,7 @@ in {
       type = types.lines;
     };
     aliases = mkOption {
-      description = "Aliases for Fish";
+      description = "Abbreviations for Fish";
       type = types.attrsOf types.nonEmptyStr;
       default = {
         cp = "cp -iv";
@@ -27,13 +28,19 @@ in {
         lt = "exa -aT --color=always --group-directories-first --icons";
       };
     };
+    path = mkOption {
+      description = "List of additional directories to add to PATH";
+      type = types.listOf types.path;
+      default = [ binDir ];
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [{
     programs.fish = {
       enable = true;
-      shellInit = cfg.extraInit;
-      shellAliases = cfg.aliases;
+      shellInit = cfg.extraInit + "\n"
+        + "set -p ${lib.concatStringsSep " " cfg.path}";
+      shellAbbrs = cfg.aliases;
     };
     users.defaultUserShell = pkgs.fish;
     environment.systemPackages =

@@ -30,8 +30,9 @@ in {
       isNormalUser = true;
       extraGroups = cfg.extraGroups;
       home = cfg.home;
+      createHome = true;
       # Make sure to change password on fresh install!
-      password = "ad";
+      initialPassword = "ad";
     };
   }];
 }

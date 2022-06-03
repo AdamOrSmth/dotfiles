@@ -15,6 +15,7 @@
     # these variables getting initialized".
     srcDir = mkOption { default = srcDir; };
     configDir = mkOption { default = "${srcDir}/config"; };
+    binDir = mkOption { default = "${srcDir}/bin"; };
   };
   config = {
     # Hostname should always be the same, so it's only bootstrapped once during
