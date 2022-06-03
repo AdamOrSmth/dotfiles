@@ -45,6 +45,7 @@
 
   # Custom per-host configuration options
   services.xserver.videoDrivers = [ "nvidia" ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
