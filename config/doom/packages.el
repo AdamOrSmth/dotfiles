@@ -1,0 +1,6 @@
+(package! org-roam-ui)
+(package! cdlatex)
+(package! auctex)
+(package! titlecase)
+(package! beacon)
+(package! anki-editor)

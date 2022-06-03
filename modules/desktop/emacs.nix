@@ -6,6 +6,7 @@ let
   inherit (lib)
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
+  inherit (config.my) home configDir;
 in {
   options =
     setAttrByPath path { enable = mkEnableOption "Doom Emacs as editor"; };
@@ -66,5 +67,7 @@ in {
       xdotool
       xorg.xwininfo
     ];
+
+    home.configFiles."doom".source = "${configDir}/doom";
   }]);
 }
