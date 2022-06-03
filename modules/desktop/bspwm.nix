@@ -42,7 +42,9 @@ in {
       inherit (pkgs) alacritty dunst eww lightlocker polybar rofi;
     };
 
-    my.home.configFiles."polybar/config.ini".source =
-      "${configDir}/polybar.ini";
+    my.home.configFiles = {
+      "polybar/config.ini".source = "${configDir}/polybar.ini";
+      "dunst/dunstrc".source = "${configDir}/dunstrc";
+    };
   }]);
 }
