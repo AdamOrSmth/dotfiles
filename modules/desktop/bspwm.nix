@@ -6,7 +6,7 @@ let
   inherit (lib)
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
-  inherit (config.my) configDir;
+  configDir = "${config.my.configDir}/bspwm";
 in {
   options =
     setAttrByPath path { enable = mkEnableOption "`bspwm` as window manager"; };
@@ -17,8 +17,8 @@ in {
         enable = true;
         windowManager.bspwm = {
           enable = true;
-          configFile = "${configDir}/bspwm/bspwmrc";
-          sxhkd.configFile = "${configDir}/sxhkd/sxhkdrc";
+          configFile = "${configDir}/bspwmrc";
+          sxhkd.configFile = "${configDir}/sxhkdrc";
         };
       };
 
@@ -41,5 +41,8 @@ in {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) alacritty dunst eww lightlocker polybar rofi;
     };
+
+    my.home.configFiles."polybar/config.ini".source =
+      "${configDir}/polybar.ini";
   }]);
 }
