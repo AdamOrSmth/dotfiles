@@ -70,7 +70,7 @@ in {
 
     my = {
       home.configFiles."doom".source = "${configDir}/doom";
-      cli.fish.path = [ "~/.config/emacs/bin" ];
+      cli.fish.path = [ "${config.my.user.home}/.config/emacs/bin" ];
     };
   }]);
 }
