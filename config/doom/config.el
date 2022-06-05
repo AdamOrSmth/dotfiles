@@ -79,11 +79,11 @@
           :desc "org-edit-src-code" "E" #'org-edit-src-code
           :desc "org-latex-preview" "L" #'org-latex-preview)))
   ;; Org-Agenda
-  (setq org-agenda-skip-scheduled-if-done t
+  (setq org-agenda-files `(,(concat org-directory "gtd/"))
+        org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
         org-agenda-todo-ignore-scheduled t
         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-        org-agenda-files (concat org-directory "gtd/")
         org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
         ;; Default appearance is kinda ugly.
         org-agenda-time-grid
