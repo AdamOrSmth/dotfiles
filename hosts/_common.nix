@@ -1,9 +1,8 @@
 # Common configuration module for all my hosts.
-# Still debating on whether this should stay here in `hosts/_common.nix`,
-# or in a `host.nix` file in the root, but I'm just gonna keep it here
-# for the time being.
+# Still debating on whether this should stay here or move somewhere else,
+# there's probably a better place, but oh well.
 
-{ host, lib }: {
+{ host, lib, inputs }: {
   options.my = let
     inherit (lib) mkOption;
     srcDir = ../.;
@@ -25,5 +24,7 @@
     # and I can't think of anywhere better to put this, so I'm just
     # gonna keep it here until it starts causing me problems.
     time.timeZone = "America/New_York";
+
+    system.configurationRevision = inputs.self.rev;
   };
 }

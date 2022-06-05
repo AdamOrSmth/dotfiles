@@ -47,7 +47,7 @@ let
   mkHost = host:
     let
       common = [
-        (import ./hosts/_common.nix { inherit host lib; })
+        (import ./hosts/_common.nix { inherit host lib inputs; })
         # `home-manager` provides a module to use with a full NixOS configuration
         # that we need to import to use. I can't think of a way to add it conditionally
         # depending on whether the configuration is enabled, and I can't be bothered to
