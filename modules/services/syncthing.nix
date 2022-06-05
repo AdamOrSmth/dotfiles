@@ -37,7 +37,7 @@ in {
       enable = true;
       openDefaultPorts = true;
       inherit (cfg) dataDir;
-      configDir = config.my.user.home + "/.config/syncthing";
+      configDir = "/var/lib/syncthing";
       devices = {
         pc = {
           id =
