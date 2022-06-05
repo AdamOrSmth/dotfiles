@@ -3,7 +3,7 @@
 let
   inherit (lib)
     filterAttrs hasSuffix hasPrefix mapAttrs' nameValuePair removeSuffix
-    mapAttrsToList id concatLists genAttrs collect isFunction;
+    mapAttrsToList id concatLists genAttrs collect isFunction flatten;
   inherit (builtins) readDir attrValues;
 
   # Run a function on every `.nix` file in a directory, non-recursively,
@@ -45,19 +45,15 @@ let
   # Create a NixOS system given a hostname, with all common configuration settings and
   # whatnot.
   mkHost = host:
-    let
-      common = [
-        (import ./hosts/_common.nix { inherit host lib inputs; })
-        # `home-manager` provides a module to use with a full NixOS configuration
-        # that we need to import to use. I can't think of a way to add it conditionally
-        # depending on whether the configuration is enabled, and I can't be bothered to
-        # think harder, and the input exists anyway, so I'm just gonna import it unconditionally.
-        inputs.home-manager.nixosModules.home-manager
-      ];
-    in lib.nixosSystem {
+    lib.nixosSystem {
       inherit system;
       specialArgs = { inherit lib pkgs inputs system; };
-      modules = common ++ (collect isFunction inputs.self.nixosModules)
-        ++ lib.singleton (import ./hosts/${host}.nix);
+      modules = flatten [
+        { networking.hostName = host; }
+        inputs.home-manager.nixosModules.home-manager
+        inputs.self.nixosModules.common
+        (collect isFunction inputs.self.nixosModules)
+        (import ./hosts/${host}.nix)
+      ];
     };
 in { inherit mapModules mapModules' mapModulesRec mapModulesRec' mkHost; }

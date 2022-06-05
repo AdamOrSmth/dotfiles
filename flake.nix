@@ -64,7 +64,9 @@
       # Import each module, passing it its relative path, which is used to
       # define options. Engineering completely over-complicated solutions
       # for not-very-problematic problems is great, isn't it?
-      nixosModules = mapModulesRec ./modules (p:
+      nixosModules = {
+        common = import ./hosts/_common.nix { inherit lib inputs; };
+      } // mapModulesRec ./modules (p:
         let
           inherit (lib) pipe removeSuffix flatten drop concat;
           inherit (builtins) split;
