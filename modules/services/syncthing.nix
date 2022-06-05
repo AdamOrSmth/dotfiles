@@ -67,5 +67,7 @@ in {
         enable = elem n cfg.enabledFolders;
       });
     };
+    systemd.services.syncthing.serviceConfig.User =
+      lib.mkForce config.my.user.username;
   });
 }
