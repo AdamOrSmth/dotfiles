@@ -29,8 +29,11 @@ in {
   config = mkIf cfg.enable (mkMerge [{
     programs.fish = {
       enable = true;
-      shellInit = cfg.extraInit + "\n"
-        + "set -p PATH ${lib.concatStringsSep " " ([ binDir ] ++ cfg.path)}";
+      shellInit = ''
+        ${cfg.extraInit}
+        set -U fish_greeting
+        fish_add_path -P ${lib.concatStringsSep " " ([ binDir ] ++ cfg.path)}
+      '';
       shellAbbrs = {
         cp = "cp -iv";
         mv = "mv -iv";
