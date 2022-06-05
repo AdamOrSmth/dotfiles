@@ -29,5 +29,7 @@ in {
       # Automatically optimise store (deduplicate files via hard-linking)
       autoOptimiseStore = cfg.autoOptimise;
     };
+
+    environment.systemPackages = [ pkgs.nixfmt ];
   }]);
 }

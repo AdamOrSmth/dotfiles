@@ -18,9 +18,11 @@ in {
 
   config = (mkMerge [
     {
-      networking.useDHCP = false; # Deprecated flag
-      networking.interfaces.${cfg.interface}.useDHCP = true;
-      networking.wireless.enable = cfg.wireless;
+      networking = {
+        useDHCP = false; # Deprecated flag
+        interfaces.${cfg.interface}.useDHCP = true;
+        wireless.enable = cfg.wireless;
+      };
     }
     (mkIf cfg.mullvad {
       services.mullvad-vpn.enable = true;
