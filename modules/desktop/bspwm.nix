@@ -15,11 +15,7 @@ in {
     services = {
       xserver = {
         enable = true;
-        windowManager.bspwm = {
-          enable = true;
-          configFile = "${configDir}/bspwmrc";
-          sxhkd.configFile = "${configDir}/sxhkdrc";
-        };
+        windowManager.bspwm.enable = true;
       };
 
       picom = {
@@ -39,12 +35,15 @@ in {
     };
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) alacritty dunst eww lightlocker polybar rofi;
+      inherit (pkgs) alacritty dunst eww lightlocker playerctl polybar rofi;
     };
 
     my.home.configFiles = {
-      "polybar/config.ini".source = "${configDir}/polybar.ini";
+      "alacritty/alacritty.yml".source = "${configDir}/alacritty.yml";
+      "bspwm/bspwmrc".source = "${configDir}/bspwmrc";
       "dunst/dunstrc".source = "${configDir}/dunstrc";
+      "polybar/config.ini".source = "${configDir}/polybar.ini";
+      "sxhkd/sxhkdrc".source = "${configDir}/sxhkdrc";
     };
   }]);
 }
