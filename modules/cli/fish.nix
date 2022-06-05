@@ -39,7 +39,7 @@ in {
     programs.fish = {
       enable = true;
       shellInit = cfg.extraInit + "\n"
-        + "set -p ${lib.concatStringsSep " " cfg.path}";
+        + "set -p PATH ${lib.concatStringsSep " " cfg.path}";
       shellAbbrs = cfg.aliases;
     };
     users.defaultUserShell = pkgs.fish;
