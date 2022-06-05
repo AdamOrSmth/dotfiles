@@ -28,52 +28,47 @@
     let
       system = "x86_64-linux";
 
-      # Bootstrap custom library functions. Why is documentation for `extend` so hard to find?
-      # Actually, that describes Nix in a nutshell. Y'know it's bad when the best example usage
-      # I found of this method was in hlissner's dotfiles, which I basically stole the entire
-      # line from.
-      lib = nixpkgs.lib.extend (self: super: { my = import ./lib.nix self; });
-      inherit (lib) getName id genAttrs singleton;
-      inherit (lib.my) mapModules mapModulesRec mapModulesRec';
-      inherit (builtins) elem attrNames split;
+      # Bootstrap custom library functions.
+      lib = nixpkgs.lib.extend (final: prev: {
+        my = import ./lib.nix {
+          inherit pkgs inputs system;
+          lib = prev;
+        };
+      });
+      inherit (lib.my) mapModules mapModulesRec;
 
       pkgs = import nixpkgs {
         inherit system;
-        # Forgive me, oh merciful lords of FOSS, for I have committed a sin.
-        # Curse you, Nvidia, for leaving me no other option. Only time will
-        # tell if your open source drivers become anything close to good, and if
-        # so, I shall forgive you.
-        # Oh yeah also I use Steam and Discord. I think that's it though. They,
-        # too, can go on the unholy list of shame.
+        # Wall of shame.
         config.allowUnfreePredicate = pkg:
-          elem (getName pkg) [
+          builtins.elem (lib.getName pkg) [
             "nvidia-x11"
             "nvidia-settings"
             "steam"
             "steam-original"
             "discord"
           ];
-
-        # Add custom library functions into top-level `pkgs` here, there's
-        # probably a better way and place to do this, but I'm not about to
-        # turn my dotfiles into an over-engineered setup like hlissner, even
-        # though I kinda already have. Just keep telling yourself that Ad,
-        # and eventually you'll have a config that's just as monkey-patched
-        # and hacky as before! Who needs clean code, as long as I understand
-        # the mess, it's fine right? Humans clearly never forget anything!
-        overlays = singleton (self: super: { inherit lib; })
-          ++ import ./overlay.nix;
+        # Import this flake's overlays. Lazy evaluation is great!
+        overlays = builtins.attrValues self.overlays;
       };
 
-      hosts = attrNames (mapModules ./hosts id);
+      hosts = builtins.attrNames (mapModules ./hosts lib.id);
 
-      # Import each module, passing it its relative path,
-      # which is used to define options. Engineering completely over-complicated solutions
-      # for not-very-problematic problems is great, isn't it? Automation go brr.
-      # There's probably a better way to do this, but I'm working on this way too late at night,
-      # so I really don't feel like finding it.
-      modules = mapModulesRec' ./modules (p:
-        let inherit (lib) pipe drop flatten removeSuffix concat;
+    in {
+      # Load custom package derivations.
+      packages.${system} = mapModules ./packages (p: pkgs.callPackage p { });
+
+      # Define an overlay for aforementioned custom package derivations.
+      overlays.default = (final: prev: { my = self.packages.${system}; });
+
+      # All modules for my configurations. Separation of concerns I suppose.
+      # Import each module, passing it its relative path, which is used to
+      # define options. Engineering completely over-complicated solutions
+      # for not-very-problematic problems is great, isn't it?
+      nixosModules = mapModulesRec ./modules (p:
+        let
+          inherit (lib) pipe removeSuffix flatten drop concat;
+          inherit (builtins) split;
         in import p (pipe p [
           (removeSuffix ".nix")
           (split "/")
@@ -82,21 +77,6 @@
           (concat [ "my" ])
         ]));
 
-    in {
-      nixosConfigurations = genAttrs hosts (host:
-        let
-          common = [
-            (import ./hosts/_common.nix { inherit host lib; })
-            # `home-manager` provides a module to use with a full NixOS configuration
-            # that we need to import to use. I can't think of a way to add it conditionally
-            # depending on whether the configuration is enabled, and I can't be bothered to
-            # think harder, and the input exists anyway, so I'm just gonna import it unconditionally.
-            home-manager.nixosModules.home-manager
-          ];
-        in lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit lib pkgs inputs system; };
-          modules = common ++ modules ++ singleton (import ./hosts/${host}.nix);
-        });
+      nixosConfigurations = lib.genAttrs hosts lib.my.mkHost;
     };
 }

@@ -13,7 +13,10 @@ in {
 
   config = mkIf cfg.enable (mkMerge [{
     # Fonts used in my config
-    fonts.fonts = with pkgs; [ nerd-fonts-symbols-only comic-neue ];
+    fonts.fonts = builtins.attrValues {
+      inherit (pkgs) comic-neue;
+      inherit (pkgs.my) nerd-fonts-symbols-only;
+    };
 
     # Enable Emacs daemon
     services.emacs = {

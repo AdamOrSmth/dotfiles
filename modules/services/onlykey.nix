@@ -6,7 +6,8 @@ let
   inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
   cfg = getAttrFromPath path config;
   # `libfido2` provides CLI commands
-  inherit (pkgs) libfido2 gnupg my-onlykey-agent onlykey-bin my-onlykey-cli;
+  inherit (pkgs) libfido2 gnupg;
+  inherit (pkgs.my) onlykey-agent onlykey-bin onlykey-cli;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "OnlyKey packages and agent service";
@@ -16,8 +17,7 @@ in {
     hardware.onlykey.enable = true;
 
     environment = {
-      systemPackages =
-        [ onlykey-bin my-onlykey-cli my-onlykey-agent libfido2 gnupg ];
+      systemPackages = [ onlykey-bin onlykey-cli onlykey-agent libfido2 gnupg ];
       variables.GNUPGHOME = "~/.gnupg/onlykey";
     };
 
@@ -32,7 +32,7 @@ in {
         serviceConfig = {
           Type = "simple";
           Environment = [ "GNUPGHOME=%h/.gnupg/onlykey" ];
-          ExecStart = "${my-onlykey-agent}/bin/onlykey-gpg-agent";
+          ExecStart = "${onlykey-agent}/bin/onlykey-gpg-agent";
         };
 
         wantedBy = [ "onlykey-gpg-agent.socket" ];

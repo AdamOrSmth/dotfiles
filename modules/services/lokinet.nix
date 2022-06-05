@@ -6,7 +6,8 @@ let
   inherit (lib)
     setAttrByPath mkEnableOption getAttrFromPath mkIf optionalString;
   dataDir = "/var/lib/lokinet";
-  inherit (pkgs) curl procps mullvad lokinet;
+  inherit (pkgs) curl procps mullvad;
+  inherit (pkgs.my) lokinet;
 in {
   options =
     setAttrByPath path { enable = mkEnableOption "Lokinet router service"; };
