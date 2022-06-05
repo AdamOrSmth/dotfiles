@@ -53,7 +53,6 @@
       };
 
       hosts = builtins.attrNames (mapModules ./hosts lib.id);
-
     in {
       # Load custom package derivations.
       packages.${system} = mapModules ./packages (p: pkgs.callPackage p { });

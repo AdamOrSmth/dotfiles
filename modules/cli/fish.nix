@@ -33,6 +33,7 @@ in {
         ${cfg.extraInit}
         set -U fish_greeting
         fish_add_path -P ${lib.concatStringsSep " " ([ binDir ] ++ cfg.path)}
+        colorscript -r
       '';
       shellAbbrs = {
         cp = "cp -iv";
@@ -42,7 +43,10 @@ in {
       } // cfg.aliases;
     };
     users.defaultUserShell = pkgs.fish;
-    environment.systemPackages =
-      builtins.attrValues { inherit (pkgs) bat coreutils htop lsof; };
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs) bat coreutils htop lsof;
+      # TODO Refactor into separate module
+      inherit (pkgs.my) shell-color-scripts;
+    };
   }]);
 }

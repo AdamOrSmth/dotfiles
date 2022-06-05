@@ -7,7 +7,7 @@ stdenv.mkDerivation {
     owner = "dwt1";
     repo = "shell-color-scripts";
     rev = "fcd013ea2e1ff80e01adbcea9d0eaf9c73db94c0";
-    sha256 = "";
+    sha256 = "bd3NBf99rCiADUKQb6fzCBDaKBmYaZHcO4qokm/39do=";
   };
 
   installPhase = ''
