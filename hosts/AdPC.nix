@@ -7,20 +7,25 @@
     cli = {
       direnv.enable = true;
       doas.enable = true;
+      files.enable = true;
       fish.enable = true;
+      git.enable = true;
       nix = {
         autoGc = true;
         autoOptimise = true;
       };
       pass.enable = true;
+      restic.enable = true;
       starship.enable = true;
     };
     desktop = {
+      browsers.enable = true;
       bspwm.enable = true;
       communication.enable = true;
       emacs.enable = true;
       gaming.enable = true;
       gimp.enable = true;
+      multimedia.enable = true;
     };
     hardware = {
       filesystem.enable = true;

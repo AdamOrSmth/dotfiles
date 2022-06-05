@@ -11,24 +11,29 @@
     cli = {
       direnv.enable = false;
       doas.enable = false;
+      files.enable = false;
       fish = {
         enable = false;
         extraInit = "";
         aliases = { };
       };
+      git.enable = false;
       nix = {
         autoGc = false;
         autoOptimise = false;
       };
       pass.enable = false;
+      restic.enable = false;
       starship.enable = false;
     };
     desktop = {
+      browsers.enable = false;
       bspwm.enable = false;
       communication.enable = false;
       emacs.enable = false;
       gaming.enable = false;
       gimp.enable = false;
+      multimedia.enable = false;
     };
     hardware = {
       filesystem.enable = false;
