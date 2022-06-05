@@ -7,6 +7,7 @@
     cli = {
       direnv.enable = true;
       doas.enable = true;
+      exa.enable = true;
       files.enable = true;
       fish.enable = true;
       git.enable = true;

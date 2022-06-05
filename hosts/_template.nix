@@ -11,6 +11,7 @@
     cli = {
       direnv.enable = false;
       doas.enable = false;
+      exa.enable = false;
       files.enable = false;
       fish = {
         enable = false;

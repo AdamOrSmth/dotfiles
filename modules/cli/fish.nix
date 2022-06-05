@@ -39,14 +39,10 @@ in {
         mv = "mv -iv";
         rm = "rm -iv";
         cat = "bat";
-        la = "exa -al --color=always --group-directories-first --icons";
-        ls = "exa -a --color=always --group-directories-first --icons";
-        ll = "exa -l --color=always --group-directories-first --icons";
-        lt = "exa -aT --color=always --group-directories-first --icons";
       } // cfg.aliases;
     };
     users.defaultUserShell = pkgs.fish;
     environment.systemPackages =
-      builtins.attrValues { inherit (pkgs) bat coreutils exa htop lsof; };
+      builtins.attrValues { inherit (pkgs) bat coreutils htop lsof; };
   }]);
 }
