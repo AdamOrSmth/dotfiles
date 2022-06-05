@@ -1,0 +1,9 @@
+[user]
+	name = Ad
+	email = me@adamorsomething.xyz
+[init]
+	defaultBranch = main
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
