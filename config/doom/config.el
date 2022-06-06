@@ -97,7 +97,8 @@
   (setq org-export-with-toc nil
         org-export-with-tags nil
         ;; LaTeX requires the 'titletoc' package for proper table of contents export,
-        ;; and it must load before 'hyperref', which is what this spaghetti does ('hyperref' is last in the list by default).
+        ;; and it must load before 'hyperref', which is what this spaghetti does
+        ;; ('hyperref' is last in the list by default).
         org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
                                                  '(("" "titletoc" nil ("pdflatex")))
                                                  (last org-latex-default-packages-alist)))
