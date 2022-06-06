@@ -31,10 +31,10 @@
       onlykey.enable = true;
       syncthing = {
         enable = true;
-        enabledFolders = [ "pass" "sync" ];
+        enabledFolders = [ "Pass" "Sync" ];
         folderLocations = {
-          pass = "/home/ad/Pass";
-          sync = "/home/ad/ST";
+          Pass = "/home/ad/Pass";
+          Sync = "/home/ad/ST";
         };
       };
     };

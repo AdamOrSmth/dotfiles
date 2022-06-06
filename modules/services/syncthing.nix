@@ -8,7 +8,7 @@ let
     genAttrs;
   inherit (builtins) elem attrNames;
   cfg = getAttrFromPath path config;
-  folders = [ "pass" "music" "sync" ];
+  folders = [ "Pass" "Music" "Sync" ];
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Syncthing service";
@@ -31,13 +31,14 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let user = config.my.user.username;
+  config = mkIf cfg.enable (let user = config.my.user;
   in {
     services.syncthing = {
       enable = true;
+      user = user.username;
       openDefaultPorts = true;
       inherit (cfg) dataDir;
-      configDir = "/var/lib/syncthing";
+      configDir = "${user.home}/.config/syncthing";
       devices = {
         pc = {
           id =
@@ -67,7 +68,5 @@ in {
         enable = elem n cfg.enabledFolders;
       });
     };
-    systemd.services.syncthing.serviceConfig.User =
-      lib.mkForce config.my.user.username;
   });
 }
