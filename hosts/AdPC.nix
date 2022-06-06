@@ -43,7 +43,7 @@
       onlykey.enable = true;
       printing.enable = true;
       syncthing = {
-        enable = false;
+        enable = true;
         dataDir = "/home/ad/BigBoiStorage";
       };
     };
