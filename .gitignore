@@ -2,5 +2,3 @@
 /result
 # Drives of tester virtual machines (`nixos-rebuild build-vm`)
 /*.qcow2
-# Direnv evaluation cache
-/.direnv

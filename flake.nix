@@ -51,6 +51,8 @@
         # Import this flake's overlays. Lazy evaluation is great!
         overlays = builtins.attrValues self.overlays;
       };
+
+      hosts = builtins.attrNames (mapModules ./hosts lib.id);
     in {
       # Load custom package derivations.
       packages.${system} = mapModules ./packages (p: pkgs.callPackage p { });
@@ -76,11 +78,6 @@
           (concat [ "my" ])
         ]));
 
-      # Create each host in the hosts sub-folder.
-      nixosConfigurations =
-        lib.genAttrs (builtins.attrNames (mapModules ./hosts lib.id))
-        lib.my.mkHost;
-
-      devShell.${system} = pkgs.mkShell { buildInputs = [ pkgs.nixops ]; };
+      nixosConfigurations = lib.genAttrs hosts lib.my.mkHost;
     };
 }
