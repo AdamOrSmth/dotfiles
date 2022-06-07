@@ -281,10 +281,15 @@
   (map! (:leader
          :desc "Random node (no dailies)" "n r A" #'ad/org-roam-random-excluding-dailies)))
 
+;;; Org-Auto_tangle
+(use-package! org-auto-tangle
+  :hook org-mode
+  :custom (org-auto-tangle-default t))
+
 ;;; Anki-Editor
 (use-package! anki-editor
+  :hook org-mode
   :config
-  (anki-editor-mode t)
   (map! (:map org-mode-map
          (:localleader
           (:prefix ("F" . "anki")

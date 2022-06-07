@@ -4,3 +4,4 @@
 (package! titlecase)
 (package! beacon)
 (package! anki-editor)
+(package! org-auto-tangle)
