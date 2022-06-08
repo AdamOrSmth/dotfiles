@@ -182,7 +182,7 @@
   ;; Personal spellcheck dictionary.
   (add-hook 'spell-fu-mode-hook
             (lambda () (spell-fu-dictionary-add
-                        (spell-fu-get-personal-dictionary "personal" (concat org-directory ".aspell.pws" ))))))
+                        (spell-fu-get-personal-dictionary "personal" (concat org-directory ".aspell.pws"))))))
 
 ;;; Org-Roam
 (after! org-roam
@@ -283,12 +283,12 @@
 
 ;;; Org-Auto_tangle
 (use-package! org-auto-tangle
-  :hook org-mode
+  :hook (org-mode . org-auto-tangle-mode)
   :custom (org-auto-tangle-default t))
 
 ;;; Anki-Editor
 (use-package! anki-editor
-  :hook org-mode
+  :hook (org-mode . anki-editor-mode)
   :config
   (map! (:map org-mode-map
          (:localleader
