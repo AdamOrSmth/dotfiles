@@ -6,12 +6,24 @@
     home.enable = true;
     cli = {
       direnv.enable = true;
+      doas.enable = true;
+      exa.enable = true;
+      files.enable = true;
       fish.enable = true;
+      git.enable = true;
       nix = {
         autoGc = true;
         autoOptimise = true;
       };
+      pass.enable = true;
       starship.enable = true;
+    };
+    desktop = {
+      browsers.enable = true;
+      bspwm.enable = true;
+      communication.enable = true;
+      emacs.enable = true;
+      multimedia.enable = true;
     };
     hardware = {
       filesystem.enable = true;
@@ -21,21 +33,19 @@
         wireless = true;
         mullvad = true;
       };
+      pam-u2f.enable = true;
       sound = {
         enable = true;
         bluetooth = true;
       };
     };
     services = {
-      lokinet.enable = true;
       onlykey.enable = true;
       syncthing = {
         enable = true;
+        dataDir = "/home/ad";
         enabledFolders = [ "Pass" "Sync" ];
-        folderLocations = {
-          Pass = "/home/ad/Pass";
-          Sync = "/home/ad/ST";
-        };
+        folderLocations.Sync = "/home/ad/Sync";
       };
     };
   };
