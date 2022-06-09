@@ -14,6 +14,6 @@ in {
 
   config = mkIf cfg.enable (mkMerge [{
     environment.systemPackages = [ pkgs.my.shell-color-scripts ];
-    my.fish.extraInit = "colorscript -r";
+    my.cli.fish.extraInit = "colorscript -r";
   }]);
 }
