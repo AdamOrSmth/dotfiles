@@ -56,6 +56,8 @@
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
+  hardware.enableRedistributableFirmware = true;
+
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/disk/by-uuid/2fb72c4b-8950-4a43-bf13-f5a2d1bbfa39";
