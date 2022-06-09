@@ -14,6 +14,8 @@ in {
 
   config = (mkMerge [{
     nix = {
+      settings.trusted-users = [ "@wheel" ];
+
       # Enable Flakes
       extraOptions = "experimental-features = nix-command flakes";
       # Pin `nixpkgs` in Flake registry to version used to build the system
