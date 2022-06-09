@@ -41,6 +41,11 @@
     services = {
       lokinet.enable = true;
       onlykey.enable = true;
+      openssh = {
+        enable = true;
+        key =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDfv959AiHhCkYxCvzA4nPY7xNJ3DSfK9XZxMaAhmuVC <ssh://ad@AdPC|ed25519>";
+      };
       printing.enable = true;
       syncthing = {
         enable = true;
