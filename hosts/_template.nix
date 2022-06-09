@@ -9,6 +9,7 @@
     };
     home.enable = false;
     cli = {
+      colorscripts.enable = false;
       direnv.enable = false;
       doas.enable = false;
       exa.enable = false;

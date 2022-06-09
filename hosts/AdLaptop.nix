@@ -5,6 +5,7 @@
   my = {
     home.enable = true;
     cli = {
+      colorscripts.enable = true;
       direnv.enable = true;
       doas.enable = true;
       exa.enable = true;
