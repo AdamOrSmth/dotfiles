@@ -21,7 +21,7 @@ in {
       networking = {
         useDHCP = false; # Deprecated flag
         interfaces.${cfg.interface}.useDHCP = true;
-        wireless.enable = cfg.wireless;
+        networkmanager.enable = cfg.wireless;
       };
     }
     (mkIf cfg.mullvad {
