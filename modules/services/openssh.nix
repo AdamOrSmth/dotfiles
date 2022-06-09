@@ -21,7 +21,14 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      permitRootLogin = "no";
+      passwordAuthentication = false;
+      kbdInteractiveAuthentication = false;
+      openFirewall = true;
+      forwardX11 = true;
+    };
 
     users.users.${cfg.user}.openssh.authorizedKeys.keys = [ cfg.key ];
 
