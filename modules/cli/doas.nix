@@ -23,6 +23,6 @@ in {
         }];
       };
     };
-    my.cli.fish.aliases.sudo = "doas";
+    my.cli.fish.abbrs.sudo = "doas";
   }]);
 }

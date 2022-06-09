@@ -16,6 +16,7 @@
       fish = {
         enable = false;
         extraInit = "";
+        abbrs = { };
         aliases = { };
       };
       git.enable = false;

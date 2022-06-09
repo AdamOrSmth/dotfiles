@@ -14,8 +14,13 @@ in {
       description = "Extra lines to add to Fish configuration";
       type = types.lines;
     };
-    aliases = mkOption {
+    abbrs = mkOption {
       description = "Abbreviations for Fish";
+      type = types.attrsOf types.nonEmptyStr;
+      default = { };
+    };
+    aliases = mkOption {
+      description = "Aliases for Fish";
       type = types.attrsOf types.nonEmptyStr;
       default = { };
     };
@@ -30,23 +35,21 @@ in {
     programs.fish = {
       enable = true;
       shellInit = ''
+        fish_add_path -P ${lib.concatStringsSep " " ([ binDir ] ++ cfg.path)}
+      '';
+      interactiveShellInit = ''
         ${cfg.extraInit}
         set -U fish_greeting
-        fish_add_path -P ${lib.concatStringsSep " " ([ binDir ] ++ cfg.path)}
-        colorscript -r
       '';
-      shellAbbrs = {
+      shellAliases = {
         cp = "cp -iv";
         mv = "mv -iv";
         rm = "rm -iv";
-        cat = "bat";
       } // cfg.aliases;
+      shellAbbrs = { cat = "bat"; } // cfg.abbrs;
     };
     users.defaultUserShell = pkgs.fish;
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) bat coreutils htop lsof;
-      # TODO Refactor into separate module
-      inherit (pkgs.my) shell-color-scripts;
-    };
+    environment.systemPackages =
+      builtins.attrValues { inherit (pkgs) bat coreutils htop lsof; };
   }]);
 }
