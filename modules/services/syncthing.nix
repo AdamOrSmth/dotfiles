@@ -40,15 +40,15 @@ in {
       inherit (cfg) dataDir;
       configDir = "${user.home}/.config/syncthing";
       devices = {
-        pc = {
+        AdPC = {
           id =
             "FEDF474-6KULWXQ-5H45SBU-YRSHPRZ-Z4UW3ZL-FR7R6P5-ZFSELXB-JPZB4A2";
         };
-        laptop = {
+        AdLaptop = {
           id =
-            "NRUJM32-YLZB7LT-OWFMVB4-CCOHL7X-DNMIMUN-XZMUAX2-QXKSBSH-K4PSTA6";
+            "AENWMMW-DELUEVT-QXCO45X-TO55E7B-3JU25OD-ACDVOIN-FTQT7CJ-CKBCEQH";
         };
-        hetzner = {
+        AdServer = {
           id =
             "VYNPC54-JKPBHIF-4NI4TEX-V33QRJ6-QXBHIS5-ZXYDUJY-3E33GM7-X2UFYAG";
         };
