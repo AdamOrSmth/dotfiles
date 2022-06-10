@@ -188,7 +188,7 @@
 (after! org-roam
   (setq org-roam-directory org-directory
         org-roam-dailies-directory (concat org-roam-directory "journals/")
-        org-roam-db-location "~/Sync/Adotorg/.org-roam.db"
+        org-roam-db-location (concat org-roam-directory ".org-roam.db")
         +org-roam-open-buffer-on-find-file nil
         ;; Capture templates.
         org-roam-capture-templates
