@@ -46,7 +46,7 @@
         enable = true;
         dataDir = "/home/ad";
         enabledFolders = [ "Pass" "Sync" ];
-        folderLocations.Sync = "/home/ad/Sync";
+        folderLocations.Sync = "/home/ad/ST";
       };
     };
   };
