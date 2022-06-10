@@ -42,7 +42,7 @@ in {
       devices = {
         AdPC = {
           id =
-            "FEDF474-6KULWXQ-5H45SBU-YRSHPRZ-Z4UW3ZL-FR7R6P5-ZFSELXB-JPZB4A2";
+            "ZCUJPS3-DS2HJXR-WXNDHY2-7TF6CCW-SUN2EIF-E7GCFYT-IGUY4CN-GY4HMQO";
         };
         AdLaptop = {
           id =
