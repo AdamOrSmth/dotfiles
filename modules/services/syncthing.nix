@@ -54,17 +54,12 @@ in {
         };
       };
       folders = let
-        mkPath = (folder:
-          if cfg.folderLocations ? folder then
-            cfg.folderLocations.${folder}
-          else
-            "${cfg.dataDir}/${folder}");
         # Generate a list of devices from the devices attribute
         devices =
           (lib.mapAttrsToList (n: _: n) config.services.syncthing.devices);
       in genAttrs folders (n: {
         inherit devices;
-        path = mkPath n;
+        path = cfg.folderLocations.${n} or "${cfg.dataDir}/${n}";
         enable = elem n cfg.enabledFolders;
       });
     };
