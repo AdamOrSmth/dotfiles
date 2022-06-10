@@ -25,7 +25,6 @@
   };
 
   # Custom per-host configuration options
-  deployment.targetHost = "5.161.48.126";
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
