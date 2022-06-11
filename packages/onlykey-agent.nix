@@ -45,8 +45,6 @@ let
       sha256 = "Y9KBr7mX0/5bZg2/+ZjwFbjkC//uJIVQYwCKuOf03v8=";
     };
 
-    patches = [ ./patches/onlykey-agent-notifications.patch ];
-
     propagatedBuildInputs = builtins.attrValues {
       inherit (python3Packages)
         cryptography docutils python-daemon wheel ecdsa pynacl mnemonic pymsgbox
