@@ -55,7 +55,7 @@ in {
       gcc # EmacSQL binary for `org-roam`
       gnuplot
       graphviz # Generating `org-roam` graphs
-      pandoc # Exporting
+      pandoc
       # Exporting to LaTeX (https://nixos.wiki/wiki/TexLive)
       (texlive.combine {
         inherit (texlive)
@@ -65,10 +65,7 @@ in {
       })
       # :lang shell
       shellcheck
-      # :app everywhere
-      xclip
-      xdotool
-      xorg.xwininfo
+      nodePackages.bash-language-server
     ];
 
     my = {
