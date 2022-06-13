@@ -105,7 +105,7 @@
                                         ; Default export sub-directory, see 'https://stackoverflow.com/questions/9559753/emacs-org-mode-export-to-another-directory'.
   (define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
     (unless pub-dir
-      (setq pub-dir (concat org-directory "exports/"))
+      (setq pub-dir (concat org-directory "export/"))
       (unless (file-directory-p pub-dir)
         (make-directory pub-dir)))
     (apply orig-fun extension subtreep pub-dir nil))
@@ -187,35 +187,27 @@
 ;;; Org-Roam
 (after! org-roam
   (setq org-roam-directory org-directory
-        org-roam-dailies-directory (concat org-roam-directory "journals/")
+        org-roam-dailies-directory (concat org-roam-directory "journal/")
         org-roam-db-location (concat org-roam-directory ".org-roam.db")
         +org-roam-open-buffer-on-find-file nil
         ;; Capture templates.
         org-roam-capture-templates
-        `(("n" "note" plain
-           (file ,(concat org-directory "templates/note.org"))
-           :target (file "notes/%<%Y%m%d%H%M%S>-${slug}.org")
+        `(("z" "zettel" plain
+           (file ,(concat org-directory "template/note.org"))
+           :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("w" "work")
           ("ww" "default" plain
-           (file ,(concat org-directory "templates/document.org"))
-           :target (file "works/%<%Y%m%d%H%M%S>-${slug}.org")
+           (file ,(concat org-directory "template/document.org"))
+           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("wl" "lab report" plain
-           (file ,(concat org-directory "templates/aet-lab-report.org"))
-           :target (file "works/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("t" "topic" plain
-           (file ,(concat org-directory "templates/topic.org"))
-           :target (file "topics/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("p" "project" plain
-           (file ,(concat org-directory "templates/project.org"))
-           :target (file "projects/%<%Y%m%d%H%M%S>-${slug}.org")
+           (file ,(concat org-directory "template/aet-lab-report.org"))
+           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t))
         org-roam-dailies-capture-templates
         `(("d" "default" entry
-           (file "templates/journal.org")
+           (file "template/journal.org")
            :target (file+head
                     "%<%Y-%m-%d>.org"
                     "#+title: %<%Y-%m-%d %a>\n\n")
@@ -223,11 +215,9 @@
            :clock-resume)))
   ;; Icons for my sub-directory file "types".
   (defvar ad/org-roam-icons
-    '(("notes"    . "📑")
-      ("topics"   . "🏷")
-      ("projects" . "📂")
-      ("works"    . "✏")
-      ("journals" . "📖")))
+    '(("zettel"  . "📑")
+      ("work"    . "✏")
+      ("journal" . "📖")))
   ;; Add type prefix to 'org-roam-find-file'.
   (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
     (cdr (assoc (org-roam-node-doom-type node)
@@ -281,7 +271,7 @@
   (map! (:leader
          :desc "Random node (no dailies)" "n r A" #'ad/org-roam-random-excluding-dailies)))
 
-;;; Org-Auto_tangle
+;;; Org-Auto-Tangle
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode)
   :custom (org-auto-tangle-default t))
