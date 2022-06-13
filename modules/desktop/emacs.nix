@@ -69,10 +69,7 @@ in {
     ];
 
     my = {
-      home.configFiles."doom" = {
-        source = "${configDir}/doom";
-        onChange = "~/.config/emacs/bin/doom sync";
-      };
+      home.configFiles."doom".source = "${configDir}/doom";
       cli.fish.path = [ "${config.my.user.home}/.config/emacs/bin" ];
     };
   }]);
