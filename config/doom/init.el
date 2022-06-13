@@ -64,7 +64,7 @@
 
        :checkers
        (syntax +childframe)              ; tasing you for every semicolon you forget
-       (spell +aspell +everywhere) ; tasing you for misspelling mispelling
+       (spell +aspell) ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -80,10 +80,10 @@
        lsp               ; M-x vscode
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
-       pass              ; password manager for nerds
+       ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
+       rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
