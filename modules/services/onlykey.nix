@@ -6,15 +6,31 @@ let
   inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
   cfg = getAttrFromPath path config;
   # `libfido2` provides CLI commands
-  inherit (pkgs) libfido2 gnupg;
+  inherit (pkgs) bash libfido2 gnupg;
   inherit (pkgs.my) onlykey-agent onlykey-bin onlykey-cli;
+  inherit (config.my) binDir;
+  inherit (config.my.user) username;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "OnlyKey packages and agent service";
   };
 
   config = mkIf cfg.enable {
-    hardware.onlykey.enable = true;
+    # We make the rules ourselves instead of using the ones in nixpkgs
+    # for full customization
+    # See https://raw.githubusercontent.com/trustcrypto/trustcrypto.github.io/pages/49-onlykey.rules
+    services.udev = {
+      # Required for shebang and whatnot to work
+      path = [ bash ];
+      extraRules = ''
+        ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", ENV{ID_MM_DEVICE_IGNORE}="1"
+        ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", ENV{MTP_NO_PROBE}="1"
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", OWNER:="${username}"
+
+        ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", MODE:="0660", OWNER:="${username}", RUN+="${binDir}/ok-init"
+        ACTION=="add", KERNEL=="ttyACM*", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", MODE:="0660", OWNER:="${username}", RUN+="${binDir}/ok-init"
+      '';
+    };
 
     environment = {
       systemPackages = [ onlykey-bin onlykey-cli onlykey-agent libfido2 gnupg ];
