@@ -127,16 +127,17 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 
 LaTeX requires the ~titletoc~ package for proper table of contents export, and it must load before ~hyperref~, which is what this spaghetti does (~hyperref~ is last in the list by default).
 #+begin_src elisp
-(setq org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
-                                               '(("" "titletoc" nil ("pdflatex")))
-                                               (last org-latex-default-packages-alist)))
+(after! org
+  (setq org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
+                                                 '(("" "titletoc" nil ("pdflatex")))
+                                                 (last org-latex-default-packages-alist))))
 #+end_src
 
 Default export sub-directory, see https://stackoverflow.com/questions/9559753/emacs-org-mode-export-to-another-directory.
 #+begin_src elisp
 (define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
   (unless pub-dir
-    (setq pub-dir (concat org-directory "export/"))
+    (setq pub-dir (expand-file-name "export/" org-directory))
     (unless (file-directory-p pub-dir)
       (make-directory pub-dir)))
   (apply orig-fun extension subtreep pub-dir nil))
@@ -144,30 +145,32 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
 ** Progress Logging
 TODO keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.
 #+begin_src elisp
-(setq org-todo-keywords '((sequence
-                           "TODO(t/!)"
-                           "PROJ(p/!)"
-                           "LOOP(r/!)"
-                           "STRT(s!/!)"
-                           "WAIT(w@/@)"
-                           "HOLD(h@/@)"
-                           "IDEA(i/@)"
-                           "LOOK(l/@)"
-                           "|"
-                           "DONE(d)"
-                           "KILL(k@/@)")
-                          (sequence
-                           "[ ](T/!)"
-                           "[-](S!)"
-                           "[?](W@/@)"
-                           "|"
-                           "[X](D)")
-                          (sequence
-                           "|"
-                           "OKAY(o@)"
-                           "YES(y@)"
-                           "NO(n@)"))
-      org-todo-keyword-faces (append org-todo-keyword-faces '(("LOOK" . +org-todo-active))))
+(after! org
+  (setq org-todo-keywords '((sequence
+                             "TODO(t/!)"
+                             "PROJ(p/!)"
+                             "LOOP(r/!)"
+                             "STRT(s!/!)"
+                             "WAIT(w@/@)"
+                             "HOLD(h@/@)"
+                             "IDEA(i/@)"
+                             "LOOK(l/@)"
+                             "|"
+                             "DONE(d)"
+                             "KILL(k@/@)")
+                            (sequence
+                             "[ ](T/!)"
+                             "[-](S!)"
+                             "[?](W@/@)"
+                             "|"
+                             "[X](D)")
+                            (sequence
+                             "|"
+                             "OKAY(o@)"
+                             "YES(y@)"
+                             "NO(n@)"))
+        org-todo-keyword-faces (append org-todo-keyword-faces
+                                       '(("LOOK" . +org-todo-active)))))
 #+end_src
 
 Log notes and timestamps into drawers.
@@ -185,7 +188,8 @@ Prompt to clock into a task when it's marked as 'STRT'.
 #+end_src
 ** Capture Templates
 #+begin_src elisp
-(setq org-capture-templates
+(setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
+      org-capture-templates
       '(("u" "unsorted" entry
          (file "inbox.org")
          "* %?\n"

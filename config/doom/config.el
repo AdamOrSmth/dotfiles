@@ -81,41 +81,44 @@
       org-export-with-toc nil
       org-export-with-tags nil)
 
-(setq org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
-                                               '(("" "titletoc" nil ("pdflatex")))
-                                               (last org-latex-default-packages-alist)))
+(after! org
+  (setq org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
+                                                 '(("" "titletoc" nil ("pdflatex")))
+                                                 (last org-latex-default-packages-alist))))
 
 (define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
   (unless pub-dir
-    (setq pub-dir (concat org-directory "export/"))
+    (setq pub-dir (expand-file-name "export/" org-directory))
     (unless (file-directory-p pub-dir)
       (make-directory pub-dir)))
   (apply orig-fun extension subtreep pub-dir nil))
 
-(setq org-todo-keywords '((sequence
-                           "TODO(t/!)"
-                           "PROJ(p/!)"
-                           "LOOP(r/!)"
-                           "STRT(s!/!)"
-                           "WAIT(w@/@)"
-                           "HOLD(h@/@)"
-                           "IDEA(i/@)"
-                           "LOOK(l/@)"
-                           "|"
-                           "DONE(d)"
-                           "KILL(k@/@)")
-                          (sequence
-                           "[ ](T/!)"
-                           "[-](S!)"
-                           "[?](W@/@)"
-                           "|"
-                           "[X](D)")
-                          (sequence
-                           "|"
-                           "OKAY(o@)"
-                           "YES(y@)"
-                           "NO(n@)"))
-      org-todo-keyword-faces (append org-todo-keyword-faces '(("LOOK" . +org-todo-active))))
+(after! org
+  (setq org-todo-keywords '((sequence
+                             "TODO(t/!)"
+                             "PROJ(p/!)"
+                             "LOOP(r/!)"
+                             "STRT(s!/!)"
+                             "WAIT(w@/@)"
+                             "HOLD(h@/@)"
+                             "IDEA(i/@)"
+                             "LOOK(l/@)"
+                             "|"
+                             "DONE(d)"
+                             "KILL(k@/@)")
+                            (sequence
+                             "[ ](T/!)"
+                             "[-](S!)"
+                             "[?](W@/@)"
+                             "|"
+                             "[X](D)")
+                            (sequence
+                             "|"
+                             "OKAY(o@)"
+                             "YES(y@)"
+                             "NO(n@)"))
+        org-todo-keyword-faces (append org-todo-keyword-faces
+                                       '(("LOOK" . +org-todo-active)))))
 
 (setq org-log-into-drawer t
       org-log-done 'time)
@@ -125,7 +128,8 @@
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
 
-(setq org-capture-templates
+(setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
+      org-capture-templates
       '(("u" "unsorted" entry
          (file "inbox.org")
          "* %?\n"
