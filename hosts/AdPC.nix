@@ -64,9 +64,11 @@
   # (copy from /etc/nixos/hardware-configuration.nix)
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules =
+    [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "rd.driver.blacklist=nouveau" "nvidia-drm.modeset=1" ];
 
   fileSystems."/home/ad/BigBoiStorage" = {
     device = "/dev/disk/by-label/bigboistorage";
