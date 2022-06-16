@@ -36,6 +36,7 @@
       emacs.enable = false;
       gaming.enable = false;
       gimp.enable = false;
+      hyprland.enable = false;
       multimedia.enable = false;
     };
     hardware = {

@@ -27,6 +27,7 @@
       emacs.enable = true;
       gaming.enable = true;
       gimp.enable = true;
+      hyprland.enable = true;
       multimedia.enable = true;
     };
     hardware = {
