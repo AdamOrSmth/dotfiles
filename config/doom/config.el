@@ -1,1 +1,1 @@
-(org-babel-load-file "config.org")
+(org-babel-load-file (concat default-directory "config.org"))
