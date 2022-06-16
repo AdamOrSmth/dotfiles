@@ -51,6 +51,7 @@ let
       modules = flatten [
         { networking.hostName = host; }
         inputs.home-manager.nixosModules.home-manager
+        inputs.hyprland.nixosModules.default
         inputs.self.nixosModules.common
         (collect isFunction inputs.self.nixosModules)
         (import ./hosts/${host}.nix)

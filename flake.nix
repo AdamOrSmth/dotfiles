@@ -22,6 +22,10 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:vaxerski/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
