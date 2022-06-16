@@ -1,4 +1,6 @@
 #+title: Doom Emacs Configuration
+#+property: header-args :tangle yes
+
 
 * Native Compilation
 Enable native compilation of Emacs-Lisp.
@@ -14,9 +16,9 @@ Enable native compilation of Emacs-Lisp.
 (setq auto-save-default t
       user-full-name "Ad"
       user-mail-address "me@adamorsomething.xyz"
-      langtool-bin "/run/current-system/sw/bin/languagetool-commandline" (ref:langtool-fix)
-      evil-want-fine-undo t)                                             (ref:fine-undo)
-(global-subword-mode t)                                                  (ref:subword-mode)
+      langtool-bin "/run/current-system/sw/bin/languagetool-commandline" ; (ref:langtool-fix)
+      evil-want-fine-undo t)                                             ; (ref:fine-undo)
+(global-subword-mode t)                                                  ; (ref:subword-mode)
 #+end_src
 * Functions
 Given an ~org-mode~ buffer =BUFFER= (default current buffer), return its =TITLE= property.
