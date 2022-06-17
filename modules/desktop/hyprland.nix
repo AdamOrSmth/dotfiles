@@ -21,7 +21,9 @@ in {
     xdg.portal = {
       enable = true;
       wlr.enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+      extraPortals = builtins.attrValues {
+        inherit (pkgs) xdg-desktop-portal-wlr xdg-desktop-portal-gtk;
+      };
       gtkUsePortal = true;
     };
 
