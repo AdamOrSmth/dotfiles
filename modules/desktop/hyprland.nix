@@ -12,5 +12,20 @@ in {
     enable = mkEnableOption "Hyprland Wayland compositor";
   };
 
-  config = mkIf cfg.enable (mkMerge [{ programs.hyprland.enable = true; }]);
+  config = mkIf cfg.enable (mkMerge [{
+    programs.hyprland = {
+      enable = true;
+      # Prefer to manage packages myself
+      extraPackages = [ ];
+    };
+    xdg.portal = {
+      enable = true;
+      wlr.enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+      gtkUsePortal = true;
+    };
+
+    environment.systemPackages =
+      builtins.attrValues { inherit (pkgs) alacritty wl-clipboard; };
+  }]);
 }

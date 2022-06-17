@@ -59,6 +59,7 @@
   # Custom per-host configuration options
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
+  hardware.nvidia.modesetting.enable = true;
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
@@ -68,7 +69,6 @@
     [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "rd.driver.blacklist=nouveau" "nvidia-drm.modeset=1" ];
 
   fileSystems."/home/ad/BigBoiStorage" = {
     device = "/dev/disk/by-label/bigboistorage";
