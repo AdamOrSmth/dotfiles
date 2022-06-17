@@ -27,7 +27,9 @@ in {
       gtkUsePortal = true;
     };
 
-    environment.systemPackages =
-      builtins.attrValues { inherit (pkgs) alacritty wl-clipboard; };
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs) alacritty rofi-wayland wl-clipboard;
+      inherit (pkgs.qt6) qtwayland;
+    };
   }]);
 }
