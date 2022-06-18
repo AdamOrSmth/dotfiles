@@ -18,17 +18,13 @@ in {
       # Prefer to manage packages myself
       extraPackages = [ ];
     };
-    xdg.portal = {
-      enable = true;
-      wlr.enable = true;
-      extraPortals = builtins.attrValues {
-        inherit (pkgs) xdg-desktop-portal-wlr xdg-desktop-portal-gtk;
-      };
-      gtkUsePortal = true;
-    };
+
+    # Rest of settings set by Hyprland module
+    # https://github.com/vaxerski/Hyprland/blob/main/nix/module.nix#L59
+    xdg.portal.gtkUsePortal = true;
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) alacritty rofi-wayland wl-clipboard;
+      inherit (pkgs) alacritty rofi-wayland swaybg swaylock wl-clipboard;
       inherit (pkgs.qt6) qtwayland;
     };
   }]);
