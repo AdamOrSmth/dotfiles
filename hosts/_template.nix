@@ -38,7 +38,10 @@
       multimedia.enable = false;
       wm = {
         bspwm.enable = false;
-        hyprland.enable = false;
+        hyprland = {
+          enable = false;
+          nvidia = false;
+        };
       };
     };
     hardware = {

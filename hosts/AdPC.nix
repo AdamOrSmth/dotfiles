@@ -29,7 +29,10 @@
       multimedia.enable = true;
       wm = {
         bspwm.enable = true;
-        hyprland.enable = true;
+        hyprland = {
+          enable = true;
+          nvidia = true;
+        };
       };
     };
     hardware = {

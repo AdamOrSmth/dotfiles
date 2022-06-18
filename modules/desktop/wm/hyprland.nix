@@ -10,23 +10,29 @@ let
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Hyprland Wayland compositor";
+    nvidia = mkEnableOption "NVIDIA-specific configurations";
   };
 
   config = mkIf cfg.enable (mkMerge [{
     programs.hyprland = {
       enable = true;
-      # Prefer to manage packages myself
-      extraPackages = [ ];
+      extraPackages = builtins.attrValues {
+        inherit (pkgs)
+          alacritty rofi-wayland swaybg swaylock-effects wl-clipboard;
+        inherit (pkgs.qt6) qtwayland;
+      };
     };
 
     # Rest of settings set by Hyprland module
     # https://github.com/vaxerski/Hyprland/blob/main/nix/module.nix#L59
     xdg.portal.gtkUsePortal = true;
 
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs)
-        alacritty rofi-wayland swaybg swaylock-effects wl-clipboard;
-      inherit (pkgs.qt6) qtwayland;
+    environment.variables = {
+      MOZ_ENABLE_WAYLAND = "1";
+    } // lib.mkIf cfg.nvidia {
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      WLR_NO_HARDWARE_CURSORS = "1";
     };
   }]);
 }
