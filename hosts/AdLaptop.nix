@@ -21,10 +21,10 @@
     };
     desktop = {
       browsers.enable = true;
-      bspwm.enable = true;
       communication.enable = true;
       emacs.enable = true;
       multimedia.enable = true;
+      wm.bspwm.enable = true;
     };
     hardware = {
       filesystem.enable = true;

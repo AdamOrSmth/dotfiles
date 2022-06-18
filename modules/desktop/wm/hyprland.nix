@@ -24,7 +24,8 @@ in {
     xdg.portal.gtkUsePortal = true;
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) alacritty rofi-wayland swaybg swaylock wl-clipboard;
+      inherit (pkgs)
+        alacritty rofi-wayland swaybg swaylock-effects wl-clipboard;
       inherit (pkgs.qt6) qtwayland;
     };
   }]);

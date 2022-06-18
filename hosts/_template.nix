@@ -31,13 +31,15 @@
     };
     desktop = {
       browsers.enable = false;
-      bspwm.enable = false;
       communication.enable = false;
       emacs.enable = false;
       gaming.enable = false;
       gimp.enable = false;
-      hyprland.enable = false;
       multimedia.enable = false;
+      wm = {
+        bspwm.enable = false;
+        hyprland.enable = false;
+      };
     };
     hardware = {
       filesystem.enable = false;
