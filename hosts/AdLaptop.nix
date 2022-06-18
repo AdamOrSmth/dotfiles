@@ -35,10 +35,7 @@
         mullvad = true;
       };
       pam-u2f.enable = true;
-      sound = {
-        enable = true;
-        bluetooth = true;
-      };
+      sound.enable = true;
     };
     services = {
       onlykey.enable = true;
