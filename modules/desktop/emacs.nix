@@ -23,20 +23,12 @@ in {
       enable = true;
       defaultEditor = true;
       package =
-        # Install Emacs 28 from the bleeding-edge overlay with native
+        # Install Emacs PGTK from the bleeding-edge overlay with native
         # compilation support and the `alpha-background` patch, and include
         # the `Vterm` package as it doesn't compile on NixOS
         ((pkgs.emacsPackagesFor
-          (inputs.emacs-overlay.packages.${system}.emacsNativeComp.overrideAttrs
-            (oldAttrs: {
-              patches = [
-                (pkgs.fetchurl {
-                  url =
-                    "https://raw.githubusercontent.com/TheVaffel/emacs/master/emacs_background_transparency.patch";
-                  sha256 = "yt4NC1CYbq3FhIRnoUZ/YHmEu5KoHVAdLssB/nStVfk=";
-                })
-              ];
-            }))).emacsWithPackages (epkgs: [ epkgs.vterm ])); # :term vterm
+          (inputs.emacs-overlay.packages.${system}.emacsPgtkNativeComp)).emacsWithPackages
+          (epkgs: [ epkgs.vterm ])); # :term vterm
     };
 
     environment.systemPackages = with pkgs; [
