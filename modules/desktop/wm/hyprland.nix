@@ -23,9 +23,12 @@ in {
       };
     };
 
-    # Rest of settings set by Hyprland module
-    # https://github.com/vaxerski/Hyprland/blob/main/nix/module.nix#L59
-    xdg.portal.gtkUsePortal = true;
+    xdg.portal = {
+      enable = true;
+      gtkUsePortal = true;
+      # Includes fix for Hyprland, need to override the default package set by the module
+      extraPortals = lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
+    };
 
     environment.variables = {
       MOZ_ENABLE_WAYLAND = "1";
