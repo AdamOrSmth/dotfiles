@@ -24,8 +24,8 @@
 
 (setq display-line-numbers-type t
       doom-theme 'doom-nord-plus
-      doom-font (font-spec :family "Comic Code Ligatures" :size 18)
-      doom-variable-pitch-font (font-spec :family "Comic Neue" :size 18)
+      doom-font (font-spec :family "Comic Code Ligatures" :size 16)
+      doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
       doom-big-font-increment 6)
 
 (custom-set-faces!
@@ -265,7 +265,7 @@
            :desc "retry failed" "r" #'anki-editor-retry-failure-notes
            :desc "insert note" "i" #'anki-editor-insert-note)))))
 
-(setq default-frame-alist (append default-frame-alist '((alpha-background . 0.85))))
+(setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
 (map! :leader
       (:prefix "t"
        :desc "Transparency" "t"
@@ -275,7 +275,7 @@
          (let* ((parameter (frame-parameter nil 'alpha-background))
                 (alpha (or (car-safe parameter) parameter)))
            (if (or (= alpha 1.0) (= alpha 100))
-               0.85
+               0.75
              1.0))))))
 
 (map! (:leader

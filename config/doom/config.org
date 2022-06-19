@@ -45,8 +45,8 @@ Create a custom ~org-agenda~ prefix of =LEN=.
 #+begin_src elisp
 (setq display-line-numbers-type t
       doom-theme 'doom-nord-plus
-      doom-font (font-spec :family "Comic Code Ligatures" :size 18)
-      doom-variable-pitch-font (font-spec :family "Comic Neue" :size 18)
+      doom-font (font-spec :family "Comic Code Ligatures" :size 16)
+      doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
       doom-big-font-increment 6)
 #+end_src
 
