@@ -12,11 +12,9 @@ in {
     setAttrByPath path { enable = mkEnableOption "Doom Emacs as editor"; };
 
   config = mkIf cfg.enable (mkMerge [{
-    # Fonts used in my config
-    fonts.fonts = builtins.attrValues {
-      inherit (pkgs) comic-neue;
-      inherit (pkgs.my) nerd-fonts-symbols-only;
-    };
+
+    # Add binary cache for emacs-overlay
+    nix.settings.substituters = [ "https://nix-community.cachix.org" ];
 
     # Enable Emacs daemon
     services.emacs = {
@@ -59,6 +57,12 @@ in {
       shellcheck
       nodePackages.bash-language-server
     ];
+
+    # Fonts used in my config
+    fonts.fonts = builtins.attrValues {
+      inherit (pkgs) comic-neue emacs-all-the-icons-fonts;
+      inherit (pkgs.my) nerd-fonts-symbols-only;
+    };
 
     my = {
       home.configFiles."doom".source = "${configDir}/doom";
