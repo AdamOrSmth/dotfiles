@@ -19,7 +19,7 @@ in {
       extraPackages = builtins.attrValues {
         inherit (pkgs)
           alacritty rofi-wayland swaybg swaylock-effects wl-clipboard;
-        inherit (pkgs.qt6) qtwayland;
+        inherit (pkgs.libsForQt5.qt5) qtwayland;
       };
     };
 
@@ -29,6 +29,7 @@ in {
 
     environment.variables = {
       MOZ_ENABLE_WAYLAND = "1";
+      SDL_VIDEODRIVER = "wayland";
     } // lib.mkIf cfg.nvidia {
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
