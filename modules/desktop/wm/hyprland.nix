@@ -41,5 +41,8 @@ in {
 
     # Required by swaylock
     security.pam.services.swaylock = { };
+
+    my.home.configFiles."hypr/hyprland.conf".source =
+      "${configDir}/hyprland/hyprland.conf";
   }]);
 }
