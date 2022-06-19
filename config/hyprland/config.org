@@ -1,8 +1,15 @@
+#+title: Hyprland Configuration
+#+property: header-args :tangle hyprland.conf
+
+* Monitors
+#+begin_src conf
 monitor = DP-2,2560x1440@144,0x0,1
 monitor = HDMI-A-1,1920x1080@60,2560x0,1
 workspace = DP-2,1
 workspace = HDMI-A-1,10
-
+#+end_src
+* General
+#+begin_src conf
 general {
     max_fps = 144
     sensitivity = 1.0
@@ -18,7 +25,9 @@ general {
 
     damage_tracking = full # leave it on full unless you hate your GPU and want to make it suffer
 }
-
+#+end_src
+* Input
+#+begin_src conf
 input {
     kb_layout =
     kb_variant =
@@ -30,14 +39,20 @@ input {
 
     force_no_accel = 1
 }
-
+#+end_src
+* Layout
+#+begin_src conf
 dwindle {
     pseudotile = 0
     col.group_border = 0xCCB48EAD
     col.group_border_active = 0xFFD08870
     special_scale_factor = 0.9
 }
+#+end_src
+* Decoration
+Your blur "amount" is ~blur_size~ * ~blur_passes~, but high ~blur_size~ (over around 5-ish) will produce artifacts. If you want heavy blur, you need to up the ~blur_passes~. The more passes, the more you can up the ~blur_size~ without noticing artifacts. More passes = more resources.
 
+#+begin_src conf
 decoration {
     rounding = 12
     multisample_edges = 1
@@ -45,7 +60,9 @@ decoration {
     blur_size = 3
     blur_passes = 2
 }
-
+#+end_src
+* Animations
+#+begin_src conf
 animations {
     enabled = 1
     animation = windows,1,10,default,slide
@@ -53,7 +70,9 @@ animations {
     animation = fadein,1,10,default
     animation = workspaces,1,10,default
 }
-
+#+end_src
+* Keybindings
+#+begin_src conf
 # Run launcher & terminal
 bind = SUPER,return,exec,rofi -show drun
 bind = SUPERSHIFT,return,exec,alacritty
@@ -132,12 +151,18 @@ bind = SUPERCTRL,Q,exec,swaylock -F
 
 # Screenshot
 bind = ,print,exec,flameshot gui
-
+#+end_src
+* Window Rules
+#+begin_src conf
 windowrule = tile,OnlyKey
 windowrule = monitor 1,discord
 windowrule = monitor 1,Signal
 windowrule = monitor 1,Sonixd
+#+end_src
+* Startup Applications
+*TODO* Fix Electron and remove ~--no-sandbox~
 
+#+begin_src conf
 exec-once=flameshot
 exec-once=dunst
 exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -146,3 +171,4 @@ exec-once=swaybg -i ~/BigBoiStorage/MEGA/Pictures/Wallpapers/0008.png
 exec-once=discord --no-sandbox
 exec-once=signal-desktop
 exec-once=sonixd --no-sandbox
+#+end_src
