@@ -66,15 +66,16 @@
   boot.kernelPackages = pkgs.linuxPackages_zen;
   hardware.nvidia = {
     modesetting.enable = true;
-    # Fix graphical bugs when resuming from suspend
+    # Fixes graphical glitches on suspend
     powerManagement.enable = true;
   };
+  boot.initrd.kernelModules =
+    [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
