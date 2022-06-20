@@ -24,6 +24,14 @@ in {
       };
     };
 
+    # Actually start the darn thing
+    services.xserver.displayManager.lightdm.enable = false;
+    my.cli.fish.extraInit = ''
+      if test (tty) = /dev/tty1
+         exec Hyprland
+      end
+    '';
+
     # Includes fix for Hyprland, need to override the default package set by the module
     xdg.portal.extraPortals =
       lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
