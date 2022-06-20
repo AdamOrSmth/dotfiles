@@ -18,19 +18,14 @@ in {
       enable = true;
       extraPackages = builtins.attrValues {
         inherit (pkgs)
-          alacritty rofi-wayland swaybg swaylock-effects wl-clipboard;
-        inherit (pkgs.libsForQt5.qt5) qtwayland;
+          alacritty pcmanfm rofi-wayland swaybg swaylock-effects wl-clipboard;
       };
     };
 
     xdg.portal = {
       enable = true;
-      gtkUsePortal = true;
       # Includes fix for Hyprland, need to override the default package set by the module
-      extraPortals = lib.mkForce [
-        pkgs.my.xdg-desktop-portal-wlr-hyprland
-        pkgs.xdg-desktop-portal-gtk
-      ];
+      extraPortals = lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
     };
 
     environment.variables = {
