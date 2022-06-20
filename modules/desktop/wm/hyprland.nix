@@ -27,7 +27,10 @@ in {
       enable = true;
       gtkUsePortal = true;
       # Includes fix for Hyprland, need to override the default package set by the module
-      extraPortals = lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
+      extraPortals = lib.mkForce [
+        pkgs.my.xdg-desktop-portal-wlr-hyprland
+        pkgs.xdg-desktop-portal-gtk
+      ];
     };
 
     environment.variables = {
