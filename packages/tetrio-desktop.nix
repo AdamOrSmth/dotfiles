@@ -1,8 +1,5 @@
 # Woo, proprietary Electron garbage!
-{ lib, stdenv, fetchurl, dpkg, autoPatchelfHook, glib, libX11, libxcb
-, libXcomposite, libXcursor, libXdamage, libXext, libXfixes, libXi, libXrender
-, libXtst, dbus, gtk3, pango, libXrandr, libdrm, cups, nss, nspr, mesa
-, libXScrnSaver, alsa-lib, cairo, atk, gdk-pixbuf, expat }:
+{ lib, stdenv, fetchurl, dpkg, makeWrapper, steam-run }:
 
 stdenv.mkDerivation {
   pname = "tetrio-desktop";
@@ -13,45 +10,19 @@ stdenv.mkDerivation {
     sha256 = "rgcRD4hpLhSF9+8dOrXv+Vd0dGYxsXgz4ozAm6Gji9o=";
   };
 
-  nativeBuildInputs = [ dpkg autoPatchelfHook ];
+  nativeBuildInputs = [ dpkg makeWrapper ];
 
-  buildInputs = [
-    glib
-    libX11
-    libxcb
-    libXcomposite
-    libXcursor
-    libXdamage
-    libXext
-    libXfixes
-    libXi
-    libXrender
-    libXtst
-    dbus
-    gtk3
-    pango
-    libXrandr
-    libdrm
-    cups
-    nss
-    nspr
-    mesa
-    libXScrnSaver
-    alsa-lib
-    cairo
-    atk
-    gdk-pixbuf
-    expat
-  ];
+  buildInputs = [ ];
 
   unpackCmd = "dpkg -x $curSrc unpacked";
 
   installPhase = ''
     mkdir -p $out/bin
     cp -r opt $out
-    ln -s $out/opt/TETR.IO/tetrio-desktop $out/bin/tetrio-desktop
+    echo "${steam-run}/bin/steam-run $out/opt/TETR.IO/tetrio-desktop" > $out/bin/tetrio-desktop
+    chmod +x $out/bin/tetrio-desktop
     cp -r usr/share $out
     substituteInPlace $out/share/applications/tetrio-desktop.desktop \
-      --replace "/opt/TETR.IO/" "$out/opt/TETR.IO/"
+      --replace "/opt/TETR.IO/" "$out/bin/"
   '';
 }
