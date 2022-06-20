@@ -315,10 +315,14 @@ Prompt to clock into a task when it's marked as 'STRT'.
          :desc "Random node (no dailies)" "n r A" #'ad/org-roam-random-excluding-dailies)))
 #+end_src
 ** Org-Auto-Tangle
+~:custom~ doesn't work for some reason.
+
+
 #+begin_src elisp
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode)
-  :custom (org-auto-tangle-default t))
+  :config
+  (setq org-auto-tangle-default t))
 #+end_src
 ** Anki-Editor
 #+begin_src elisp

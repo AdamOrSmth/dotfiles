@@ -252,7 +252,8 @@
 
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode)
-  :custom (org-auto-tangle-default t))
+  :config
+  (setq org-auto-tangle-default t))
 
 (use-package! anki-editor
   :hook (org-mode . anki-editor-mode)
