@@ -18,15 +18,15 @@ in {
       enable = true;
       extraPackages = builtins.attrValues {
         inherit (pkgs)
-          alacritty pcmanfm rofi-wayland swaybg swaylock-effects wl-clipboard;
+          alacritty dunst pcmanfm rofi-wayland swaybg swaylock-effects
+          wl-clipboard;
+        inherit (pkgs.xorg) xeyes;
       };
     };
 
-    xdg.portal = {
-      enable = true;
-      # Includes fix for Hyprland, need to override the default package set by the module
-      extraPortals = lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
-    };
+    # Includes fix for Hyprland, need to override the default package set by the module
+    xdg.portal.extraPortals =
+      lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
 
     environment.variables = {
       MOZ_ENABLE_WAYLAND = "1";
