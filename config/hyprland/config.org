@@ -79,7 +79,7 @@ animations {
 * Keybindings
 #+begin_src conf
 # Run launcher & terminal
-bind = SUPER,return,exec,rofi -show drun
+bind = SUPER,return,exec,wofi --show drun
 bind = SUPERSHIFT,return,exec,alacritty
 
 # Quit

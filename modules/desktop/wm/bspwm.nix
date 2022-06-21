@@ -35,9 +35,7 @@ in {
     };
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs)
-        alacritty dunst eww lightlocker playerctl polybar
-        rofi-wayland; # Doesn't hurt if we're not using Wayland
+      inherit (pkgs) alacritty dunst eww lightlocker playerctl polybar rofi;
     };
 
     my.home.configFiles = {
