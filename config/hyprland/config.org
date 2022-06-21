@@ -2,18 +2,39 @@
 #+property: header-args :tangle hyprland.conf
 
 * Monitors
+Configures available monitors, with their appropriate resolutions, refresh rates, relative locations, and workspaces. I prefer only my primary monitor to have workspaces, and for my secondary monitor to remain for reference only, therefore I give it the workspace 10 (bound to 0 in my keybindings). See the [[https://github.com/vaxerski/=Hyprland=/wiki/Advanced-config#monitors][relevant documentation]] for more details.
+
 #+begin_src conf
 monitor = DP-2,2560x1440@144,0x0,1
-monitor = HDMI-A-1,1920x1080@60,2560x0,1
+monitor = HDMI-A-1,1920x1080@60,2560x360,1
 workspace = DP-2,1
 workspace = HDMI-A-1,10
 #+end_src
 * General
+Settings that don't really belong anywhere else (although some of this arguably belongs in the =input= section, but oh well, it's not my code).
+
++ ~max_fps~ :: Self-explanatory.
+
++ ~sensitivity~ :: Self-explanatory.
++ ~apply_sens_to_raw~ :: Disable applying mouse sensitivity customization to raw input (e.g. for games).
+
++ ~main_mod~ :: Super as the default modifier key (Windows key on most keyboards).
+
++ ~gaps_in~ :: Gap of 3 pixels between windows.
++ ~gaps_out~ :: Gap of 6 pixels between monitor edge and windows.
++ ~border_size~ :: Border width of 3 pixels.
+
+The total distance between windows is equal to ~gaps_in~ + ~border_size~.
+
++ ~col.active_border~, ~col.inactive_border~ :: Self-explanatory.
++ ~damage_tracking~ :: Only update the screen when something changes. Highly recommended to leave on =full=.
+
 #+begin_src conf
 general {
     max_fps = 144
+
     sensitivity = 1.0
-    apply_sens_to_raw=0
+    apply_sens_to_raw = 0
 
     main_mod = SUPER
 
@@ -23,10 +44,16 @@ general {
     col.active_border = 0xFF88C0D0
     col.inactive_border = 0xCC3B4252
 
-    damage_tracking = full # leave it on full unless you hate your GPU and want to make it suffer
+    damage_tracking = full
 }
 #+end_src
 * Input
+Settings related to input.
+
++ Keyboard settings :: I don't know what any of these do, but =Hyprland= refuses to work without them, so I've kept them present but blank.
++ ~follow_mouse~ :: Focus follows the mouse cursor, and the mouse cursor follows focus.
++ ~force_no_accel~ :: Mouse acceleration (usually) sucks.
+
 #+begin_src conf
 input {
     kb_layout =
@@ -41,9 +68,12 @@ input {
 }
 #+end_src
 * Layout
-+ Disable pseudo-tiling.
-+ Set scale factor of special workspace to 90%.
-+ Always split to the right and bottom.
+Settings related to the =dwindle= layout of =Hyprland=, based off =bspwm=. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
+
++ ~pseudotile~ :: Disable pseudo-tiling.
++ ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
++ ~special_scale_factor~ :: Special workspace is 90% of full monitor.
++ ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
 
 #+begin_src conf
 dwindle {
@@ -55,7 +85,12 @@ dwindle {
 }
 #+end_src
 * Decoration
-Your blur "amount" is ~blur_size~ * ~blur_passes~, but high ~blur_size~ (over around 5-ish) will produce artifacts. If you want heavy blur, you need to up the ~blur_passes~. The more passes, the more you can up the ~blur_size~ without noticing artifacts. More passes = more resources.
+Appearance-related settings.
+
++ ~rounding~ :: Round corners of windows by 12 pixels. Lower is practically unnoticeable, higher looks bad on most applications.
++ ~multisample_edges~ :: Make rounding look better.
++ ~blur~ :: Enable background blur of transparent windows.
++ ~blur_size~, ~blur_passes~ :: Blur amount depends on both ~blur_size~ and ~blur_passes~. Increasing ~blur_passes~ increases blur more, but comes at a performance cost, while increasing ~blur_size~ is more performant but begins to produce artifacts at higher values. I've found 3 and 3 work well for me.
 
 #+begin_src conf
 decoration {
@@ -67,34 +102,59 @@ decoration {
 }
 #+end_src
 * Animations
+Settings related to animations present within =Hyprland=.
+
++ ~windows~ :: Animations for the opening, closing, and movement of windows.
++ ~fadein~ :: Animation of windows fading in + out on open + close, respectively.
++ ~borders~ :: Animation of borders fading in + out on focus switch.
++ ~workspaces~ :: Animation of switching workspaces.
+
+Each animation takes parameters =enabled=, =duration=, and =curve=. ~windows~ and ~workspace~ additionally take a =style= parameter, which can be =slide= or =popin= for ~window~ and =slide=, =slidevert=, and =fadein= for ~workspace~. I only use the default bezier curves (for now). See more information at the [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#animations][documentation]].
+
 #+begin_src conf
 animations {
     enabled = 1
     animation = windows,1,7,default,slide
-    animation = borders,1,10,default
     animation = fadein,1,7,default
-    animation = workspaces,1,6,default
+    animation = borders,1,10,default
+    animation = workspaces,1,6,default,fadein
 }
 #+end_src
 * Keybindings
+Define a keybinding with the ~bind~ keyword. It takes a modifier, key, dispatcher, and then arguments for the dispatcher (if it has any). For a general list of dispatchers, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#general-dispatcher-list][here]]. Modifiers key are just the key names in all caps smashed together, e.g. =SUPER= or =SUPERSHIFT=. Omitting a modifier is fine as well. Use ~wev~ to get key names if unsure. Single keys are generally uppercase, otherwise all lowercase.
+
+Run launcher + terminal.
 #+begin_src conf
-# Run launcher & terminal
 bind = SUPER,return,exec,wofi --show drun
 bind = SUPERSHIFT,return,exec,alacritty
+#+end_src
 
-# Quit
+Quit =Hyprland=.
+#+begin_src conf
 bind = SUPERSHIFT,Q,exit
+#+end_src
 
+Toggle floating + fullscreen.
+#+begin_src conf
 # Toggle floating/fullscreen
 bind = SUPER,F,fullscreen,0
 bind = SUPERSHIFT,F,togglefloating
+#+end_src
 
-# Open applications
+Open applications:
++ s-e :: Emacs
++ s-b :: Qutebrowser
++ s-S-b :: Brave
+#+begin_src conf
 bind = SUPER,E,exec,emacsclient -c
 bind = SUPER,B,exec,qutebrowser
 bind = SUPERSHIFT,B,exec,brave
+#+end_src
 
-# Focus & move windows
+Focus + move windows directionally, vi-like.
++ s-{h/j/k/l} :: Switch focus directionally.
++ s-S-{h/j/k/l} :: Swap windows directionally. Swapping windows is also possible with s-M1, and is usually more flexible this way.
+#+begin_src conf
 bind = SUPER,H,movefocus,l
 bind = SUPER,J,movefocus,d
 bind = SUPER,K,movefocus,u
@@ -103,16 +163,24 @@ bind = SUPERSHIFT,H,movewindow,l
 bind = SUPERSHIFT,J,movewindow,d
 bind = SUPERSHIFT,K,movewindow,u
 bind = SUPERSHIFT,L,movewindow,r
+#+end_src
 
-# Music control
+Music control with the media keys via ~playerctl~.
+#+begin_src conf
 bind = ,xf86audioplay,exec,playerctl play-pause
 bind = ,xf86audioprev,exec,playerctl previous
 bind = ,xf86audionext,exec,playerctl next
+#+end_src
 
-# Close/kill window
++ s-c :: Close/kill window.
+#+begin_src conf
 bind = SUPER,C,killactive,
+#+end_src
 
-# Switch & move windows between workspaces
+Switch + move windows between workspaces.
++ s-{0-9} :: Switch between workspaces.
++ s-S-{0-9} :: Move a window to a workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~. *Remember that =SHIFT= changes the typed character.*
+#+begin_src conf
 bind = SUPER,1,workspace,1
 bind = SUPER,2,workspace,2
 bind = SUPER,3,workspace,3
@@ -133,31 +201,58 @@ bind = SUPERSHIFT,ampersand,movetoworkspacesilent,7
 bind = SUPERSHIFT,asterisk,movetoworkspacesilent,8
 bind = SUPERSHIFT,parenleft,movetoworkspacesilent,9
 bind = SUPERSHIFT,parenright,movetoworkspacesilent,10
-# Special workspace (let's just use '/', seems appropriate for a scratchpad-esque workspace)
+#+end_src
+
+The special workspace can toggle above any other workspace like a "scratchpad" workspace in other window managers. I'm using the slash key for related keybindings.
++ s-/ :: Toggle special workspace.
++ s-S-/ :: Move a window to the special workspace.
+#+begin_src conf
 bind = SUPER,slash,togglespecialworkspace
 bind = SUPERSHIFT,question,movetoworkspace,special
+#+end_src
 
-# Switch & move windows between monitors
+Switch & move windows between monitors.
++ s-{s/d} :: Switch focus to the leftward/rightward monitor.
++ s-S-{s/d} :: Move the focused window to the leftward/rightward monitor.
+#+begin_src conf
 bind = SUPER,S,focusmonitor,l
 bind = SUPER,D,focusmonitor,r
 bind = SUPERSHIFT,S,movewindow,mon:l
 bind = SUPERSHIFT,D,movewindow,mon:r
+#+end_src
 
+Groups are collections of windows/nodes that only take up one window's worth of space, like tabs in a browser. A keybinding switches between windows within a group. Opening new windows onto the group nodes adds them to the group.
++ s-g :: Make the current node and all its siblings a group.
++ s-{m/n} :: Switch between the windows in the focused group. Switching windows also forces a reload from the renderer, otherwise weird artifacts occur for me (probably a NVIDIA-specific issue).
+#+begin_src conf
 # Groups
 bind = SUPER,G,togglegroup
 bind = SUPER,M,changegroupactive,f
 bind = SUPER,N,changegroupactive,b
+bind = SUPER,M,forcerendererreload
+bind = SUPER,N,forcerendererreload
+#+end_src
 
+Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture.
++ s-`, C-s-q :: Lock the current session.
++ s-~ :: Lock and suspend the current session.
+#+begin_src conf
 # Lock
 bind = SUPER,grave,exec,swaylock -F
-bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
-# Also lock, OnlyKey's lock button sends this for Mac, but we can also use it
 bind = SUPERCTRL,Q,exec,swaylock -F
+bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
+#+end_src
 
+Take a screenshot via ~grim~ and ~slurp~. Currently in a separate script since inlining it doesn't work, but I might try calling Bash sometime. *TODO*
+#+begin_src conf
 # Screenshot
 bind = ,print,exec,shootscreen
 #+end_src
 * Window Rules
+Window rules define actions that are automatically performed when a window with a matching class is *opened*.
+
+Create a window rule with the ~windowrule~ keyword, which takes a rule to apply and a window class to match against. To find a window class, use the command ~hyprctl activewindow~ or ~hyprctl clients~. For a list of the possible rules, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#rules][here]].
+
 #+begin_src conf
 windowrule = tile,OnlyKey
 windowrule = monitor 1,discord
@@ -165,15 +260,16 @@ windowrule = monitor 1,Signal
 windowrule = monitor 1,Sonixd
 #+end_src
 * Startup Applications
+Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup.
+
 *TODO* Fix Electron and remove ~--no-sandbox~
 
 #+begin_src conf
-exec-once=flameshot
-exec-once=dunst
-exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec-once=swaybg -i ~/BigBoiStorage/MEGA/Pictures/Wallpapers/0008.png
+exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = dunst
+exec-once = swaybg -i ~/BigBoiStorage/MEGA/Pictures/Wallpapers/0008.png
 
-exec-once=discord --no-sandbox
-exec-once=signal-desktop --ozone-platform=wayland
-exec-once=sonixd --no-sandbox
+exec-once = discord --no-sandbox
+exec-once = signal-desktop --ozone-platform=wayland
+exec-once = sonixd --no-sandbox
 #+end_src
