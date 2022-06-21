@@ -155,7 +155,7 @@ bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
 bind = SUPERCTRL,Q,exec,swaylock -F
 
 # Screenshot
-bind = ,print,exec,flameshot gui
+bind = ,print,exec,shootscreen
 #+end_src
 * Window Rules
 #+begin_src conf

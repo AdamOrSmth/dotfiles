@@ -18,7 +18,8 @@ in {
       enable = true;
       extraPackages = builtins.attrValues {
         inherit (pkgs)
-          alacritty dunst pcmanfm wofi swaybg swaylock-effects wl-clipboard;
+          alacritty dunst grim pcmanfm slurp swaybg swaylock-effects
+          wl-clipboard wofi;
         inherit (pkgs.xorg) xeyes;
       };
     };
