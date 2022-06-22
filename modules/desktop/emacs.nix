@@ -62,9 +62,8 @@ in {
       nodePackages.bash-language-server
     ];
 
-    # Fonts used in my config
     fonts.fonts = builtins.attrValues {
-      inherit (pkgs) comic-neue emacs-all-the-icons-fonts;
+      inherit (pkgs) comic-neue emacs-all-the-icons-fonts liberation_ttf;
       inherit (pkgs.my) nerd-fonts-symbols-only;
     };
 
