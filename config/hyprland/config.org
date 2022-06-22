@@ -105,9 +105,9 @@ decoration {
 Settings related to animations present within =Hyprland=.
 
 I first define some custom bezier curves using the ~bezier~ keyword, which takes a name and then the coordinates for the two points of a cubic bezier. A good place to mess around with curves is [[https://www.cssportal.com/css-cubic-bezier-generator/][here]].
-+ =linear= :: Self-explanatory.
 + =overshot= :: A curve that starts steep and levels out with a bump going slightly over 1. Used with ~windows~.
 + =easein= :: An almost-linear ease-in used with ~fadein~ in conjunction with =overshot= on ~windows~.
++ =easeout= :: A steep, extreme ease-out curve for switching workspaces.
 
 There are four animations in =Hyprland=:
 + ~windows~ :: Animations for the opening, closing, and movement of windows.
@@ -118,16 +118,16 @@ There are four animations in =Hyprland=:
 Each animation takes parameters =enabled=, =duration=, and =curve=. ~windows~ and ~workspace~ additionally take a =style= parameter, which can be =slide= or =popin= for ~window~ and =slide=, =slidevert=, and =fadein= for ~workspace~. See more information at the [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#animations][documentation]].
 
 #+begin_src conf
-bezier = linear,0,0,1,1
 bezier = overshot,0.1,0.7,0.1,1.1
 bezier = easein,0.1,0,1,1
+bezier = easeout,0,1,0.5,1
 
 animations {
     enabled = 1
     animation = windows,1,7,overshot,slide
     animation = fadein,1,7,default
     animation = borders,1,10,default
-    animation = workspaces,1,6,linear
+    animation = workspaces,1,5,easeout
 }
 #+end_src
 * Keybindings
