@@ -24,11 +24,6 @@ in {
       type = types.attrs;
       default = { };
     };
-    extraConfig = mkOption {
-      description = "Extra home-manager options";
-      type = types.attrs;
-      default = { };
-    };
   };
 
   config = mkIf cfg.enable (mkMerge [{
@@ -41,7 +36,7 @@ in {
           configFile = cfg.configFiles;
           dataFile = cfg.dataFiles;
         };
-      } // cfg.extraConfig;
+      };
     };
   }]);
 }
