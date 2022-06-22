@@ -29,8 +29,12 @@ in {
   config = mkIf cfg.enable (mkMerge [{
     home-manager = {
       useGlobalPkgs = true;
+      useUserPackages = true;
       users.${config.my.user.username} = {
-        home.file = cfg.files;
+        home = {
+          file = cfg.files;
+          stateVersion = config.system.stateVersion;
+        };
         xdg = {
           enable = true;
           configFile = cfg.configFiles;
