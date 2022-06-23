@@ -23,7 +23,7 @@
     (concat (make-string (- len (length time)) ? ) time)))
 
 (setq display-line-numbers-type t
-      doom-theme 'doom-nord-plus
+      doom-theme 'doom-one
       doom-font (font-spec :family "Comic Code Ligatures" :size 16)
       doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
       doom-big-font-increment 6)
