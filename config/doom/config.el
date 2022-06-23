@@ -220,8 +220,9 @@
   ;; Update zettel file names when title changes to new slug.
   (defun ad/update-roam-filename ()
     (interactive)
-    (when (and (org-roam-file-p) ; Ensure it's a roam file of the 'zettel' type.
-               (string-equal (concat org-directory "zettel/") (file-name-directory buffer-file-name)))
+    (when (and (org-roam-file-p) ; Ensure it's a roam file of the 'zettel' or 'work' type.
+               (or (string-equal (concat org-directory "zettel/") (file-name-directory buffer-file-name))
+                   (string-equal (concat org-directory "work/")   (file-name-directory buffer-file-name))))
       (let
           ((file-location ; Location that file should be at.
             (concat
