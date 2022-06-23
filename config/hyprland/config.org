@@ -137,9 +137,10 @@ bind = SUPER,return,exec,wofi --show drun
 bind = SUPERSHIFT,return,exec,alacritty
 #+end_src
 
-Quit =Hyprland=.
+Quit + reload =Hyprland=. =Hyprland= automatically reloads the configuration file whenever it's edited, but it doesn't work when the file is a symlink and its target location changes, which is what happens during a NixOS rebuild with ~home-manager~. A keybinding is nice to have to quickly force a reload after a rebuild without having to open a terminal.
 #+begin_src conf
 bind = SUPERSHIFT,Q,exit
+bind = SUPERSHIFT,R,exec,hyprctl reload
 #+end_src
 
 Toggle floating + fullscreen + pseudo-tiled. A pseudo-tiled window automatically shrinks with the layout, but will not grow larger than its floating size (useful for e.g. dialog boxes, TOR browser).
