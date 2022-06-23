@@ -76,7 +76,7 @@
         :desc "org-latex-preview" "L" #'org-latex-preview
         :desc "org-babel-demarcate-block" "D" #'org-babel-demarcate-block)))
 
-(setq org-agenda-files `(,(concat org-directory "gtd/"))
+(setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-todo-ignore-scheduled t
@@ -174,26 +174,26 @@
 
 (add-hook 'spell-fu-mode-hook
           (lambda () (spell-fu-dictionary-add
-                      (spell-fu-get-personal-dictionary "personal" (concat org-directory ".aspell.pws")))))
+                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 
 (after! org-roam
   (setq org-roam-directory org-directory
-        org-roam-dailies-directory (concat org-roam-directory "journal/")
-        org-roam-db-location (concat org-roam-directory ".org-roam.db")
+        org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
+        org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
         +org-roam-open-buffer-on-find-file nil
         ;; Capture templates.
         org-roam-capture-templates
         `(("z" "zettel" plain
-           (file ,(concat org-directory "template/note.org"))
+           (file ,(expand-file-name "template/note.org" org-directory))
            :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("w" "work")
           ("ww" "default" plain
-           (file ,(concat org-directory "template/document.org"))
+           (file ,(expand-file-name "template/document.org" org-directory))
            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("wl" "lab report" plain
-           (file ,(concat org-directory "template/aet-lab-report.org"))
+           (file ,(expand-file-name "template/aet-lab-report.org" org-directory))
            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t))
         org-roam-dailies-capture-templates
@@ -221,8 +221,8 @@
   (defun ad/update-roam-filename ()
     (interactive)
     (when (and (org-roam-file-p) ; Ensure it's a roam file of the 'zettel' or 'work' type.
-               (or (string-equal (concat org-directory "zettel/") (file-name-directory buffer-file-name))
-                   (string-equal (concat org-directory "work/")   (file-name-directory buffer-file-name))))
+               (or (string-equal (expand-file-name "zettel/" org-directory) (file-name-directory buffer-file-name))
+                   (string-equal (expand-file-name "work/"   org-directory) (file-name-directory buffer-file-name))))
       (let
           ((file-location ; Location that file should be at.
             (concat
