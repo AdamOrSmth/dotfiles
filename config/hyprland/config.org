@@ -70,14 +70,12 @@ input {
 * Layout
 Settings related to the =dwindle= layout of =Hyprland=, based off =bspwm=. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
 
-+ ~pseudotile~ :: Disable pseudo-tiling.
 + ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
 + ~special_scale_factor~ :: Special workspace is 90% of full monitor.
 + ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
 
 #+begin_src conf
 dwindle {
-    pseudotile = 0
     col.group_border = 0xCCB48EAD
     col.group_border_active = 0xFFD08870
     special_scale_factor = 0.9
@@ -144,11 +142,12 @@ Quit =Hyprland=.
 bind = SUPERSHIFT,Q,exit
 #+end_src
 
-Toggle floating + fullscreen.
+Toggle floating + fullscreen + pseudo-tiled. A pseudo-tiled window automatically shrinks with the layout, but will not grow larger than its floating size (useful for e.g. dialog boxes, TOR browser).
 #+begin_src conf
 # Toggle floating/fullscreen
 bind = SUPER,F,fullscreen,0
 bind = SUPERSHIFT,F,togglefloating
+bind = SUPER,T,pseudo
 #+end_src
 
 Open applications:
@@ -263,11 +262,15 @@ Window rules define actions that are automatically performed when a window with 
 
 Create a window rule with the ~windowrule~ keyword, which takes a rule to apply and a window class to match against. To find a window class, use the command ~hyprctl activewindow~ or ~hyprctl clients~. For a list of the possible rules, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#rules][here]].
 
++ Tile the OnlyKey App automatically.
++ Move startup applications to my second monitor.
++ Automatically pseudo-tile Tor Browser (has the class =firefox=, but I don't use actual Firefox so it's fine).
 #+begin_src conf
 windowrule = tile,OnlyKey
 windowrule = monitor 1,discord
 windowrule = monitor 1,Signal
 windowrule = monitor 1,Sonixd
+windowrule = pseudo,firefox
 #+end_src
 * Startup Applications
 Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup.
