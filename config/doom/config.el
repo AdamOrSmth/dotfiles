@@ -32,6 +32,18 @@
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 
+(custom-set-faces!
+  `(org-document-info  :inherit variable-pitch :height 1.0  :weight light  :slant italic)
+  `(org-document-title :inherit variable-pitch :height 1.50 :weight bold   :slant italic)
+  `(org-level-1        :inherit variable-pitch :height 1.44 :weight medium :foreground ,(doom-color 'blue))
+  `(org-level-2        :inherit variable-pitch :height 1.38 :weight medium :foreground ,(doom-color 'magenta))
+  `(org-level-3        :inherit variable-pitch :height 1.34 :weight medium :foreground ,(doom-color 'violet))
+  `(org-level-4        :inherit variable-pitch :height 1.28 :weight medium :foreground ,(doom-lighten (doom-color 'blue) 0.25))
+  `(org-level-5        :inherit variable-pitch :height 1.22 :weight medium :foreground ,(doom-lighten (doom-color 'magenta) 0.25))
+  `(org-level-6        :inherit variable-pitch :height 1.16 :weight medium :foreground ,(doom-lighten (doom-color 'blue) 0.5))
+  `(org-level-7        :inherit variable-pitch :height 1.10 :weight medium :foreground ,(doom-lighten (doom-color 'magenta) 0.5))
+  `(org-level-8        :inherit variable-pitch :height 1.04 :weight medium :foreground ,(doom-lighten (doom-color 'blue) 0.8)))
+
 (use-package! beacon
   :custom
   (beacon-blink-when-point-moves-vertically 10)
