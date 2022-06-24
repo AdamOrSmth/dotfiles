@@ -1,5 +1,6 @@
 #+title: Hyprland Configuration
 #+property: header-args :tangle hyprland.conf
+#+auto_tangle: t
 
 * Monitors
 Configures available monitors, with their appropriate resolutions, refresh rates, relative locations, and workspaces. I prefer only my primary monitor to have workspaces, and for my secondary monitor to remain for reference only, therefore I give it the workspace 10 (bound to 0 in my keybindings). See the [[https://github.com/vaxerski/=Hyprland=/wiki/Advanced-config#monitors][relevant documentation]] for more details.

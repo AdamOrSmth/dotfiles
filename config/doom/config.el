@@ -264,9 +264,7 @@
          :desc "Random node (no dailies)" "n r A" #'ad/org-roam-random-excluding-dailies)))
 
 (use-package! org-auto-tangle
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+  :hook (org-mode . org-auto-tangle-mode))
 
 (use-package! anki-editor
   :hook (org-mode . anki-editor-mode)
