@@ -55,7 +55,7 @@ in {
         inherit (texlive)
           scheme-medium # Medium because there are some font packages that I don't feel like tracking down
           dvisvgm dvipng wrapfig amsmath ulem hyperref capt-of spverbatim
-          titlesec mla-paper biblatex-mla;
+          titlesec mla-paper biblatex-mla hanging;
       })
       # :lang shell
       shellcheck
