@@ -191,9 +191,11 @@ bind = ,xf86audionext,exec,playerctl next
 bind = SUPER,C,killactive
 #+end_src
 
-Switch + move windows between workspaces.
 + s-{0-9} :: Switch between workspaces.
-+ s-S-{0-9} :: Move a window to a workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~. *Remember that =SHIFT= changes the typed character.*
++ s-S-{0-9} :: Move the focused window to workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~. *Remember that =SHIFT= changes the typed character.*
++ s-{comma,period} :: Switch to the leftward/rightward workspace.
++ s-S-{comma,period} :: Move the focused window to the leftward/rightward workspace.
+  ~m±1~ specifies the workspace ID one down/up on the current monitor.
 #+begin_src conf
 bind = SUPER,1,workspace,1
 bind = SUPER,2,workspace,2
@@ -215,6 +217,10 @@ bind = SUPERSHIFT,ampersand,movetoworkspacesilent,7
 bind = SUPERSHIFT,asterisk,movetoworkspacesilent,8
 bind = SUPERSHIFT,parenleft,movetoworkspacesilent,9
 bind = SUPERSHIFT,parenright,movetoworkspacesilent,10
+bind = SUPER,comma,workspace,m-1
+bind = SUPER,period,workspace,m+1
+bind = SUPERSHIFT,comma,movetoworkspacesilent,m-1
+bind = SUPERSHIFT,period,movetoworkspacesilent,m+1
 #+end_src
 
 The special workspace can toggle above any other workspace like a "scratchpad" workspace in other window managers. I'm using the slash key for related keybindings.
