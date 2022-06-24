@@ -7,6 +7,7 @@ let
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
   inherit (pkgs) discord firejail;
+  inherit (config.my) configDir;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "chat and communication programs";
@@ -27,5 +28,8 @@ in {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) element-desktop session-desktop-appimage signal-desktop;
     };
+
+    my.home.configFiles."BetterDiscord/themes".source =
+      "${configDir}/betterdiscord/themes";
   }]);
 }
