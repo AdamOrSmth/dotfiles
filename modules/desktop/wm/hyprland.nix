@@ -25,7 +25,7 @@ in {
     };
 
     # Actually start the darn thing
-    services.xserver.displayManager.lightdm.enable = false;
+    #services.xserver.displayManager.lightdm.enable = false;
     my.cli.fish.extraInit = ''
       if test (tty) = /dev/tty1
          exec Hyprland
