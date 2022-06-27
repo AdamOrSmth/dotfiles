@@ -7,7 +7,7 @@ let
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
   inherit (pkgs) discord firejail;
-  inherit (config.my) configDir;
+  configDir = "${config.my.configDir}/betterdiscord";
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "chat and communication programs";
@@ -29,7 +29,13 @@ in {
       inherit (pkgs) element-desktop session-desktop-appimage signal-desktop;
     };
 
-    my.home.configFiles."BetterDiscord/themes".source =
-      "${configDir}/betterdiscord/themes";
+    # TODO Separate Discord into a separate module
+    my.home.configFiles = {
+      "BetterDiscord/themes".source = "${configDir}/themes";
+      "BetterDiscord/plugins" = {
+        source = "${configDir}/plugins";
+        recursive = true; # Need write access to the plugins directory
+      };
+    };
   }]);
 }
