@@ -21,5 +21,9 @@ in {
         fsType = "vfat";
       };
     };
+
+    # This should be somewhere else, but I'm too lazy to find a spot.
+    boot.supportedFilesystems = [ "ntfs" ];
   };
+
 }
