@@ -159,18 +159,17 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
   (apply orig-fun extension subtreep pub-dir nil))
 #+end_src
 ** Progress Logging
-TODO keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.
+Agenda keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.
 #+begin_src elisp
 (after! org
   (setq org-todo-keywords '((sequence
                              "TODO(t/!)"
                              "PROJ(p/!)"
-                             "LOOP(r/!)"
                              "STRT(s!/!)"
                              "WAIT(w@/@)"
                              "HOLD(h@/@)"
                              "IDEA(i/@)"
-                             "LOOK(l/@)"
+                             "READ(r/@)"
                              "|"
                              "DONE(d)"
                              "KILL(k@/@)")
@@ -179,12 +178,7 @@ TODO keywords, inspired by Doom's default keywords, just with logging and some c
                              "[-](S!)"
                              "[?](W@/@)"
                              "|"
-                             "[X](D)")
-                            (sequence
-                             "|"
-                             "OKAY(o@)"
-                             "YES(y@)"
-                             "NO(n@)"))
+                             "[X](D)"))
         org-todo-keyword-faces (append org-todo-keyword-faces
                                        '(("LOOK" . +org-todo-active)))))
 #+end_src
@@ -203,10 +197,12 @@ Prompt to clock into a task when it's marked as 'STRT'.
     (org-clock-in)))
 #+end_src
 ** Capture Templates
+These capture templates are for random thoughts and notes I want to remember, and all go into my Inbox file for later. For specific notes, I use ~org-roam~ capture templates instead.
+
 #+begin_src elisp
 (setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
       org-capture-templates
-      '(("u" "unsorted" entry
+      '(("d" "default" entry
          (file "inbox.org")
          "* %?\n"
          :prepend t)
@@ -215,11 +211,11 @@ Prompt to clock into a task when it's marked as 'STRT'.
          "* %?\n<%(org-read-date)>\n"
          :prepend t)
         ("t" "todo")
-        ("tt" "no time" entry
+        ("tt" "default" entry
          (file "inbox.org")
          "* TODO %?\n"
          :prepend t)
-        ("ts" "with scheduled" entry
+        ("ts" "scheduled" entry
          (file "inbox.org")
          "* TODO %?\nSCHEDULED: <%(org-read-date)>\n"
          :prepend t)
@@ -231,9 +227,9 @@ Prompt to clock into a task when it's marked as 'STRT'.
          (file "inbox.org")
          "* IDEA %?\n"
          :prepend t)
-        ("c" "check out/investigate" entry
+        ("r" "read later" entry
          (file "inbox.org")
-         "* LOOK %?\n"
+         "* READ %?\n"
          :prepend t)))
 #+end_src
 ** Personal Spellcheck Dictionary
@@ -298,23 +294,26 @@ I have my titles in my ~org-roam~ file names, as well as the timestamp of creati
 (add-hook 'before-save-hook #'ad/update-roam-filename)
 #+end_src
 *** Capture Templates
-Just a different capture template for each different "type" of note, nothing too interesting here.
+Just a different capture template for each different "type" of note. I do define a short helper function to avoid having to type out the expression for my templates directory for every template. Otherwise, nothing too interesting going on. For assorted thoughts and tasks, I use normal ~org-mode~ capture templates into my Inbox instead.
 
 #+begin_src elisp
-(setq org-roam-capture-templates
-      `(("z" "zettel" plain
-         (file ,(expand-file-name "template/note.org" org-directory))
-         :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
-         :unnarrowed t)
-        ("w" "work")
-        ("ww" "default" plain
-         (file ,(expand-file-name "template/document.org" org-directory))
-         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-         :unnarrowed t)
-        ("wl" "lab report" plain
-         (file ,(expand-file-name "template/aet-lab-report.org" org-directory))
-         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-         :unnarrowed t)))
+(let ((template (lambda (template)
+                  (expand-file-name (concat template ".org")
+                                    (expand-file-name "template/" org-roam-directory)))))
+  (setq org-roam-capture-templates)
+  `(("z" "zettel" plain
+     (file ,(template "zettel"))
+     :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
+     :unnarrowed t)
+    ("w" "work")
+    ("ww" "default" plain
+     (file ,(template "work"))
+     :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+     :unnarrowed t)
+    ("wl" "lab report" plain
+     (file ,(template "lab-report"))
+     :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+     :unnarrowed t)))
       #+end_src
 *** Dailies/Journals
 My dailies are the same as my journal entries; this just defines a capture template and some default contents for each file.
