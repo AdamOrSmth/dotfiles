@@ -243,93 +243,106 @@ Prompt to clock into a task when it's marked as 'STRT'.
                       (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 #+end_src
 ** Org-Roam
+General settings.
 #+begin_src elisp
 (after! org-roam
   (setq org-roam-directory org-directory
         org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
         org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
-        +org-roam-open-buffer-on-find-file nil
-        ;; Capture templates.
-        org-roam-capture-templates
-        `(("z" "zettel" plain
-           (file ,(expand-file-name "template/note.org" org-directory))
-           :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("w" "work")
-          ("ww" "default" plain
-           (file ,(expand-file-name "template/document.org" org-directory))
-           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("wl" "lab report" plain
-           (file ,(expand-file-name "template/aet-lab-report.org" org-directory))
-           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t))
-        org-roam-dailies-capture-templates
-        `(("d" "default" entry
-           (file "template/journal.org")
-           :target (file+head
-                    "%<%Y-%m-%d>.org"
-                    "#+title: %<%Y-%m-%d %a>\n\n")
-           :clock-in
-           :clock-resume)))
-  ;; Icons for my sub-directory file "types".
-  (defvar ad/org-roam-icons
-    '(("zettel"  . "📑")
-      ("work"    . "✏")
-      ("journal" . "📖")))
-  ;; Add type prefix to 'org-roam-find-file'.
-  (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
-    (cdr (assoc (org-roam-node-doom-type node)
-                ad/org-roam-icons)))
-  (setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:*} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
-                                         (face font-lock-keyword-face)
-                                         36 51
-                                         (face org-tag)))
-  ;; Update zettel file names when title changes to new slug.
-  (defun ad/update-roam-filename ()
-    (interactive)
-    (when (and (org-roam-file-p) ; Ensure it's a roam file of the 'zettel' or 'work' type.
-               (or (string-equal (expand-file-name "zettel/" org-directory) (file-name-directory buffer-file-name))
-                   (string-equal (expand-file-name "work/"   org-directory) (file-name-directory buffer-file-name))))
-      (let
-          ((file-location ; Location that file should be at.
-            (concat
-             (file-name-directory buffer-file-name)
-             (s-replace-regexp "^\\([0-9]\\{14\\}\\).*" "\\1" (file-name-base buffer-file-name))
-             "-"
-             (-> (org-roam-node-at-point)
-                 (org-roam-node-file-title)
-                 (org-roam-node-from-title-or-alias)
-                 (org-roam-node-slug))
-             ".org")))
-        (unless (string-equal buffer-file-name file-location)
-          (doom/move-this-file file-location)))))
-  (add-hook 'before-save-hook #'ad/update-roam-filename)
-  ;; Org-Roam-UI
-  (use-package! org-roam-ui
-    :bind (:map doom-leader-notes-map ("r u" . org-roam-ui-mode))
-    :requires (org-roam)
-    :init
-    (use-package! websocket)
-    :custom
-    (org-roam-ui-sync-theme t)
-    (org-roam-ui-follow t)
-    (org-roam-ui-update-on-save t)
-    (org-roam-ui-open-on-start nil))
-  ;; Keybind to visit a random node, excluding dailies.
-  (defun ad/org-roam-random-excluding-dailies (&optional other-window)
-    "Visit a random `org-roam` node, excluding dailies."
-    (interactive "P")
-    (org-roam-node-random
-     other-window
-     (lambda (node)
-       (->> node
-            (org-roam-node-file)
-            (file-name-directory)
-            (string-equal org-roam-dailies-directory)
-            (not)))))
-  (map! (:leader
-         :desc "Random node (no dailies)" "n r A" #'ad/org-roam-random-excluding-dailies)))
+        +org-roam-open-buffer-on-find-file nil))
+#+end_src
+*** File Types
+Each subdirectory in my ~org-directory~ corresponds to a "type" of ~org-roam~ note. These code snippets integrate my file types into ~org-roam~ nicely.
+
+Define an associative list for the names of each subdirectory to their respective icon. You could also simply use the subdirectory name alone, but I like having some pretty icons as well. Given the subdirectory name, fetching the icon is as simple as using the ~assoc~ function.
+#+begin_src elisp
+(defvar ad/org-roam-icons
+  '(("gtd"     . "🗓")
+    ("journal" . "📖")
+    ("log"     . "🗄")
+    ("ref"     . "📚")
+    ("work"    . "✏")
+    ("zettel"  . "💭")))
+#+end_src
+
+Defining a custom method is how ~org-roam~ allows you to add custom properties to ~org-roam-node-display-template~, which controls the format of functions like ~org-roam-find-file~. I copied the extra font stuff from Doom's default setting for this variable, since I don't really understand how the font stuff works. This code partially comes from =hlissner='s own private configuration, as well as some of Doom's defaults. See the documentation of ~org-roam-node-display-template~ for more information.
+#+begin_src elisp
+(cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
+  (cdr (assoc (org-roam-node-doom-type node)
+              ad/org-roam-icons)))
+(setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:*} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
+                                       (face font-lock-keyword-face)
+                                       36 51
+                                       (face org-tag)))
+#+end_src
+
+I have my titles in my ~org-roam~ file names, as well as the timestamp of creation (which helps serve as a unique file name). I like to automatically have the file name titles in sync with the ~org-mode~ titles, which the following custom function does. I then add it as a hook to run right before save. It first ensures that it's a file in a folder with managed file names, and then does some string parsing and whatnot to get a new file name, before running the Doom function to rename the file. I've found the Doom function works the best with Doom Emacs, since it's functionally equivalent to the interactive keybinding to move a file, which is what it should be. Keeps everything running smoothly.
+#+begin_src elisp
+(defun ad/update-roam-filename ()
+  (interactive)
+  (when (and (org-roam-file-p)
+             (-contains-p '("log" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
+    (let
+        ((new-file-location
+          (concat
+           (file-name-directory buffer-file-name)
+           (s-replace-regexp "^\\([0-9]\\{14\\}\\).*" "\\1" (file-name-base buffer-file-name))
+           "-"
+           (-> (org-roam-node-at-point)
+               (org-roam-node-file-title)
+               (org-roam-node-from-title-or-alias)
+               (org-roam-node-slug))
+           ".org")))
+      (unless (string-equal buffer-file-name new-file-location)
+        (doom/move-this-file new-file-location)))))
+(add-hook 'before-save-hook #'ad/update-roam-filename)
+#+end_src
+*** Capture Templates
+Just a different capture template for each different "type" of note, nothing too interesting here.
+
+#+begin_src elisp
+(setq org-roam-capture-templates
+      `(("z" "zettel" plain
+         (file ,(expand-file-name "template/note.org" org-directory))
+         :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("w" "work")
+        ("ww" "default" plain
+         (file ,(expand-file-name "template/document.org" org-directory))
+         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("wl" "lab report" plain
+         (file ,(expand-file-name "template/aet-lab-report.org" org-directory))
+         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)))
+      #+end_src
+*** Dailies/Journals
+My dailies are the same as my journal entries; this just defines a capture template and some default contents for each file.
+#+begin_src elisp
+(setq org-roam-dailies-capture-templates
+      `(("d" "default" entry
+         (file "template/journal.org")
+         :target (file+head
+                  "%<%Y-%m-%d>.org"
+                  "#+title: %<%Y-%m-%d %a>\n\n")
+         :clock-in
+         :clock-resume)))
+
+#+end_src
+*** Org-Roam-UI
+=Org-Roam-UI= is a really cool visualization of ~org-roam~, that unfortunately doesn't come built-in. I set it up here, toggled with the keybinding =SPC n r u=, in line with the rest of the ~org-roam~ binds.
+
+#+begin_src elisp
+(use-package! org-roam-ui
+  :bind (:map doom-leader-notes-map ("r u" . org-roam-ui-mode))
+  :requires (org-roam)
+  :init
+  (use-package! websocket)
+  :custom
+  (org-roam-ui-sync-theme t)
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start nil))
 #+end_src
 ** Org-Auto-Tangle
 #+begin_src elisp
