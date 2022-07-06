@@ -184,13 +184,14 @@
     ("work"    . "✏")
     ("zettel"  . "💭")))
 
-(cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
-  (cdr (assoc (org-roam-node-doom-type node)
-              ad/org-roam-icons)))
-(setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:*} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
-                                       (face font-lock-keyword-face)
-                                       36 51
-                                       (face org-tag)))
+(after! org-roam
+   (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
+     (cdr (assoc (org-roam-node-doom-type node)
+                 ad/org-roam-icons)))
+  (setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:*} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
+                                         (face font-lock-keyword-face)
+                                         36 51
+                                         (face org-tag))))
 
 (defun ad/update-roam-filename ()
   (interactive)
@@ -214,20 +215,20 @@
 (let ((template (lambda (template)
                   (expand-file-name (concat template ".org")
                                     (expand-file-name "template/" org-roam-directory)))))
-  (setq org-roam-capture-templates)
-  `(("z" "zettel" plain
-     (file ,(template "zettel"))
-     :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
-     :unnarrowed t)
-    ("w" "work")
-    ("ww" "default" plain
-     (file ,(template "work"))
-     :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-     :unnarrowed t)
-    ("wl" "lab report" plain
-     (file ,(template "lab-report"))
-     :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-     :unnarrowed t)))
+  (setq org-roam-capture-templates
+         `(("z" "zettel" plain
+            (file ,(apply template "zettel" nil))
+            :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
+            :unnarrowed t)
+           ("w" "work")
+           ("ww" "default" plain
+            (file ,(apply template "work" nil))
+            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+            :unnarrowed t)
+           ("wl" "lab report" plain
+            (file ,(apply template "lab-report" nil))
+            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+            :unnarrowed t))))
 
 (setq org-roam-dailies-capture-templates
       `(("d" "default" entry
