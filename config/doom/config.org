@@ -334,8 +334,8 @@ My dailies are the same as my journal entries; this just defines a capture templ
 
 #+begin_src elisp
 (use-package! org-roam-ui
+  :after (org-roam)
   :bind (:map doom-leader-notes-map ("r u" . org-roam-ui-mode))
-  :requires (org-roam)
   :init
   (use-package! websocket)
   :custom

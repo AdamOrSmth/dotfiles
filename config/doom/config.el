@@ -240,8 +240,8 @@
          :clock-resume)))
 
 (use-package! org-roam-ui
+  :after (org-roam)
   :bind (:map doom-leader-notes-map ("r u" . org-roam-ui-mode))
-  :requires (org-roam)
   :init
   (use-package! websocket)
   :custom
