@@ -170,19 +170,19 @@
           (lambda () (spell-fu-dictionary-add
                       (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 
-(after! org-roam
-  (setq org-roam-directory org-directory
-        org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
-        org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
-        +org-roam-open-buffer-on-find-file nil))
+(setq org-roam-directory org-directory
+      org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
+      org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
+      +org-roam-open-buffer-on-find-file nil)
 
 (defvar ad/org-roam-icons
   '(("gtd"     . "🗓")
     ("journal" . "📖")
-    ("log"     . "🗄")
+    ("log"     . "🗃")
     ("ref"     . "📚")
     ("work"    . "✏")
-    ("zettel"  . "💭")))
+    ("zettel"  . "🗒")
+    (nil       . "📥")))
 
 (after! org-roam
    (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))

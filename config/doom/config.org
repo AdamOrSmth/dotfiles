@@ -241,24 +241,24 @@ These capture templates are for random thoughts and notes I want to remember, an
 ** Org-Roam
 General settings.
 #+begin_src elisp
-(after! org-roam
-  (setq org-roam-directory org-directory
-        org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
-        org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
-        +org-roam-open-buffer-on-find-file nil))
+(setq org-roam-directory org-directory
+      org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
+      org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
+      +org-roam-open-buffer-on-find-file nil)
 #+end_src
 *** File Types
 Each subdirectory in my ~org-directory~ corresponds to a "type" of ~org-roam~ note. These code snippets integrate my file types into ~org-roam~ nicely.
 
-Define an associative list for the names of each subdirectory to their respective icon. You could also simply use the subdirectory name alone, but I like having some pretty icons as well. Given the subdirectory name, fetching the icon is as simple as using the ~assoc~ function.
+Define an associative list for the names of each subdirectory to their respective icon. You could also simply use the subdirectory name alone, but I like having some pretty icons as well. Given the subdirectory name, fetching the icon is as simple as using the ~assoc~ function. ~nil~ is my Inbox file, which is the only file that resides in the root ~org-roam-directory~.
 #+begin_src elisp
 (defvar ad/org-roam-icons
   '(("gtd"     . "🗓")
     ("journal" . "📖")
-    ("log"     . "🗄")
+    ("log"     . "🗃")
     ("ref"     . "📚")
     ("work"    . "✏")
-    ("zettel"  . "💭")))
+    ("zettel"  . "🗒")
+    (nil       . "📥")))
 #+end_src
 
 Defining a custom method is how ~org-roam~ allows you to add custom properties to ~org-roam-node-display-template~, which controls the format of functions like ~org-roam-find-file~. I copied the extra font stuff from Doom's default setting for this variable, since I don't really understand how the font stuff works. This code partially comes from =hlissner='s own private configuration, as well as some of Doom's defaults. See the documentation of ~org-roam-node-display-template~ for more information. This has to run after ~org-roam~ loads, else it errors out from the method definition.
