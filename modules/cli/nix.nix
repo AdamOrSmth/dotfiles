@@ -14,7 +14,13 @@ in {
 
   config = (mkMerge [{
     nix = {
-      settings.trusted-users = [ "@wheel" ];
+      settings = {
+        # Allow users of the wheel group to interact with the Nix daemon
+        trusted-users = [ "@wheel" ];
+
+        # Automatically optimise store (deduplicate files via hard-linking)
+        auto-optimise-store = cfg.autoOptimise;
+      };
 
       # Enable Flakes
       extraOptions = "experimental-features = nix-command flakes";
@@ -28,8 +34,6 @@ in {
         dates = "weekly";
       };
 
-      # Automatically optimise store (deduplicate files via hard-linking)
-      autoOptimiseStore = cfg.autoOptimise;
     };
 
     environment.systemPackages = [ pkgs.nixfmt ];
