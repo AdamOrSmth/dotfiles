@@ -220,6 +220,10 @@
            (file ,(apply template '("zettel")))
            :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
+          ("o" "outline" plain
+           (file ,(apply template '("outline")))
+           :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
+           :unnarrowed t)
           ("w" "work")
           ("ww" "default" plain
            (file ,(apply template '("work")))
