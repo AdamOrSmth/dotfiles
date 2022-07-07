@@ -15,7 +15,7 @@ in {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
         calibre feh flameshot glava libreoffice mpv obs-studio pavucontrol
-        qbittorrent sonixd tenacity;
+        qbittorrent sonixd tenacity zotero;
       inherit (pkgs.gnome) simple-scan;
     };
   }]);
