@@ -100,7 +100,27 @@
       (make-directory pub-dir)))
   (apply orig-fun extension subtreep pub-dir nil))
 
-(setq org-latex-compiler "lualatex")
+(setq org-latex-compiler "lualatex"
+      org-latex-default-class "report")
+
+(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
+                          ("report" "\\documentclass[11pt]{report}"
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
+                          ("book" "\\documentclass[11pt]{book}"
+                           ("\\part{%s}"          . "\\part*{%s}")
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
 (after! org
   (setq org-todo-keywords '((sequence

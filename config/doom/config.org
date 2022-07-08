@@ -152,7 +152,30 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
 #+end_src
 *** LaTeX
 #+begin_src elisp
-(setq org-latex-compiler "lualatex")
+(setq org-latex-compiler "lualatex"
+      org-latex-default-class "report")
+#+end_src
+
+One thing I need from LaTeX is for each top-level header to (generally) start on a new page, but not the part and chapter overkill that "report" comes with by default; this customizes the "report" class to do what I want, while leaving everything else default.
+#+begin_src elisp
+(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
+                          ("report" "\\documentclass[11pt]{report}"
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
+                          ("book" "\\documentclass[11pt]{book}"
+                           ("\\part{%s}"          . "\\part*{%s}")
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 #+end_src
 ** Progress Logging
 Agenda keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.
