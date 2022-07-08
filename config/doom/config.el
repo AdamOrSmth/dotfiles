@@ -93,17 +93,14 @@
       org-export-with-toc nil
       org-export-with-tags nil)
 
-(after! org
-  (setq org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
-                                                 '(("" "titletoc" nil ("pdflatex")))
-                                                 (last org-latex-default-packages-alist))))
-
 (define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
   (unless pub-dir
     (setq pub-dir (expand-file-name "export/" org-directory))
     (unless (file-directory-p pub-dir)
       (make-directory pub-dir)))
   (apply orig-fun extension subtreep pub-dir nil))
+
+(setq org-latex-compiler "lualatex")
 
 (after! org
   (setq org-todo-keywords '((sequence

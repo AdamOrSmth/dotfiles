@@ -141,14 +141,6 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
       org-export-with-tags nil)
 #+end_src
 
-LaTeX requires the ~titletoc~ package for proper table of contents export, and it must load before ~hyperref~, which is what this spaghetti does (~hyperref~ is last in the list by default).
-#+begin_src elisp
-(after! org
-  (setq org-latex-default-packages-alist (append (butlast org-latex-default-packages-alist 1)
-                                                 '(("" "titletoc" nil ("pdflatex")))
-                                                 (last org-latex-default-packages-alist))))
-#+end_src
-
 Default export sub-directory, see https://stackoverflow.com/questions/9559753/emacs-org-mode-export-to-another-directory.
 #+begin_src elisp
 (define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
@@ -157,6 +149,10 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
     (unless (file-directory-p pub-dir)
       (make-directory pub-dir)))
   (apply orig-fun extension subtreep pub-dir nil))
+#+end_src
+*** LaTeX
+#+begin_src elisp
+(setq org-latex-compiler "lualatex")
 #+end_src
 ** Progress Logging
 Agenda keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.

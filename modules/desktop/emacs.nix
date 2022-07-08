@@ -54,9 +54,9 @@ in {
       # Exporting to LaTeX (https://nixos.wiki/wiki/TexLive)
       (texlive.combine {
         inherit (texlive)
-          scheme-medium # Medium because there are some font packages that I don't feel like tracking down
-          dvisvgm dvipng wrapfig amsmath ulem hyperref capt-of spverbatim
-          titlesec biblatex biblatex-mla biblatex-apa biber mla-paper hanging;
+          scheme-basic latexmk wrapfig ulem capt-of # Required by default
+          biber biblatex biblatex-mla biblatex-apa # Citations
+          hanging; # Custom formatting
       })
       # :lang shell
       shellcheck
