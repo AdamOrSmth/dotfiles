@@ -33,6 +33,7 @@ in {
           (epkgs: [ epkgs.vterm ])); # :term vterm
     };
 
+    # TODO Separate some of these into a separate module
     environment.systemPackages = with pkgs; [
       # Dependencies for base Doom
       git
@@ -55,7 +56,7 @@ in {
         inherit (texlive)
           scheme-medium # Medium because there are some font packages that I don't feel like tracking down
           dvisvgm dvipng wrapfig amsmath ulem hyperref capt-of spverbatim
-          titlesec mla-paper biblatex-mla hanging;
+          titlesec biblatex biblatex-mla biblatex-apa mla-paper hanging;
       })
       # :lang shell
       shellcheck
