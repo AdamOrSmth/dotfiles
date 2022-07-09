@@ -244,14 +244,12 @@ bind = SUPERSHIFT,D,movewindow,mon:r
 
 Groups are collections of windows/nodes that only take up one window's worth of space, like tabs in a browser. A keybinding switches between windows within a group. Opening new windows onto the group nodes adds them to the group.
 + s-g :: Make the current node and all its siblings a group.
-+ s-{m/n} :: Switch between the windows in the focused group. Switching windows also forces a reload from the renderer, otherwise weird artifacts occur for me (probably a NVIDIA-specific issue).
++ s-{m/n} :: Switch between the windows in the focused group.
 #+begin_src conf
 # Groups
 bind = SUPER,G,togglegroup
 bind = SUPER,M,changegroupactive,f
 bind = SUPER,N,changegroupactive,b
-bind = SUPER,M,forcerendererreload
-bind = SUPER,N,forcerendererreload
 #+end_src
 
 Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture.
