@@ -4,7 +4,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company)           ; the ultimate code completion backend
+       (company +childframe)           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;(ivy +childframe +icons +prescient)               ; a search engine for love and life
@@ -153,7 +153,7 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
        yaml              ; JSON, but readable
-       (zig +lsp)               ; C, but simpler
+       ;;(zig +lsp)               ; C, but simpler
 
        :email
        ;;(mu4e +org +gmail)
