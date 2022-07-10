@@ -132,18 +132,34 @@ animations {
 * Keybindings
 Define a keybinding with the ~bind~ keyword. It takes a modifier, key, dispatcher, and then arguments for the dispatcher (if it has any). For a general list of dispatchers, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#general-dispatcher-list][here]]. Modifiers key are just the key names in all caps smashed together, e.g. =SUPER= or =SUPERSHIFT=. Omitting a modifier is fine as well. Use ~wev~ to get key names if unsure. Single keys are generally uppercase, otherwise all lowercase.
 
-+ s-return :: Launch Wofi, a native-Wayland application menu.
-+ s-S-return :: Launch Alacritty terminal emulator.
-#+begin_src conf
-bind = SUPER,return,exec,wofi --show drun
-bind = SUPERSHIFT,return,exec,alacritty
-#+end_src
-
+** Hyprland
 + s-S-q :: Quit =Hyprland=.
 + s-S-r :: Reload =Hyprland=. =Hyprland= automatically reloads the configuration file whenever it's edited, but it doesn't work when the file is a symlink and its target location changes, which is what happens during a NixOS rebuild with ~home-manager~. A keybinding is nice to have to quickly force a reload after a rebuild without having to open a terminal.
 #+begin_src conf
 bind = SUPERSHIFT,Q,exit
 bind = SUPERSHIFT,R,exec,hyprctl reload
+#+end_src
+** Window Management
+Cycle through windows.
++ s-{j/k} :: Switch focus to the next/previous window.
+#+begin_src conf
+bind = SUPER,J,cyclenext
+bind = SUPER,K,cyclenext,prev
+#+end_src
+
++ s-c :: Close/kill window.
+#+begin_src conf
+bind = SUPER,C,killactive
+#+end_src
+
+Switch & move windows between monitors.
++ s-{h/l} :: Switch focus to the leftward/rightward monitor.
++ s-S-{h/l} :: Move the focused window to the leftward/rightward monitor.
+#+begin_src conf
+bind = SUPER,H,focusmonitor,l
+bind = SUPER,L,focusmonitor,r
+bind = SUPERSHIFT,H,movewindow,mon:l
+bind = SUPERSHIFT,L,movewindow,mon:r
 #+end_src
 
 + s-f :: Toggle fullscreen for the focused window. The argument decides whether or not to truly fullscreen or simply "maximize" the window and leave gaps + bars; I choose to fully fullscreen.
@@ -156,42 +172,54 @@ bind = SUPERSHIFT,F,togglefloating
 bind = SUPER,T,pseudo
 #+end_src
 
-Open applications:
-+ s-e :: Emacs
-+ s-b :: Qutebrowser
-+ s-S-b :: Brave
+Swapping windows uses a sub-map activated with =s-s= and exited using =ESC=. This sub-map allows me to swap windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
 #+begin_src conf
-bind = SUPER,E,exec,emacsclient -c
-bind = SUPER,B,exec,qutebrowser
-bind = SUPERSHIFT,B,exec,brave
+bind = SUPER,S,submap,swap
+
+submap = swap
+
+bind = ,H,movewindow,l
+bind = ,J,movewindow,d
+bind = ,K,movewindow,u
+bind = ,L,movewindow,r
+
+bind = ,escape,submap,reset
+
+submap = reset
 #+end_src
 
-Focus + move windows directionally, vi-like.
-+ s-{h/j/k/l} :: Switch focus directionally.
-+ s-S-{h/j/k/l} :: Swap windows directionally. Swapping windows is also possible with s-M1, and is usually more flexible this way.
+Resizing works the same way as swapping windows; a sub-map using Vi-like keybindings. Shift does smaller adjustments.
++ =s-r= :: Enter the ~resize~ sub-map.
++ ={h,j,k,l}= :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
++ =ESC= :: Exit the ~resize~ sub-map.
 #+begin_src conf
-bind = SUPER,H,movefocus,l
-bind = SUPER,J,movefocus,d
-bind = SUPER,K,movefocus,u
-bind = SUPER,L,movefocus,r
-bind = SUPERSHIFT,H,movewindow,l
-bind = SUPERSHIFT,J,movewindow,d
-bind = SUPERSHIFT,K,movewindow,u
-bind = SUPERSHIFT,L,movewindow,r
+bind = SUPER,R,submap,resize
+
+submap = resize
+
+bind = ,H,resizeactive,-100 0
+bind = ,J,resizeactive,0 100
+bind = ,K,resizeactive,0 -100
+bind = ,L,resizeactive,100 0
+bind = SHIFT,H,resizeactive,-20 0
+bind = SHIFT,J,resizeactive,0 20
+bind = SHIFT,K,resizeactive,0 -20
+bind = SHIFT,L,resizeactive,20 0
+
+bind = ,escape,submap,reset
+
+submap = reset
 #+end_src
 
-Music control with the media keys via ~playerctl~.
+Groups are collections of windows/nodes that only take up one window's worth of space, like tabs in a browser. A keybinding switches between windows within a group. Opening new windows onto the group nodes adds them to the group.
++ s-g :: Make the current node and all its siblings a group.
++ s-{m/n} :: Switch between the windows in the focused group.
 #+begin_src conf
-bind = ,xf86audioplay,exec,playerctl play-pause
-bind = ,xf86audioprev,exec,playerctl previous
-bind = ,xf86audionext,exec,playerctl next
+bind = SUPER,G,togglegroup
+bind = SUPER,M,changegroupactive,f
+bind = SUPER,N,changegroupactive,b
 #+end_src
-
-+ s-c :: Close/kill window.
-#+begin_src conf
-bind = SUPER,C,killactive
-#+end_src
-
+** Workspaces
 + s-{0-9} :: Switch between workspaces.
 + s-S-{0-9} :: Move the focused window to workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~. *Remember that =SHIFT= changes the typed character.*
 + s-{comma,period} :: Switch to the leftward/rightward workspace.
@@ -232,31 +260,11 @@ bind = SUPER,slash,togglespecialworkspace
 bind = SUPERSHIFT,question,movetoworkspace,special
 #+end_src
 
-Switch & move windows between monitors.
-+ s-{s/d} :: Switch focus to the leftward/rightward monitor.
-+ s-S-{s/d} :: Move the focused window to the leftward/rightward monitor.
-#+begin_src conf
-bind = SUPER,S,focusmonitor,l
-bind = SUPER,D,focusmonitor,r
-bind = SUPERSHIFT,S,movewindow,mon:l
-bind = SUPERSHIFT,D,movewindow,mon:r
-#+end_src
-
-Groups are collections of windows/nodes that only take up one window's worth of space, like tabs in a browser. A keybinding switches between windows within a group. Opening new windows onto the group nodes adds them to the group.
-+ s-g :: Make the current node and all its siblings a group.
-+ s-{m/n} :: Switch between the windows in the focused group.
-#+begin_src conf
-# Groups
-bind = SUPER,G,togglegroup
-bind = SUPER,M,changegroupactive,f
-bind = SUPER,N,changegroupactive,b
-#+end_src
-
+** Misc
 Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture.
 + s-`, C-s-q :: Lock the current session.
 + s-~ :: Lock and suspend the current session.
 #+begin_src conf
-# Lock
 bind = SUPER,grave,exec,swaylock -F
 bind = SUPERCTRL,Q,exec,swaylock -F
 bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
@@ -264,8 +272,27 @@ bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
 
 Take a screenshot via ~grim~ and ~slurp~. Currently in a separate script since inlining it doesn't work, but I might try calling Bash sometime. *TODO*
 #+begin_src conf
-# Screenshot
 bind = ,print,exec,shootscreen
+#+end_src
+
+Music control with the media keys via ~playerctl~.
+#+begin_src conf
+bind = ,xf86audioplay,exec,playerctl play-pause
+bind = ,xf86audioprev,exec,playerctl previous
+bind = ,xf86audionext,exec,playerctl next
+#+end_src
+** Applications
++ s-return :: Wofi
++ s-S-return :: Alacritty
++ s-e :: Emacs client window
++ s-b :: Qutebrowser
++ s-S-b :: Brave
+#+begin_src conf
+bind = SUPER,return,exec,wofi --show drun
+bind = SUPERSHIFT,return,exec,alacritty
+bind = SUPER,E,exec,emacsclient -c
+bind = SUPER,B,exec,qutebrowser
+bind = SUPERSHIFT,B,exec,brave
 #+end_src
 * Window Rules
 Window rules define actions that are automatically performed when a window with a matching class is *opened*.
