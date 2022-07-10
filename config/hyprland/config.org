@@ -275,7 +275,6 @@ Create a window rule with the ~windowrule~ keyword, which takes a rule to apply 
 + Tile the OnlyKey App automatically.
 + Move startup applications to my second monitor.
 + Automatically pseudo-tile Tor Browser (has the class =firefox=, but I don't use actual Firefox so it's fine).
-+ Fixes for =Zotero='s dialog boxes (they get zero-sized by default). A second rule matching titles makes sure context menus don't get tiled. I also need a Bash script to un-float the default window (see [[*Startup Applications]]) What a mess, =XWayland= sucks sometimes.
 #+begin_src conf
 windowrule = tile,OnlyKey
 
@@ -284,9 +283,6 @@ windowrule = monitor 1,Signal
 windowrule = monitor 1,Sonixd
 
 windowrule = pseudo,firefox
-
-windowrule = tile,Zotero
-windowrule = float,title:Zotero
 #+end_src
 * Startup Applications
 Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup.
@@ -301,6 +297,4 @@ exec-once = swaybg -i ~/BigBoiStorage/MEGA/Pictures/Wallpapers/0008.png
 exec-once = discord --no-sandbox
 exec-once = signal-desktop --ozone-platform=wayland
 exec-once = sonixd --no-sandbox
-
-exec-once = hyprland-zotero-fix
 #+end_src

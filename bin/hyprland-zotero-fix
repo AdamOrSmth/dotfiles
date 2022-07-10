@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-line_match='\[LOG\] Window \w* set title to My Library - Zotero'
-
-tail -f /tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/hyprland.log | while read -r line; do
-    if [[ $line =~ $line_match ]]; then
-        hyprctl dispatch togglefloating 0
-    fi
-done
