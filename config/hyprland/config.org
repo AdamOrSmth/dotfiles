@@ -140,11 +140,17 @@ bind = SUPERSHIFT,Q,exit
 bind = SUPERSHIFT,R,exec,hyprctl reload
 #+end_src
 ** Window Management
-Cycle through windows.
-+ s-{j/k} :: Switch focus to the next/previous window.
++ s-{h/j/k/l} :: Switch focus, Vi-like.
++ =s-S-{h/j/k/l} :: Swap windows.
 #+begin_src conf
-bind = SUPER,J,cyclenext
-bind = SUPER,K,cyclenext,prev
+bind = SUPER,H,movefocus,l
+bind = SUPER,J,movefocus,d
+bind = SUPER,K,movefocus,u
+bind = SUPER,L,movefocus,r
+bind = SUPERSHIFT,H,movewindow,l
+bind = SUPERSHIFT,J,movewindow,d
+bind = SUPERSHIFT,K,movewindow,u
+bind = SUPERSHIFT,L,movewindow,r
 #+end_src
 
 + s-c :: Close/kill window.
@@ -153,13 +159,13 @@ bind = SUPER,C,killactive
 #+end_src
 
 Switch & move windows between monitors.
-+ s-{h/l} :: Switch focus to the leftward/rightward monitor.
-+ s-S-{h/l} :: Move the focused window to the leftward/rightward monitor.
++ s-{s/d} :: Switch focus to the leftward/rightward monitor.
++ s-S-{s/d} :: Move the focused window to the leftward/rightward monitor.
 #+begin_src conf
-bind = SUPER,H,focusmonitor,l
-bind = SUPER,L,focusmonitor,r
-bind = SUPERSHIFT,H,movewindow,mon:l
-bind = SUPERSHIFT,L,movewindow,mon:r
+bind = SUPER,S,focusmonitor,l
+bind = SUPER,D,focusmonitor,r
+bind = SUPERSHIFT,S,movewindow,mon:l
+bind = SUPERSHIFT,D,movewindow,mon:r
 #+end_src
 
 + s-f :: Toggle fullscreen for the focused window. The argument decides whether or not to truly fullscreen or simply "maximize" the window and leave gaps + bars; I choose to fully fullscreen.
@@ -172,23 +178,7 @@ bind = SUPERSHIFT,F,togglefloating
 bind = SUPER,T,pseudo
 #+end_src
 
-Swapping windows uses a sub-map activated with =s-s= and exited using =ESC=. This sub-map allows me to swap windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
-#+begin_src conf
-bind = SUPER,S,submap,swap
-
-submap = swap
-
-bind = ,H,movewindow,l
-bind = ,J,movewindow,d
-bind = ,K,movewindow,u
-bind = ,L,movewindow,r
-
-bind = ,escape,submap,reset
-
-submap = reset
-#+end_src
-
-Resizing works the same way as swapping windows; a sub-map using Vi-like keybindings. Shift does smaller adjustments.
+Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
 + =s-r= :: Enter the ~resize~ sub-map.
 + ={h,j,k,l}= :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
 + =ESC= :: Exit the ~resize~ sub-map.
@@ -259,7 +249,6 @@ The special workspace can toggle above any other workspace like a "scratchpad" w
 bind = SUPER,slash,togglespecialworkspace
 bind = SUPERSHIFT,question,movetoworkspace,special
 #+end_src
-
 ** Misc
 Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture.
 + s-`, C-s-q :: Lock the current session.
