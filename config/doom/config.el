@@ -74,7 +74,10 @@
        (:localleader
         :desc "org-edit-src-code" "E" #'org-edit-src-code
         :desc "org-latex-preview" "L" #'org-latex-preview
-        :desc "org-babel-demarcate-block" "D" #'org-babel-demarcate-block)))
+        :desc "org-babel-demarcate-block" "D" #'org-babel-demarcate-block)
+       (:leader
+        :prefix "i"
+        :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
 (setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
       org-agenda-skip-scheduled-if-done t

@@ -117,7 +117,11 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
        (:localleader
         :desc "org-edit-src-code" "E" #'org-edit-src-code
         :desc "org-latex-preview" "L" #'org-latex-preview
-        :desc "org-babel-demarcate-block" "D" #'org-babel-demarcate-block)))
+        :desc "org-babel-demarcate-block" "D" #'org-babel-demarcate-block)
+       (:leader
+        :prefix "i"
+        :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
+
 #+end_src
 ** Org-Agenda
 #+begin_src elisp
