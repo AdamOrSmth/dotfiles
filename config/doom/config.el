@@ -216,7 +216,7 @@
 (defun ad/update-roam-filename ()
   (interactive)
   (when (and (org-roam-file-p)
-             (-contains-p '("log" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
+             (-contains-p '("log" "outline" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
     (let
         ((new-file-location
           (concat
