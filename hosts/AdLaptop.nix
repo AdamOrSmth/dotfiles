@@ -23,6 +23,7 @@
       browsers.enable = true;
       communication.enable = true;
       emacs.enable = true;
+      gaming.enable = true;
       multimedia.enable = true;
       wm.bspwm.enable = true;
     };
