@@ -53,10 +53,7 @@
         mullvad = false;
       };
       pam-u2f.enable = false;
-      sound = {
-        enable = false;
-        bluetooth = false;
-      };
+      sound.enable = false;
     };
     services = {
       caddy.enable = false;

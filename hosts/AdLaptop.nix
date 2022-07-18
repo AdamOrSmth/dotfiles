@@ -50,8 +50,8 @@
   };
 
   # Custom per-host configuration options
-  # CapsLock to Escape
   services.xserver.xkbOptions = "caps:escape";
+  hardware.bluetooth.enable = true;
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
