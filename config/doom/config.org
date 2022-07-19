@@ -296,7 +296,7 @@ Defining a custom method is how ~org-roam~ allows you to add custom properties t
                                          (face org-tag))))
 #+end_src
 
-I have my titles in my ~org-roam~ file names, as well as the timestamp of creation (which helps serve as a unique file name). I like to automatically have the file name titles in sync with the ~org-mode~ titles, which the following custom function does. I then add it as a hook to run right before save. It first ensures that it's a file in a folder with managed file names, and then does some string parsing and whatnot to get a new file name, before running the Doom function to rename the file. I've found the Doom function works the best with Doom Emacs, since it's functionally equivalent to the interactive keybinding to move a file, which is what it should be. Keeps everything running smoothly.
+I have my titles in my ~org-roam~ file names, as well as the timestamp of creation (which helps serve as a unique file name). I like to automatically have the file name titles in sync with the ~org-mode~ titles, which the following custom function does. I then add it as a hook to run right after save, since the ~org-roam~ values don't get updated before save. It first ensures that it's a file in a folder with managed file names, and then does some string parsing and whatnot to get a new file name, before running the Doom function to rename the file. I've found the Doom function works the best with Doom Emacs, since it's functionally equivalent to the interactive keybinding to move a file, which is what it should be. Keeps everything running smoothly.
 #+begin_src elisp
 (defun ad/update-roam-filename ()
   (interactive)
@@ -315,7 +315,7 @@ I have my titles in my ~org-roam~ file names, as well as the timestamp of creati
            ".org")))
       (unless (string-equal buffer-file-name new-file-location)
         (doom/move-this-file new-file-location)))))
-(add-hook 'before-save-hook #'ad/update-roam-filename)
+(add-hook 'after-save-hook #'ad/update-roam-filename)
 #+end_src
 *** Capture Templates
 Just a different capture template for each different "type" of note. I do define a short helper function to avoid having to type out the expression for my templates directory for every template. Otherwise, nothing too interesting going on. For assorted thoughts and tasks, I use normal ~org-mode~ capture templates into my Inbox instead.

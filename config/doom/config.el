@@ -230,7 +230,7 @@
            ".org")))
       (unless (string-equal buffer-file-name new-file-location)
         (doom/move-this-file new-file-location)))))
-(add-hook 'before-save-hook #'ad/update-roam-filename)
+(add-hook 'after-save-hook #'ad/update-roam-filename)
 
 (let ((template (lambda (template)
                   (expand-file-name (concat template ".org")
