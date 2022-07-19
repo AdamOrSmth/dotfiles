@@ -318,8 +318,18 @@ I have my titles in my ~org-roam~ file names, as well as the timestamp of creati
 (add-hook 'after-save-hook #'ad/update-roam-filename)
 #+end_src
 *** Capture Templates
-Just a different capture template for each different "type" of note. I do define a short helper function to avoid having to type out the expression for my templates directory for every template. Otherwise, nothing too interesting going on. For assorted thoughts and tasks, I use normal ~org-mode~ capture templates into my Inbox instead.
+In some templates, I fill in the ~org-attach~ directory automatically, useful for things like export paths for =gnuplot= or =graphviz=. However, by default, there's no function that both creates the directory and returns it; ~org-attach-dir-get-create~ doesn't accept an ID parameter, and the ID technically doesn't exist in the capture template, since it doesn't have an associated file until its initial save. No other method accepts an ID parameter /and/ creates the directory, so here's a simple one to fill my need.
+#+begin_src elisp
+(defun ad/org-attach-dir-get-create (id)
+  "Return existing or new directory associated with the given ID"
+  (let ((attach-dir (org-attach-dir-from-id id)))
+    (unless (file-directory-p attach-dir)
+      (make-directory attach-dir t))
+    attach-dir))
 
+#+end_src
+
+Just a different capture template for each different "type" of note. I do define a short helper function to avoid having to type out the expression for my templates directory over and over again. Otherwise, nothing too interesting going on. For assorted thoughts and tasks, I use normal ~org-mode~ capture templates into my Inbox instead.
 #+begin_src elisp
 (let ((template (lambda (template)
                   (expand-file-name (concat template ".org")
@@ -342,7 +352,7 @@ Just a different capture template for each different "type" of note. I do define
            (file ,(apply template '("lab-report")))
            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t))))
-      #+end_src
+#+end_src
 *** Dailies/Journals
 My dailies are the same as my journal entries; this just defines a capture template and some default contents for each file.
 #+begin_src elisp

@@ -232,6 +232,13 @@
         (doom/move-this-file new-file-location)))))
 (add-hook 'after-save-hook #'ad/update-roam-filename)
 
+(defun ad/org-attach-dir-get-create (id)
+  "Return existing or new directory associated with the given ID"
+  (let ((attach-dir (org-attach-dir-from-id id)))
+    (unless (file-directory-p attach-dir)
+      (make-directory attach-dir t))
+    attach-dir))
+
 (let ((template (lambda (template)
                   (expand-file-name (concat template ".org")
                                     (expand-file-name "template/" org-roam-directory)))))
