@@ -123,64 +123,6 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
         :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
 #+end_src
-** Org-Agenda
-#+begin_src elisp
-(setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-todo-ignore-scheduled t
-      org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-      org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
-      org-agenda-time-grid
-      '((daily today require-timed)
-        (800 1000 1200 1400 1600 1800 2000)
-        "" "----------------")
-      org-agenda-time-leading-zero t
-      org-agenda-current-time-string "———————————————— now")
-#+end_src
-** Org-Export
-#+begin_src elisp
-(setq org-export-with-section-numbers nil
-      org-export-with-toc nil
-      org-export-with-tags nil)
-#+end_src
-
-Default export sub-directory, see https://stackoverflow.com/questions/9559753/emacs-org-mode-export-to-another-directory.
-#+begin_src elisp
-(define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
-  (unless pub-dir
-    (setq pub-dir (expand-file-name "export/" org-directory))
-    (unless (file-directory-p pub-dir)
-      (make-directory pub-dir)))
-  (apply orig-fun extension subtreep pub-dir nil))
-#+end_src
-*** LaTeX
-#+begin_src elisp
-(setq org-latex-compiler "lualatex"
-      org-latex-default-class "report")
-#+end_src
-
-One thing I need from LaTeX is for each top-level header to (generally) start on a new page, but not the part and chapter overkill that "report" comes with by default; this customizes the "report" class to do what I want, while leaving everything else default.
-#+begin_src elisp
-(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
-                          ("report" "\\documentclass[11pt]{report}"
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
-                          ("book" "\\documentclass[11pt]{book}"
-                           ("\\part{%s}"          . "\\part*{%s}")
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-#+end_src
 ** Progress Logging
 Agenda keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.
 #+begin_src elisp
@@ -254,12 +196,6 @@ These capture templates are for random thoughts and notes I want to remember, an
          (file "inbox.org")
          "* READ %?\n"
          :prepend t)))
-#+end_src
-** Personal Spellcheck Dictionary
-#+begin_src elisp
-(add-hook 'spell-fu-mode-hook
-          (lambda () (spell-fu-dictionary-add
-                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 #+end_src
 ** Org-Roam
 General settings.
@@ -381,10 +317,79 @@ My dailies are the same as my journal entries; this just defines a capture templ
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start nil))
 #+end_src
+** Org-Agenda
+#+begin_src elisp
+(setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-todo-ignore-scheduled t
+      org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
+      org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
+      org-agenda-time-grid
+      '((daily today require-timed)
+        (800 1000 1200 1400 1600 1800 2000)
+        "" "----------------")
+      org-agenda-time-leading-zero t
+      org-agenda-current-time-string "———————————————— now")
+#+end_src
+** Org-Export
+#+begin_src elisp
+(setq org-export-with-section-numbers nil
+      org-export-with-toc nil
+      org-export-with-tags nil)
+#+end_src
+
+Default export sub-directory, see https://stackoverflow.com/questions/9559753/emacs-org-mode-export-to-another-directory.
+#+begin_src elisp
+(define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
+  (unless pub-dir
+    (setq pub-dir (expand-file-name "export/" org-directory))
+    (unless (file-directory-p pub-dir)
+      (make-directory pub-dir)))
+  (apply orig-fun extension subtreep pub-dir nil))
+#+end_src
 ** Org-Auto-Tangle
 #+begin_src elisp
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
+#+end_src
+** LaTeX
+#+begin_src elisp
+(setq org-latex-compiler "lualatex"
+      org-latex-default-class "report")
+#+end_src
+
+Automatically turn on ~org-cdlatex-mode~ when opening files. A simple minor mode that makes writing subscripts, superscripts, and math easier. See [[https://orgmode.org/manual/CDLaTeX-mode.html][here]] for more.
+#+begin_src elisp
+(add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+#+end_src
+
+One thing I need from LaTeX is for each top-level header to (generally) start on a new page, but not the part and chapter overkill that "report" comes with by default; this customizes the "report" class to do what I want, while leaving everything else default.
+#+begin_src elisp
+(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
+                          ("report" "\\documentclass[11pt]{report}"
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
+                          ("book" "\\documentclass[11pt]{book}"
+                           ("\\part{%s}"          . "\\part*{%s}")
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+#+end_src
+** Personal Spellcheck Dictionary
+#+begin_src elisp
+(add-hook 'spell-fu-mode-hook
+          (lambda () (spell-fu-dictionary-add
+                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 #+end_src
 ** Anki-Editor
 #+begin_src elisp

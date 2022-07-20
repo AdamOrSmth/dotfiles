@@ -79,52 +79,6 @@
         :prefix "i"
         :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
-(setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-todo-ignore-scheduled t
-      org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-      org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
-      org-agenda-time-grid
-      '((daily today require-timed)
-        (800 1000 1200 1400 1600 1800 2000)
-        "" "----------------")
-      org-agenda-time-leading-zero t
-      org-agenda-current-time-string "———————————————— now")
-
-(setq org-export-with-section-numbers nil
-      org-export-with-toc nil
-      org-export-with-tags nil)
-
-(define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
-  (unless pub-dir
-    (setq pub-dir (expand-file-name "export/" org-directory))
-    (unless (file-directory-p pub-dir)
-      (make-directory pub-dir)))
-  (apply orig-fun extension subtreep pub-dir nil))
-
-(setq org-latex-compiler "lualatex"
-      org-latex-default-class "report")
-
-(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
-                          ("report" "\\documentclass[11pt]{report}"
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
-                          ("book" "\\documentclass[11pt]{book}"
-                           ("\\part{%s}"          . "\\part*{%s}")
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-
 (after! org
   (setq org-todo-keywords '((sequence
                              "TODO(t/!)"
@@ -185,10 +139,6 @@
          (file "inbox.org")
          "* READ %?\n"
          :prepend t)))
-
-(add-hook 'spell-fu-mode-hook
-          (lambda () (spell-fu-dictionary-add
-                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 
 (setq org-roam-directory org-directory
       org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
@@ -281,8 +231,60 @@
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start nil))
 
+(setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-todo-ignore-scheduled t
+      org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
+      org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
+      org-agenda-time-grid
+      '((daily today require-timed)
+        (800 1000 1200 1400 1600 1800 2000)
+        "" "----------------")
+      org-agenda-time-leading-zero t
+      org-agenda-current-time-string "———————————————— now")
+
+(setq org-export-with-section-numbers nil
+      org-export-with-toc nil
+      org-export-with-tags nil)
+
+(define-advice org-export-output-file-name (:around (orig-fun extension &optional subtreep pub-dir))
+  (unless pub-dir
+    (setq pub-dir (expand-file-name "export/" org-directory))
+    (unless (file-directory-p pub-dir)
+      (make-directory pub-dir)))
+  (apply orig-fun extension subtreep pub-dir nil))
+
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
+
+(setq org-latex-compiler "lualatex"
+      org-latex-default-class "report")
+
+(add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+
+(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
+                          ("report" "\\documentclass[11pt]{report}"
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
+                          ("book" "\\documentclass[11pt]{book}"
+                           ("\\part{%s}"          . "\\part*{%s}")
+                           ("\\chapter{%s}"       . "\\chapter*{%s}")
+                           ("\\section{%s}"       . "\\section*{%s}")
+                           ("\\subsection{%s}"    . "\\subsection*{%s}")
+                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+(add-hook 'spell-fu-mode-hook
+          (lambda () (spell-fu-dictionary-add
+                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
 
 (use-package! anki-editor
   :hook (org-mode . anki-editor-mode)
