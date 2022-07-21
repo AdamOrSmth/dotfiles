@@ -14,8 +14,6 @@ workspace = HDMI-A-1,10
 * General
 Settings that don't really belong anywhere else (although some of this arguably belongs in the =input= section, but oh well, it's not my code).
 
-+ ~max_fps~ :: Self-explanatory.
-
 + ~sensitivity~ :: Self-explanatory.
 + ~apply_sens_to_raw~ :: Disable applying mouse sensitivity customization to raw input (e.g. for games).
 
@@ -32,8 +30,6 @@ The total distance between windows is equal to ~gaps_in~ + ~border_size~.
 
 #+begin_src conf
 general {
-    max_fps = 144
-
     sensitivity = 1.0
     apply_sens_to_raw = 0
 
