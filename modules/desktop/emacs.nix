@@ -54,9 +54,8 @@ in {
       # Exporting to LaTeX (https://nixos.wiki/wiki/TexLive)
       (texlive.combine {
         inherit (texlive)
-          scheme-basic latexmk wrapfig ulem capt-of # Required by default
-          biber biblatex biblatex-mla biblatex-apa # Citations
-          hanging; # Custom formatting
+          scheme-basic latexmk wrapfig ulem capt-of dvipng # Required by default
+          biber biblatex biblatex-mla biblatex-apa; # Citations
       })
       # :lang shell
       shellcheck
