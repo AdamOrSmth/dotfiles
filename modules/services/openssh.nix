@@ -31,7 +31,5 @@ in {
     };
 
     users.users.${cfg.user}.openssh.authorizedKeys.keys = [ cfg.key ];
-
-    networking.firewall.allowedTCPPorts = [ 22 ];
   };
 }
