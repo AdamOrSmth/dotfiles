@@ -3,14 +3,17 @@
 {
   # Options for my various modules
   my = {
-    cli.nix = {
-      autoGc = true;
-      autoOptimise = true;
+    cli = {
+      git.enable = true;
+      nix = {
+        autoGc = true;
+        autoOptimise = true;
+      };
     };
     hardware.networking = { interface = "enp1s0"; };
     services = {
       caddy.enable = true;
-      gitea.enable = true;
+      gitolite-cgit.enable = true;
       navidrome = {
         enable = true;
         musicFolder = "${config.my.services.syncthing.dataDir}/Music";
