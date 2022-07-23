@@ -39,12 +39,11 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e3a3ba17-847f-4790-a373-b53ca933f477";
+    device = "/dev/sda1";
     fsType = "ext4";
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/cf262e63-b229-4c89-b97a-91c05d433177"; }];
+  swapDevices = [{ device = "/dev/sda2"; }];
 
   hardware.cpu.amd.updateMicrocode = true;
 
