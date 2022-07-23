@@ -18,17 +18,7 @@ in {
   config = mkIf cfg.enable {
     services.navidrome = {
       enable = true;
-      settings = { MusicFolder = cfg.musicFolder; };
+      settings.MusicFolder = cfg.musicFolder;
     };
-
-    # Override to fix Last.Fm scrobbling,
-    # which requires read-access to certain folders in /etc
-    systemd.services.navidrome.serviceConfig.BindReadOnlyPaths = [
-      builtins.storeDir
-      cfg.musicFolder
-      "/etc/resolv.conf"
-      "/etc/ssl/certs"
-      "/etc/static/ssl/certs"
-    ];
   };
 }
