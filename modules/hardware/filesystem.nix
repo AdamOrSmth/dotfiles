@@ -22,7 +22,7 @@ in {
       };
     };
 
-    # This should be somewhere else, but I'm too lazy to find a spot.
+    # TODO This should be somewhere else, but I'm too lazy to find a spot.
     boot.supportedFilesystems = [ "ntfs" ];
   };
 
