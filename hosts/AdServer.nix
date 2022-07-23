@@ -11,10 +11,10 @@
     services = {
       caddy.enable = true;
       gitea.enable = true;
-      #navidrome = {
-      #  enable = true;
-      #  musicFolder = "${config.my.services.syncthing.dataDir}/Music";
-      #};
+      navidrome = {
+        enable = true;
+        musicFolder = "${config.my.services.syncthing.dataDir}/Music";
+      };
       openssh = {
         enable = true;
         key =
