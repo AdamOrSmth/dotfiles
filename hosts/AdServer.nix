@@ -37,9 +37,22 @@
 
   boot.kernelPackages = pkgs.linuxPackages_5_15;
 
-  boot.initrd.availableKernelModules =
-    [ "ahci" "xhci_pci" "virtio_pci" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "xhci_pci"
+    "virtio_pci"
+    "sd_mod"
+    "sr_mod"
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "9p"
+    "9pnet_virtio"
+  ];
+  boot.initrd.kernelModules =
+    [ "virtio_balloon" "virtio_console" "virtio_rng" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
