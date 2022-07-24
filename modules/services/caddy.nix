@@ -48,6 +48,9 @@ in {
       '';
     };
 
+    systemd.services.caddy.serviceConfig.AmbientCapabilities =
+      "CAP_NET_BIND_SERVICE";
+
     networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }
