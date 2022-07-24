@@ -9,13 +9,16 @@ let
   inherit (builtins) elem attrNames;
   cfg = getAttrFromPath path config;
   folders = [ "Pass" "Music" "Sync" ];
+  user = if cfg.system then "syncthing" else config.my.user.username;
+  home = if cfg.system then "/var/lib/syncthing" else config.my.user.home;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Syncthing service";
+    system = mkEnableOption "Run as system user + service";
     dataDir = mkOption {
       description = "Default data location";
       type = types.path;
-      default = "/var/lib/syncthing";
+      default = home;
     };
     enabledFolders = mkOption {
       description = "List of folders to enable on this device";
@@ -31,14 +34,13 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let user = config.my.user;
-  in {
+  config = mkIf cfg.enable ({
     services.syncthing = {
       enable = true;
-      user = user.username;
+      inherit user;
       openDefaultPorts = true;
       inherit (cfg) dataDir;
-      configDir = "${user.home}/.config/syncthing";
+      configDir = "${home}/.config/syncthing";
       devices = {
         AdPC = {
           id =

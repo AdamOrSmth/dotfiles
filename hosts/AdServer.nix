@@ -23,7 +23,10 @@
         key =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODhsvZT2xbdvgUOZn12BH1wy8slQAR2kRibdHy164bh <ssh://ad@5.161.48.126|ed25519>";
       };
-      syncthing.enable = true;
+      syncthing = {
+        enable = true;
+        system = true;
+      };
     };
   };
 

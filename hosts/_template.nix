@@ -72,6 +72,7 @@
       printing.enable = false;
       syncthing = {
         enable = false;
+        system = false;
         dataDir = null;
         enabledFolders = null;
         folderLocations = null;
