@@ -18,6 +18,7 @@ in {
       # Perl is a readonly language
       extraGitoliteRc = ''
         $RC{UMASK} = 0027;
+        $RC{GIT_CONFIG_KEYS} = '.*';
         push( @{$RC{ENABLE}}, 'cgit' );
       '';
     };
