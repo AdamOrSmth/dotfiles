@@ -42,18 +42,12 @@ in {
       inherit (cfg) dataDir;
       configDir = "${home}/.config/syncthing";
       devices = {
-        AdPC = {
-          id =
-            "ZCUJPS3-DS2HJXR-WXNDHY2-7TF6CCW-SUN2EIF-E7GCFYT-IGUY4CN-GY4HMQO";
-        };
-        AdLaptop = {
-          id =
-            "AENWMMW-DELUEVT-QXCO45X-TO55E7B-3JU25OD-ACDVOIN-FTQT7CJ-CKBCEQH";
-        };
-        AdServer = {
-          id =
-            "XPDW2XO-HPQPHCH-5GXJOW2-BQH7R6Z-FDIFJ5X-MSFOOZR-PC3W2N6-XLV5BQ7";
-        };
+        AdPC.id =
+          "ZCUJPS3-DS2HJXR-WXNDHY2-7TF6CCW-SUN2EIF-E7GCFYT-IGUY4CN-GY4HMQO";
+        AdLaptop.id =
+          "AENWMMW-DELUEVT-QXCO45X-TO55E7B-3JU25OD-ACDVOIN-FTQT7CJ-CKBCEQH";
+        AdServer.id =
+          "XPDW2XO-HPQPHCH-5GXJOW2-BQH7R6Z-FDIFJ5X-MSFOOZR-PC3W2N6-XLV5BQ7";
       };
       folders = let
         # Generate a list of devices from the devices attribute
