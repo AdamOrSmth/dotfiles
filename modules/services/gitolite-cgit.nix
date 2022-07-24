@@ -36,6 +36,7 @@ in {
 
       enable-blame=1
       enable-commit-graph=1
+      enable-git-config=1
       enable-index-links=1
       enable-log-filecount=1
       enable-log-linecount=1
