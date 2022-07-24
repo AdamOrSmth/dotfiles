@@ -4,7 +4,7 @@ path:
 
 let
   inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
-  inherit (pkgs) buildGoModule caddy fetchFromGitHub;
+  inherit (pkgs) buildGoModule fetchFromGitHub cgit;
   custom-caddy = let version = "2.5.2";
   in buildGoModule rec {
     pname = "caddy-custom";
@@ -37,12 +37,8 @@ in {
           reverse_proxy 127.0.0.1:${toString cfg.navidrome.settings.Port}
         }
         git.adamorsomething.xyz {
-          handle_path /cgit* {
-            root * /usr/share/cgit
-            file_server
-          }
           handle {
-            cgi * /usr/lib/cgit/cgit.cgi
+            cgi * ${cgit}/cgit/cgit.cgi
           }
         }
       '';
