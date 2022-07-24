@@ -23,9 +23,17 @@ in {
     };
 
     environment.etc.cgitrc.text = ''
+      project-list=/var/lib/gitolite/projects.list
       scan-path=/var/lib/gitolite/repositories
 
       root-title=Ad's Repos
+      root-desc=Random projects of mine
+
+      enable-blame=1
+      enable-commit-graph=1
+      enable-index-links=1
+      enable-log-filecount=1
+      enable-log-linecount=1
     '';
   };
 }
