@@ -38,6 +38,10 @@ in {
           reverse_proxy 127.0.0.1:${toString cfg.navidrome.settings.Port}
         }
         git.adamorsomething.xyz {
+          handle_path /cgit* {
+            root * ${cgit}/cgit
+            file_server
+          }
           handle {
             cgi * ${cgit}/cgit/cgit.cgi
           }
