@@ -50,7 +50,7 @@ in {
         };
         AdServer = {
           id =
-            "VYNPC54-JKPBHIF-4NI4TEX-V33QRJ6-QXBHIS5-ZXYDUJY-3E33GM7-X2UFYAG";
+            "5FI3FTU-7L7SQZF-XVUMTBU-VHOTGRL-AQQFRJ6-IPHO2X5-PV6DSKL-DA3Q4Q3";
         };
       };
       folders = let
