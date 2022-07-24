@@ -28,6 +28,7 @@ in {
     services.caddy = {
       enable = true;
       package = custom-caddy;
+      group = "git";
       globalConfig = ''
         order cgi before file_server
       '';
