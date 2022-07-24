@@ -24,9 +24,6 @@ in {
     };
 
     environment.etc.cgitrc.text = ''
-      project-list=/var/lib/gitolite/projects.list
-      scan-path=/var/lib/gitolite/repositories
-
       root-title=Ad's Repos
       root-desc=Random projects of mine
 
@@ -40,6 +37,9 @@ in {
       enable-index-links=1
       enable-log-filecount=1
       enable-log-linecount=1
+
+      project-list=/var/lib/gitolite/projects.list
+      scan-path=/var/lib/gitolite/repositories
     '';
   };
 }
