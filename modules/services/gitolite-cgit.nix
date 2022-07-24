@@ -29,6 +29,10 @@ in {
       root-title=Ad's Repos
       root-desc=Random projects of mine
 
+      css=/cgit/cgit.css
+      logo=/cgit/cgit.png
+      favicon=/cgit/favicon.ico
+
       enable-blame=1
       enable-commit-graph=1
       enable-index-links=1
