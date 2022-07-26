@@ -174,7 +174,7 @@ bind = SUPERSHIFT,F,togglefloating
 bind = SUPER,T,pseudo
 #+end_src
 
-Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
+Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. Additionally, bind has the =e= flag given, which makes it automatically repeat, convenient for this map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
 + =s-r= :: Enter the ~resize~ sub-map.
 + ={h,j,k,l}= :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
 + =ESC= :: Exit the ~resize~ sub-map.
@@ -183,14 +183,14 @@ bind = SUPER,R,submap,resize
 
 submap = resize
 
-bind = ,H,resizeactive,-100 0
-bind = ,J,resizeactive,0 100
-bind = ,K,resizeactive,0 -100
-bind = ,L,resizeactive,100 0
-bind = SHIFT,H,resizeactive,-20 0
-bind = SHIFT,J,resizeactive,0 20
-bind = SHIFT,K,resizeactive,0 -20
-bind = SHIFT,L,resizeactive,20 0
+binde = ,H,resizeactive,-100 0
+binde = ,J,resizeactive,0 100
+binde = ,K,resizeactive,0 -100
+binde = ,L,resizeactive,100 0
+binde = SHIFT,H,resizeactive,-20 0
+binde = SHIFT,J,resizeactive,0 20
+binde = SHIFT,K,resizeactive,0 -20
+binde = SHIFT,L,resizeactive,20 0
 
 bind = ,escape,submap,reset
 
