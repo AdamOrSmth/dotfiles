@@ -65,8 +65,10 @@ input {
 }
 #+end_src
 * Layout
-Settings related to the =dwindle= layout of =Hyprland=, based off =bspwm=. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
+=Hyprland= comes with two different layout schemes: =dwindle=, based off =bspwm=, and =master=, based off the master/stack layout popularized by =Xmonad=.
 
+** Dwindle
+Settings related to the =dwindle= layout of =Hyprland=, based off =bspwm=. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
 + ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
 + ~special_scale_factor~ :: Special workspace is 90% of full monitor.
 + ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
