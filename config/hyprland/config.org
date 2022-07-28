@@ -28,6 +28,8 @@ The total distance between windows is equal to ~gaps_in~ + ~border_size~.
 + ~col.active_border~, ~col.inactive_border~ :: Self-explanatory.
 + ~damage_tracking~ :: Only update the screen when something changes. Highly recommended to leave on =full=.
 
++ layout :: Use the =master= layout.
+
 #+begin_src conf
 general {
     sensitivity = 1.0
@@ -42,6 +44,8 @@ general {
     col.inactive_border = 0xCC3B4252
 
     damage_tracking = full
+
+    layout = master
 }
 #+end_src
 * Input
@@ -68,7 +72,7 @@ input {
 =Hyprland= comes with two different layout schemes: =dwindle=, based off =bspwm=, and =master=, based off the master/stack layout popularized by =Xmonad=.
 
 ** Dwindle
-Settings related to the =dwindle= layout of =Hyprland=, based off =bspwm=. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
+Settings for the =dwindle= layout. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
 + ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
 + ~special_scale_factor~ :: Special workspace is 90% of full monitor.
 + ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
@@ -79,6 +83,19 @@ dwindle {
     col.group_border_active = 0xFFD08870
     special_scale_factor = 0.9
     force_split = 2
+}
+#+end_src
+** Master + Stack
+Settings for the =master= layout. More information in the [[https://github.com/hyprwm/Hyprland/wiki/Master-Layout][documentation]].
++ new_is_master :: Set new windows to open on the stack.
++ new_on_top :: Set new windows to open on the /top/ of the stack.
++ ~special_scale_factor~ :: Special workspace is 90% of full monitor.
+
+#+begin_src conf
+master {
+    new_is_master = 0
+    new_on_top = 1
+    special_scale_factor = 0.9
 }
 #+end_src
 * Decoration
