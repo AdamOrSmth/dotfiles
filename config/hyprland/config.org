@@ -103,8 +103,9 @@ Appearance-related settings.
 
 + ~rounding~ :: Round corners of windows by 12 pixels. Lower is practically unnoticeable, higher looks bad on most applications.
 + ~multisample_edges~ :: Make rounding look better.
-+ ~blur~ :: Enable background blur of transparent windows.
++ ~blur~ :: Enable dual kawase background blur of transparent windows.
 + ~blur_size~, ~blur_passes~ :: Blur amount depends on both ~blur_size~ and ~blur_passes~. Increasing ~blur_passes~ increases blur more, but comes at a performance cost, while increasing ~blur_size~ is more performant but begins to produce artifacts at higher values. I've found 3 and 3 work well for me.
++ drop_shadow :: Enable drop shadows on windows.
 
 #+begin_src conf
 decoration {
@@ -113,6 +114,10 @@ decoration {
     blur = 1
     blur_size = 3
     blur_passes = 3
+    drop_shadow = 1
+    shadow_range = 4
+    shadow_render_power = 2
+    col.shadow = 0xffffffff
 }
 #+end_src
 * Animations
