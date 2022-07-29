@@ -14,14 +14,12 @@ in {
   };
 
   config = mkIf cfg.enable (mkMerge [{
-    programs.hyprland = {
-      enable = true;
-      extraPackages = builtins.attrValues {
-        inherit (pkgs)
-          alacritty bemenu dunst grim pcmanfm playerctl slurp swaybg
-          swaylock-effects wl-clipboard wofi;
-        inherit (pkgs.xorg) xeyes;
-      };
+    programs.hyprland.enable = true;
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs)
+        alacritty bemenu dunst grim pcmanfm playerctl slurp swaybg
+        swaylock-effects wl-clipboard wofi;
+      inherit (pkgs.xorg) xeyes;
     };
 
     # Actually start the darn thing + set relevant environment variables
