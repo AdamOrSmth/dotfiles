@@ -101,7 +101,7 @@ master {
 * Decoration
 Appearance-related settings.
 
-+ ~rounding~ :: Round corners of windows by 12 pixels. Lower is practically unnoticeable, higher looks bad on most applications.
++ ~rounding~ :: Round corners of windows by 8 pixels.
 + ~multisample_edges~ :: Make rounding look better.
 + ~blur~ :: Enable dual kawase background blur of transparent windows.
 + ~blur_size~, ~blur_passes~ :: Blur amount depends on both ~blur_size~ and ~blur_passes~. Increasing ~blur_passes~ increases blur more, but comes at a performance cost, while increasing ~blur_size~ is more performant but begins to produce artifacts at higher values. I've found 3 and 3 work well for me.
