@@ -322,5 +322,5 @@ exec-once = sonixd --no-sandbox
 My Nix module for =Hyprland= exposes an ~extraConfig~ option to apply device-specific configuration; the configuration gets saved to the ~extra.conf~ file, so we source/import it here.
 
 #+begin_src conf
-source = extra.conf
+source = ~/.config/hypr/extra.conf
 #+end_src
