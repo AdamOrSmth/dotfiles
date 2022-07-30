@@ -28,8 +28,6 @@ The total distance between windows is equal to ~gaps_in~ + ~border_size~.
 + ~col.active_border~, ~col.inactive_border~ :: Self-explanatory.
 + ~damage_tracking~ :: Only update the screen when something changes. Highly recommended to leave on =full=.
 
-+ layout :: Use the =master= layout.
-
 #+begin_src conf
 general {
     sensitivity = 1.0
@@ -44,8 +42,6 @@ general {
     col.inactive_border = 0x00000000
 
     damage_tracking = full
-
-    layout = master
 }
 #+end_src
 * Input
@@ -157,17 +153,17 @@ bind = SUPERSHIFT,Q,exit
 bind = SUPERSHIFT,R,exec,hyprctl reload
 #+end_src
 ** Window Management
-+ s-{j/k} :: Cycle between windows.
-+ s-S-{j/k} :: Swap the active window via Vi-like directions.
-+ s-m :: Focus the master window. There currently isn't a dispatcher for this, so I'm just moving the focus to the left, which should work most of the time.
-+ s-S-m :: Swap the active window with the master window.
++ s-{h/j/k/l} :: Switch focus, Vi-like.
++ =s-S-{h/j/k/l} :: Swap windows.
 #+begin_src conf
-bind = SUPER,J,layoutmsg,cyclenext
-bind = SUPER,K,layoutmsg,cycleprev
+bind = SUPER,H,movefocus,l
+bind = SUPER,J,movefocus,d
+bind = SUPER,K,movefocus,u
+bind = SUPER,L,movefocus,r
+bind = SUPERSHIFT,H,movewindow,l
 bind = SUPERSHIFT,J,movewindow,d
 bind = SUPERSHIFT,K,movewindow,u
-bind = SUPER,M,movefocus,l
-bind = SUPERSHIFT,M,layoutmsg,swapwithmaster
+bind = SUPERSHIFT,L,movewindow,r
 #+end_src
 
 + s-c :: Close/kill window.
@@ -195,14 +191,36 @@ bind = SUPERSHIFT,F,togglefloating
 bind = SUPER,T,pseudo
 #+end_src
 
-The =bind= keyword can take flags that modify its behavior; the =e= flag allows it to repeat while held down, which is definitely useful for a keybinding to resize windows.
-+ =s-{h/l}= :: Resize the active window/stack.
-+ s-S-{h/l} :: Resize the active window/stack, but a /little/.
+Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. Additionally, bind has the =e= flag given, which makes it automatically repeat, convenient for this map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
++ =s-r= :: Enter the ~resize~ sub-map.
++ ={h,j,k,l}= :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
++ =ESC= :: Exit the ~resize~ sub-map.
 #+begin_src conf
-binde = SUPER,H,resizeactive,-100 0
-binde = SUPER,L,resizeactive,100 0
-binde = SUPERSHIFT,H,resizeactive,-20 0
-binde = SUPERSHIFT,L,resizeactive,20 0
+bind = SUPER,R,submap,resize
+
+submap = resize
+
+binde = ,H,resizeactive,-100 0
+binde = ,J,resizeactive,0 100
+binde = ,K,resizeactive,0 -100
+binde = ,L,resizeactive,100 0
+binde = SHIFT,H,resizeactive,-20 0
+binde = SHIFT,J,resizeactive,0 20
+binde = SHIFT,K,resizeactive,0 -20
+binde = SHIFT,L,resizeactive,20 0
+
+bind = ,escape,submap,reset
+
+submap = reset
+#+end_src
+
+Groups are collections of windows/nodes that only take up one window's worth of space, like tabs in a browser. A keybinding switches between windows within a group. Opening new windows onto the group nodes adds them to the group.
++ s-g :: Make the current node and all its siblings a group.
++ s-{m/n} :: Switch between the windows in the focused group.
+#+begin_src conf
+bind = SUPER,G,togglegroup
+bind = SUPER,M,changegroupactive,f
+bind = SUPER,N,changegroupactive,b
 #+end_src
 ** Workspaces
 + s-{0-9} :: Switch between workspaces.
