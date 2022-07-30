@@ -6,8 +6,8 @@
 Configures available monitors, with their appropriate resolutions, refresh rates, relative locations, and workspaces. I prefer only my primary monitor to have workspaces, and for my secondary monitor to remain for reference only, therefore I give it the workspace 10 (bound to 0 in my keybindings). See the [[https://github.com/vaxerski/=Hyprland=/wiki/Advanced-config#monitors][relevant documentation]] for more details.
 
 #+begin_src conf
-monitor = DP-2,2560x1440@144,0x0,1
-monitor = HDMI-A-1,1920x1080@60,2560x360,1
+monitor   = DP-2,2560x1440@144,0x0,1
+monitor   = HDMI-A-1,1920x1080@60,2560x360,1
 workspace = DP-2,1
 workspace = HDMI-A-1,10
 #+end_src
@@ -30,18 +30,18 @@ The total distance between windows is equal to ~gaps_in~ + ~border_size~.
 
 #+begin_src conf
 general {
-    sensitivity = 1.0
-    apply_sens_to_raw = false
+    sensitivity         = 1.0
+    apply_sens_to_raw   = false
 
-    main_mod = SUPER
+    main_mod            = SUPER
 
-    gaps_in = 2
-    gaps_out = 6
-    border_size = 2
-    col.active_border = 0xFF88C0D0
+    gaps_in             = 2
+    gaps_out            = 6
+    border_size         = 2
+    col.active_border   = 0xFF88C0D0
     col.inactive_border = 0x00000000
 
-    damage_tracking = full
+    damage_tracking     = full
 }
 #+end_src
 * Input
@@ -53,13 +53,13 @@ Settings related to input.
 
 #+begin_src conf
 input {
-    kb_layout =
-    kb_variant =
-    kb_model =
-    kb_options =
-    kb_rules =
+    kb_layout      =
+    kb_variant     =
+    kb_model       =
+    kb_options     =
+    kb_rules       =
 
-    follow_mouse = true
+    follow_mouse   = true
 
     force_no_accel = true
 }
@@ -75,10 +75,10 @@ Settings for the =dwindle= layout. More information in the [[https:github.com/va
 
 #+begin_src conf
 dwindle {
-    col.group_border = 0xCCB48EAD
+    col.group_border        = 0xCCB48EAD
     col.group_border_active = 0xFFD08870
-    special_scale_factor = 0.9
-    force_split = 2
+    special_scale_factor    = 0.9
+    force_split             = 2
 }
 #+end_src
 ** Master + Stack
@@ -89,8 +89,8 @@ Settings for the =master= layout. More information in the [[https://github.com/h
 
 #+begin_src conf
 master {
-    new_is_master = false
-    new_on_top = true
+    new_is_master        = false
+    new_on_top           = true
     special_scale_factor = 0.9
 }
 #+end_src
@@ -105,21 +105,21 @@ Appearance-related settings.
 
 #+begin_src conf
 decoration {
-    rounding = 8
+    rounding          = 8
     multisample_edges = true
-    blur = true
-    blur_size = 3
-    blur_passes = 3
-    drop_shadow = true
+    blur              = true
+    blur_size         = 3
+    blur_passes       = 3
+    drop_shadow       = true
 }
 #+end_src
 * Animations
 Settings related to animations present within =Hyprland=.
 
 I first define some custom bezier curves using the ~bezier~ keyword, which takes a name and then the coordinates for the two points of a cubic bezier. A good place to mess around with curves is [[https://www.cssportal.com/css-cubic-bezier-generator/][here]].
-+ =overshot= :: A curve that starts steep and levels out with a bump going slightly over 1. Used with ~windows~.
-+ =easein= :: An almost-linear ease-in used with ~fadein~ in conjunction with =overshot= on ~windows~.
-+ =easeout= :: A steep, extreme ease-out curve for switching workspaces.
++ overshot :: A curve that starts steep and levels out with a bump going slightly over 1. Used with ~windows~.
++ easein :: An almost-linear ease-in used with ~fadein~ in conjunction with =overshot= on ~windows~.
++ easeout :: A steep, extreme ease-out curve for switching workspaces.
 
 There are four animations in =Hyprland=:
 + ~windows~ :: Animations for the opening, closing, and movement of windows.
@@ -135,7 +135,7 @@ bezier = easein,0.1,0,1,1
 bezier = easeout,0,1,0.5,1
 
 animations {
-    enabled = true
+    enabled   = true
     animation = windows,1,7,overshot,slide
     animation = fade,1,7,default
     animation = border,1,10,default
@@ -154,7 +154,7 @@ bind = SUPERSHIFT,R,exec,hyprctl reload
 #+end_src
 ** Window Management
 + s-{h/j/k/l} :: Switch focus, Vi-like.
-+ =s-S-{h/j/k/l} :: Swap windows.
++ s-S-{h/j/k/l} :: Swap windows.
 #+begin_src conf
 bind = SUPER,H,movefocus,l
 bind = SUPER,J,movefocus,d
@@ -192,24 +192,24 @@ bind = SUPER,T,pseudo
 #+end_src
 
 Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. Additionally, bind has the =e= flag given, which makes it automatically repeat, convenient for this map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
-+ =s-r= :: Enter the ~resize~ sub-map.
-+ ={h,j,k,l}= :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
-+ =ESC= :: Exit the ~resize~ sub-map.
++ s-r :: Enter the ~resize~ sub-map.
++ {h,j,k,l} :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
++ ESC :: Exit the ~resize~ sub-map.
 #+begin_src conf
-bind = SUPER,R,submap,resize
+bind   = SUPER,R,submap,resize
 
 submap = resize
 
-binde = ,H,resizeactive,-100 0
-binde = ,J,resizeactive,0 100
-binde = ,K,resizeactive,0 -100
-binde = ,L,resizeactive,100 0
-binde = SHIFT,H,resizeactive,-20 0
-binde = SHIFT,J,resizeactive,0 20
-binde = SHIFT,K,resizeactive,0 -20
-binde = SHIFT,L,resizeactive,20 0
+binde  = ,H,resizeactive,-100 0
+binde  = ,J,resizeactive,0 100
+binde  = ,K,resizeactive,0 -100
+binde  = ,L,resizeactive,100 0
+binde  = SHIFT,H,resizeactive,-20 0
+binde  = SHIFT,J,resizeactive,0 20
+binde  = SHIFT,K,resizeactive,0 -20
+binde  = SHIFT,L,resizeactive,20 0
 
-bind = ,escape,submap,reset
+bind   = ,escape,submap,reset
 
 submap = reset
 #+end_src
