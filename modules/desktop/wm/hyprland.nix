@@ -11,6 +11,10 @@ in {
   options = setAttrByPath path {
     enable = mkEnableOption "Hyprland Wayland compositor";
     nvidia = mkEnableOption "NVIDIA-specific configurations";
+    extraConfig = mkOption {
+      description = "Extra device-specific lines to add to configuration";
+      type = types.lines;
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [{
@@ -46,7 +50,9 @@ in {
     # Required by swaylock
     security.pam.services.swaylock = { };
 
-    my.home.configFiles."hypr/hyprland.conf".source =
-      "${configDir}/hyprland/hyprland.conf";
+    my.home.configFiles = {
+      "hypr/hyprland.conf".source = "${configDir}/hyprland/hyprland.conf";
+      "hypr/extra.conf".text = cfg.extraConfig;
+    };
   }]);
 }

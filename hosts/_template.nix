@@ -41,6 +41,7 @@
         hyprland = {
           enable = false;
           nvidia = false;
+          extraConfig = "";
         };
       };
     };

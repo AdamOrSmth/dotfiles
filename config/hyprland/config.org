@@ -327,3 +327,9 @@ exec-once = discord --no-sandbox
 exec-once = signal-desktop --ozone-platform=wayland
 exec-once = sonixd --no-sandbox
 #+end_src
+* Import Custom Configuration
+My Nix module for =Hyprland= exposes an ~extraConfig~ option to apply device-specific configuration; the configuration gets saved to the ~extra.conf~ file, so we source/import it here.
+
+#+begin_src conf
+source = extra.conf
+#+end_src
