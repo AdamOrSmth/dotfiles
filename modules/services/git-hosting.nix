@@ -2,7 +2,9 @@ path:
 
 { config, lib, pkgs, ... }:
 
-let inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
+let
+  inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
+  inherit (pkgs) cgit;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Gitolite + cgit self-hosted Git server";
@@ -40,6 +42,18 @@ in {
 
       project-list=/var/lib/gitolite/projects.list
       scan-path=/var/lib/gitolite/repositories
+    '';
+
+    my.services.caddy.config = ''
+      git.adamorsomething.xyz {
+        handle_path /cgit* {
+          root * ${cgit}/cgit
+          file_server
+        }
+        handle {
+          cgi * ${cgit}/cgit/cgit.cgi
+        }
+      }
     '';
   };
 }

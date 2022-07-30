@@ -5,8 +5,8 @@ path:
 let
   inherit (lib)
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
-  cfg = getAttrFromPath path config;
   inherit (config.my) configDir;
+  cfg = getAttrFromPath path config;
 in {
   options = setAttrByPath path {
     enable = mkEnableOption throw "Create some options here!";

@@ -20,5 +20,12 @@ in {
       enable = true;
       settings.MusicFolder = cfg.musicFolder;
     };
+    my.services.caddy.config = ''
+      music.adamorsomething.xyz {
+        reverse_proxy 127.0.0.1:${
+          toString config.services.navidrome.settings.Port
+        }
+      }
+    '';
   };
 }
