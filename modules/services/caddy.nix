@@ -15,7 +15,7 @@ let
     src = fetchgit {
       url = "https://git.adamorsomething.xyz/caddy.git";
       rev = "8272013fc9e64cb4dcb1b451a69089cf73fa9be6";
-      sha256 = "";
+      sha256 = "Eddm+BtUTPoPLPB9feWQpmz/+yk668c7GtIGrv9oV04=";
     };
 
     vendorSha256 = "cu8AcPAk18LcZwK+KGoqH6IjB4/BUg2ZnCQSB691ieQ=";
