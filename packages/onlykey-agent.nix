@@ -1,28 +1,7 @@
-{ onlykey-agent, python3Packages, fetchFromGitHub, libnotify }:
+{ python3Packages, fetchFromGitHub, libnotify, onlykey-agent, my }:
 
 let
   inherit (python3Packages) buildPythonPackage fetchPypi;
-  onlykey = let
-    pname = "onlykey";
-    version = "1.2.9";
-  in buildPythonPackage {
-    inherit pname version;
-
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "92CzDZgtmww0eABtjeBo6HNQ00sijWakjXLPJiOXY/A=";
-    };
-
-    propagatedBuildInputs = with python3Packages; [
-      pynacl
-      aenum
-      cython
-      prompt-toolkit
-      hidapi
-      ecdsa
-      onlykey-solo-python
-    ];
-  };
   bech32 = let
     pname = "bech32";
     version = "1.2.0";
@@ -66,5 +45,5 @@ in onlykey-agent.overrideAttrs (oldAttrs: {
     sha256 = "tc6UrF8llPvY2rWlSXhyIKR8G4NKG0DjTyRyhjxUj1M=";
   };
 
-  propagatedBuildInputs = [ onlykey lib-agent ];
+  propagatedBuildInputs = [ my.onlykey-cli lib-agent ];
 })
