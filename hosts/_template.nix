@@ -57,7 +57,7 @@
     };
     services = {
       caddy.enable = false;
-      gitea.enable = false;
+      git-hosting.enable = false;
       lokinet.enable = false;
       navidrome = {
         enable = false;

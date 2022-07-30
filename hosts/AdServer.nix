@@ -13,7 +13,7 @@
     hardware.networking = { interface = "enp1s0"; };
     services = {
       caddy.enable = true;
-      gitolite-cgit.enable = true;
+      git-hosting.enable = true;
       navidrome = {
         enable = true;
         musicFolder = "${config.my.services.syncthing.dataDir}/Music";
