@@ -32,6 +32,12 @@
         hyprland = {
           enable = true;
           nvidia = true;
+          extraConfig = ''
+            monitor   = DP-2,2560x1440@144,0x0,1
+            monitor   = HDMI-A-1,1920x1080@60,2560x360,1
+            workspace = DP-2,1
+            workspace = HDMI-A-1,10
+          '';
         };
       };
     };
