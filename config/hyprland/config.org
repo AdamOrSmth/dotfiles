@@ -133,6 +133,14 @@ animations {
     animation = workspaces,1,5,easeout,slidevert
 }
 #+end_src
+* Miscellaneous
+Wake up the monitors on mouse move (the lock keybind triggers DPMS).
+
+#+begin_src conf
+misc {
+     mouse_move_enables_dpms = true
+}
+#+end_src
 * Keybindings
 Define a keybinding with the ~bind~ keyword. It takes a modifier, key, dispatcher, and then arguments for the dispatcher (if it has any). For a general list of dispatchers, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#general-dispatcher-list][here]]. Modifiers key are just the key names in all caps smashed together, e.g. =SUPER= or =SUPERSHIFT=. Omitting a modifier is fine as well. Use ~wev~ to get key names if unsure. Single keys are generally uppercase, otherwise all lowercase.
 
@@ -254,12 +262,12 @@ bind = SUPER,slash,togglespecialworkspace
 bind = SUPERSHIFT,question,movetoworkspace,special
 #+end_src
 ** Misc
-Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture.
-+ s-`, C-s-q :: Lock the current session.
+Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture. A non-suspend lock also turns off monitors by calling the DPMS dispatcher through ~hyprctl~ (stacking bindings doesn't work).
++ s-`, C-s-q :: Lock the current session and disable DPMS (turn off monitors).
 + s-~ :: Lock and suspend the current session.
 #+begin_src conf
-bind = SUPER,grave,exec,swaylock -F
-bind = SUPERCTRL,Q,exec,swaylock -F
+bind = SUPER,grave,exec,swaylock -fF && hyprctl dispatch dpms off
+bind = SUPERCTRL,Q,exec,swaylock -fF && hyprctl dispatch dpms off
 bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
 #+end_src
 
