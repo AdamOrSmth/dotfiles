@@ -72,19 +72,6 @@ dwindle {
     force_split             = 2
 }
 #+end_src
-** Master + Stack
-Settings for the =master= layout. More information in the [[https://github.com/hyprwm/Hyprland/wiki/Master-Layout][documentation]].
-+ new_is_master :: Set new windows to open on the stack.
-+ new_on_top :: Set new windows to open on the /top/ of the stack.
-+ ~special_scale_factor~ :: Special workspace is 90% of full monitor.
-
-#+begin_src conf
-master {
-    new_is_master        = false
-    new_on_top           = true
-    special_scale_factor = 0.9
-}
-#+end_src
 * Decoration
 Appearance-related settings.
 
