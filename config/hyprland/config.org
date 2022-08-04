@@ -2,6 +2,12 @@
 #+property: header-args :tangle hyprland.conf
 #+auto_tangle: t
 
+* Monitors
+I use =Hyprland= on different devices, so their monitor setup is not always consistent; therefore, I've moved device-specific configuration to their respective host modules. However, =Hyprland= has the ~preferred~ and ~auto~ option for monitors, which serve as a nice fallback; see [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config#monitors][here]].
+
+#+begin_src conf
+monitor = ,preferred,auto,1
+#+end_src
 * General
 Settings that don't really belong anywhere else (although some of this arguably belongs in the =input= section, but oh well, it's not my code).
 
