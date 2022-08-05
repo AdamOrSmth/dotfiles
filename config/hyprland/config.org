@@ -44,14 +44,14 @@ general {
 * Input
 Settings related to input.
 
-+ Keyboard settings :: I don't know what any of these do, but =Hyprland= refuses to work without them, so I've kept them present but blank.
++ kb_layout, kb_variant, kb_model, kb_options, kb_rules :: Appropriate ~xkb~ keyboard settings, used to set keyboard variant to Colemak-DH.
 + ~follow_mouse~ :: Focus follows the mouse cursor, and the mouse cursor follows focus.
 + ~force_no_accel~ :: Mouse acceleration (usually) sucks.
 
 #+begin_src conf
 input {
-    kb_layout      =
-    kb_variant     =
+    kb_layout      = us
+    kb_variant     = colemak_dh
     kb_model       =
     kb_options     =
     kb_rules       =
