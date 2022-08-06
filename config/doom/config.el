@@ -310,6 +310,34 @@
                0.75
              1.0))))))
 
+(setq evil-org-movement-bindings '((left  . "m")
+                                   (down  . "n")
+                                   (up    . "e")
+                                   (right . "i")))
+(map!
+ :nmv "m" #'evil-backward-char
+ :nmv "h" #'evil-forward-word-end
+ :nmv "n" #'evil-next-line
+ :nv  "j" #'evil-set-marker
+ :nmv "e" #'evil-previous-line
+ :nmv "k" #'evil-ex-search-next
+ :nmv "i" #'evil-forward-char
+ :n   "l" #'evil-insert
+ :v   "L" #'evil-insert
+ :nmv "K" #'evil-ex-search-previous
+ :nmv "E" #'+lookup/documentation
+ (:map evil-window-map
+  "m" #'evil-window-left
+  "h" nil
+  (:prefix ("h" . "maximize")
+   "m" #'doom/window-maximize-buffer
+   "s" #'doom/window-maximize-horizontally
+   "v" #'doom/window-maximize-vertically)
+  "n" #'evil-window-down
+  "e" #'evil-window-up
+  "k" #'evil-window-new
+  "i" #'evil-window-right))
+
 (map! (:leader
        (:prefix ("l" . "langtool")
         :desc "langtool-check" "c" #'langtool-check
