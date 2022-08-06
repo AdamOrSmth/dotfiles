@@ -135,42 +135,42 @@ misc {
 }
 #+end_src
 * Keybindings
-Define a keybinding with the ~bind~ keyword. It takes a modifier, key, dispatcher, and then arguments for the dispatcher (if it has any). For a general list of dispatchers, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#general-dispatcher-list][here]]. Modifiers key are just the key names in all caps smashed together, e.g. =SUPER= or =SUPERSHIFT=. Omitting a modifier is fine as well. Use ~wev~ to get key names if unsure. Single keys are generally uppercase, otherwise all lowercase.
+Define a keybinding with the ~bind~ keyword. It takes a modifier, key, dispatcher, and then arguments for the dispatcher (if it has any). For a general list of dispatchers, see [[https://github.com/vaxerski/Hyprland/wiki/Advanced-config#general-dispatcher-list][here]]. Modifiers key are just the key names in all caps smashed together, e.g. =SUPER= or =SUPERSHIFT=. Omitting a modifier is fine as well. Use ~wev~ to get key names if unsure. Single keys are generally uppercase, otherwise all lowercase. I use the =Colemak-DH= keyboard layout; I documented the binds with their QWERTY position, and then transposed them to their appropriate Colemak-DH location.
 
 ** Hyprland
 + s-S-q :: Quit =Hyprland=.
 + s-S-r :: Reload =Hyprland=. =Hyprland= automatically reloads the configuration file whenever it's edited, but it doesn't work when the file is a symlink and its target location changes, which is what happens during a NixOS rebuild with ~home-manager~. A keybinding is nice to have to quickly force a reload after a rebuild without having to open a terminal.
 #+begin_src conf
 bind = SUPERSHIFT,Q,exit
-bind = SUPERSHIFT,R,exec,hyprctl reload
+bind = SUPERSHIFT,P,exec,hyprctl reload
 #+end_src
 ** Window Management
 + s-{h/j/k/l} :: Switch focus, Vi-like.
 + s-S-{h/j/k/l} :: Swap windows.
 #+begin_src conf
-bind = SUPER,H,movefocus,l
-bind = SUPER,J,movefocus,d
-bind = SUPER,K,movefocus,u
-bind = SUPER,L,movefocus,r
-bind = SUPERSHIFT,H,movewindow,l
-bind = SUPERSHIFT,J,movewindow,d
-bind = SUPERSHIFT,K,movewindow,u
-bind = SUPERSHIFT,L,movewindow,r
+bind = SUPER,M,movefocus,l
+bind = SUPER,N,movefocus,d
+bind = SUPER,E,movefocus,u
+bind = SUPER,I,movefocus,r
+bind = SUPERSHIFT,M,movewindow,l
+bind = SUPERSHIFT,N,movewindow,d
+bind = SUPERSHIFT,E,movewindow,u
+bind = SUPERSHIFT,I,movewindow,r
 #+end_src
 
 + s-c :: Close/kill window.
 #+begin_src conf
-bind = SUPER,C,killactive
+bind = SUPER,D,killactive
 #+end_src
 
 Switch & move windows between monitors.
 + s-{s/d} :: Switch focus to the leftward/rightward monitor.
 + s-S-{s/d} :: Move the focused window to the leftward/rightward monitor.
 #+begin_src conf
-bind = SUPER,S,focusmonitor,l
-bind = SUPER,D,focusmonitor,r
-bind = SUPERSHIFT,S,movewindow,mon:l
-bind = SUPERSHIFT,D,movewindow,mon:r
+bind = SUPER,R,focusmonitor,l
+bind = SUPER,S,focusmonitor,r
+bind = SUPERSHIFT,R,movewindow,mon:l
+bind = SUPERSHIFT,S,movewindow,mon:r
 #+end_src
 
 + s-f :: Toggle fullscreen for the focused window. The argument decides whether or not to truly fullscreen or simply "maximize" the window and leave gaps + bars; I choose to fully fullscreen.
@@ -178,9 +178,9 @@ bind = SUPERSHIFT,D,movewindow,mon:r
 + s-t :: Toggle pseudo-tiled for the focused window. A pseudo-tiled window automatically shrinks with the layout, but will not grow larger than its floating size (useful for e.g. dialog boxes, TOR browser).
 #+begin_src conf
 # Toggle floating/fullscreen
-bind = SUPER,F,fullscreen,0
-bind = SUPERSHIFT,F,togglefloating
-bind = SUPER,T,pseudo
+bind = SUPER,T,fullscreen,0
+bind = SUPERSHIFT,T,togglefloating
+bind = SUPER,B,pseudo
 #+end_src
 
 Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. Additionally, bind has the =e= flag given, which makes it automatically repeat, convenient for this map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
@@ -188,18 +188,18 @@ Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. Thi
 + {h,j,k,l} :: While in the ~resize~ sub-map, resize windows with Vi-like keybindings, respectively.
 + ESC :: Exit the ~resize~ sub-map.
 #+begin_src conf
-bind   = SUPER,R,submap,resize
+bind   = SUPER,P,submap,resize
 
 submap = resize
 
-binde  = ,H,resizeactive,-100 0
-binde  = ,J,resizeactive,0 100
-binde  = ,K,resizeactive,0 -100
-binde  = ,L,resizeactive,100 0
-binde  = SHIFT,H,resizeactive,-20 0
-binde  = SHIFT,J,resizeactive,0 20
-binde  = SHIFT,K,resizeactive,0 -20
-binde  = SHIFT,L,resizeactive,20 0
+binde  = ,M,resizeactive,-100 0
+binde  = ,N,resizeactive,0 100
+binde  = ,E,resizeactive,0 -100
+binde  = ,I,resizeactive,100 0
+binde  = SHIFT,M,resizeactive,-20 0
+binde  = SHIFT,N,resizeactive,0 20
+binde  = SHIFT,E,resizeactive,0 -20
+binde  = SHIFT,I,resizeactive,20 0
 
 bind   = ,escape,submap,reset
 
@@ -211,8 +211,8 @@ Groups are collections of windows/nodes that only take up one window's worth of 
 + s-{m/n} :: Switch between the windows in the focused group.
 #+begin_src conf
 bind = SUPER,G,togglegroup
-bind = SUPER,M,changegroupactive,f
-bind = SUPER,N,changegroupactive,b
+bind = SUPER,H,changegroupactive,f
+bind = SUPER,K,changegroupactive,b
 #+end_src
 ** Workspaces
 + s-{0-9} :: Switch between workspaces.
@@ -284,9 +284,9 @@ bind = ,xf86audionext,exec,playerctl next
 #+begin_src conf
 bind = SUPER,return,exec,wofi --show drun
 bind = SUPERSHIFT,return,exec,alacritty
-bind = SUPER,E,exec,emacsclient -c
-bind = SUPER,B,exec,qutebrowser
-bind = SUPERSHIFT,B,exec,brave
+bind = SUPER,F,exec,emacsclient -c
+bind = SUPER,Z,exec,qutebrowser
+bind = SUPERSHIFT,Z,exec,brave
 #+end_src
 * Window Rules
 Window rules define actions that are automatically performed when a window with a matching class is *opened*.
