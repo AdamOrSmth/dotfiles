@@ -77,6 +77,8 @@
   };
   boot.initrd.kernelModules =
     [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  programs.adb.enable = true;
+  my.user.extraGroups = [ "adbusers" ];
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
