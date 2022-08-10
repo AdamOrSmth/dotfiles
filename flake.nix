@@ -18,6 +18,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # TODO Follow nixpkgs, eventually
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     hyprland = {
       url = "github:vaxerski/Hyprland";
