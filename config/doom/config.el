@@ -310,43 +310,45 @@
                0.75
              1.0))))))
 
-(after! (evil-org magit)
+(after! (evil-org)
   (setq evil-org-movement-bindings '((left  . "m")
                                      (down  . "n")
                                      (up    . "e")
                                      (right . "i"))))
-(map! :after evil
-      :nmv "m" #'evil-backward-char
-      :nmv "h" #'evil-forward-word-end
+(evil-collection-translate-key nil '(evil-normal-state-map evil-motion-state-map evil-visual-state-map evil-operator-state-map)
+  "m" "h"
+  "n" "j"
+  "e" "k"
+  "i" "l"
+  "h" "e"
+  "j" "m"
+  "k" "n"
+  "l" "u"
+  "u" "i"
+  "M" "H"
+  "N" "J"
+  "E" "K"
+  "I" "L"
+  "H" "E"
+  "J" "M"
+  "K" "N"
+  "L" "U"
+  "U" "I")
+(evil-collection-translate-key nil '(evil-window-map)
+  "m" "h"
+  "n" "j"
+  "e" "k"
+  "i" "l"
+  "h" "m"
+  "k" "n")
+(map! :after magit
+      :map magit-mode-map
       :nmv "n" #'evil-next-line
-      :nv  "j" #'evil-set-marker
+      :nv  "j" #'magit-ediff-dwim
       :nmv "e" #'evil-previous-line
       :nmv "k" #'evil-ex-search-next
-      :nmv "i" #'evil-forward-char
-      :n   "l" #'evil-undo
-      :n   "u" #'evil-insert
-      :v   "U" #'evil-insert
       :nmv "K" #'evil-ex-search-previous
-      :nmv "E" #'+lookup/documentation
-      (:map evil-window-map
-       "m" #'evil-window-left
-       "h" nil
-       (:prefix ("h" . "maximize")
-        "m" #'doom/window-maximize-buffer
-        "s" #'doom/window-maximize-horizontally
-        "v" #'doom/window-maximize-vertically)
-       "n" #'evil-window-down
-       "e" #'evil-window-up
-       "k" #'evil-window-new
-       "i" #'evil-window-right)
-      (:after magit
-       :map magit-mode-map
-       :nmv "n" #'evil-next-line
-       :nv  "j" #'magit-ediff-dwim
-       :nmv "e" #'evil-previous-line
-       :nmv "k" #'evil-ex-search-next
-       :nmv "K" #'evil-ex-search-previous
-       :nmv "E" #'+lookup/documentation))
+      :nmv "E" #'+lookup/documentation)
 
 (map! (:leader
        (:prefix ("l" . "langtool")
