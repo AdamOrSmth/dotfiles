@@ -5,6 +5,7 @@ path:
 let
   inherit (lib) setAttrByPath mkEnableOption getAttrFromPath mkIf;
   inherit (pkgs) cgit;
+  filters = "${cgit}/lib/cgit/filters";
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Gitolite + cgit self-hosted Git server";
@@ -39,6 +40,9 @@ in {
       enable-index-links=1
       enable-log-filecount=1
       enable-log-linecount=1
+
+      commit-filter=${filters}/commit-links.sh
+      source-filter=${filters}/syntax-highlighting.py
 
       project-list=/var/lib/gitolite/projects.list
       scan-path=/var/lib/gitolite/repositories
