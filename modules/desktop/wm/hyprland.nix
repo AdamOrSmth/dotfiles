@@ -14,6 +14,7 @@ in {
     extraConfig = mkOption {
       description = "Extra device-specific lines to add to configuration";
       type = types.lines;
+      default = "";
     };
   };
 
