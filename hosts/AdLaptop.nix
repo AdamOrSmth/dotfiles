@@ -25,7 +25,14 @@
       emacs.enable = true;
       gaming.enable = true;
       multimedia.enable = true;
-      wm.hyprland.enable = true;
+      wm.hyprland = {
+        enable = true;
+        extraConfig = ''
+          general {
+              sensitivity = 0.75
+          }
+        '';
+      };
     };
     hardware = {
       filesystem.enable = true;
