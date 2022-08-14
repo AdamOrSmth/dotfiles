@@ -25,7 +25,7 @@
       emacs.enable = true;
       gaming.enable = true;
       multimedia.enable = true;
-      wm.bspwm.enable = true;
+      wm.hyprland.enable = true;
     };
     hardware = {
       filesystem.enable = true;
