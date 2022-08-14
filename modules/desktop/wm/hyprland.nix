@@ -34,9 +34,9 @@ in {
     #services.xserver.displayManager.lightdm.enable = false;
     my.cli.fish.extraInit = let
       nvidiaExtras = lib.optionalString cfg.nvidia
-        "GBM_BACKEND=nvidia-drm __GLX_VENDOR_LIBRARY_NAME=nvidia WLR_NO_HARDWARE_CURSORS=1";
+        "GBM_BACKEND=nvidia-drm __GLX_VENDOR_LIBRARY_NAME=nvidia WLR_NO_HARDWARE_CURSORS=1 WLR_BACKEND=vulkan LIBVA_DRIVER_NAME=nvidia CLUTTER_BACKEND=wayland QT_WAYLAND_DISABLE_WINDOWDECORATION=1";
       command =
-        "MOZ_ENABLE_WAYLAND=1 SDL_VIDEODRIVER=wayland QT_QPA_PLAYFORM=wayland ${nvidiaExtras} exec Hyprland";
+        "MOZ_ENABLE_WAYLAND=1 SDL_VIDEODRIVER=wayland QT_QPA_PLAYFORM=wayland XDG_SESSION_TYPE=wayland ${nvidiaExtras} exec Hyprland";
     in ''
       if test (tty) = /dev/tty1
         exec bash -c '${command}'
