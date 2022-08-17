@@ -38,23 +38,27 @@ general {
 }
 #+end_src
 * Input
-Settings related to input.
+Settings related to input. Input also contains a subcategory =touchpad=.
 
 + kb_layout, kb_variant, kb_model, kb_options, kb_rules :: Appropriate ~xkb~ keyboard settings, used to set keyboard variant to Colemak-DH.
 + ~follow_mouse~ :: Focus follows the mouse cursor, and the mouse cursor follows focus.
 + ~force_no_accel~ :: Mouse acceleration (usually) sucks.
++ touchpad:natural_scroll :: I don't know why this is "natural", but it's how I prefer scrolling to work.
 
 #+begin_src conf
 input {
     kb_layout      = us
     kb_variant     = colemak_dh
     kb_model       =
-    kb_options     =
     kb_rules       =
 
     follow_mouse   = true
 
     force_no_accel = true
+
+    touchpad {
+        natural_scroll = true
+    }
 }
 #+end_src
 * Layout

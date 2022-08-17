@@ -31,6 +31,10 @@
           general {
               sensitivity = 0.75
           }
+
+          input {
+              kb_options = caps:escape
+          }
         '';
       };
     };
