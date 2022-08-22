@@ -3,14 +3,16 @@
     "emacs-overlay": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1659523043,
-        "narHash": "sha256-llcqXZrp4OsL/N/uPGRsxIKcEW+lySs82umP1H+L59E=",
+        "lastModified": 1661195877,
+        "narHash": "sha256-yWCEloPk7ZsZ8YQ9qjDh0fXEjQbqIdDcVL/EwyB4j3o=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "f4d60d03ea621634ab3091f2c7c036b6a4ad49c3",
+        "rev": "f274dc1c9c898f140755c5d8061b21cff1219445",
         "type": "github"
       },
       "original": {
@@ -21,11 +23,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1656928814,
-        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
         "type": "github"
       },
       "original": {
@@ -63,11 +65,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1661174217,
-        "narHash": "sha256-UPbLGQ9s3ZJoskz/9FDs1ORdRyAJFiLDAHrcT4yrJus=",
+        "lastModified": 1661188595,
+        "narHash": "sha256-RLSoyPJCr5PL1racremeNB05WACRMDrU2nTQ0T5+3cY=",
         "owner": "vaxerski",
         "repo": "Hyprland",
-        "rev": "8a6e29974b4339abc868af80761849b52c98cc40",
+        "rev": "fb0e81c18ee58a92dc109d6023677463d859523e",
         "type": "github"
       },
       "original": {
@@ -77,18 +79,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-CVGOtR/Wyq3TVCjf8/kdnYD5G2JwUKUQVtd+5WIDTuY=",
-        "path": "/nix/store/gk9ag5wlkhwi4qbn56fx77g3v41n2a5g-source",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1661088761,
         "narHash": "sha256-5DGKX81wIPAAiLwUmUYECpA3vop94AHHR7WmGXSsQok=",
@@ -109,7 +99,7 @@
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     },
     "utils": {
