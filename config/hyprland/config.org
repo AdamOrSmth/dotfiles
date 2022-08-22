@@ -216,7 +216,7 @@ bind = SUPER,K,changegroupactive,b
 #+end_src
 ** Workspaces
 + s-{0-9} :: Switch between workspaces.
-+ s-S-{0-9} :: Move the focused window to workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~. *Remember that =SHIFT= changes the typed character.*
++ s-S-{0-9} :: Move the focused window to workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~.
 + s-{comma,period} :: Switch to the leftward/rightward workspace.
 + s-S-{comma,period} :: Move the focused window to the leftward/rightward workspace.
   ~m±1~ specifies the workspace ID one down/up on the current monitor.
@@ -231,20 +231,20 @@ bind = SUPER,7,workspace,7
 bind = SUPER,8,workspace,8
 bind = SUPER,9,workspace,9
 bind = SUPER,0,workspace,10
-bind = SUPERSHIFT,exclam,movetoworkspacesilent,1
-bind = SUPERSHIFT,at,movetoworkspacesilent,2
-bind = SUPERSHIFT,numbersign,movetoworkspacesilent,3
-bind = SUPERSHIFT,dollar,movetoworkspacesilent,4
-bind = SUPERSHIFT,percent,movetoworkspacesilent,5
-bind = SUPERSHIFT,asciicircum,movetoworkspacesilent,6
-bind = SUPERSHIFT,ampersand,movetoworkspacesilent,7
-bind = SUPERSHIFT,asterisk,movetoworkspacesilent,8
-bind = SUPERSHIFT,parenleft,movetoworkspacesilent,9
-bind = SUPERSHIFT,parenright,movetoworkspacesilent,10
+bind = SUPERSHIFT,1,movetoworkspacesilent,1
+bind = SUPERSHIFT,2,movetoworkspacesilent,2
+bind = SUPERSHIFT,3,movetoworkspacesilent,3
+bind = SUPERSHIFT,4,movetoworkspacesilent,4
+bind = SUPERSHIFT,5,movetoworkspacesilent,5
+bind = SUPERSHIFT,6,movetoworkspacesilent,6
+bind = SUPERSHIFT,7,movetoworkspacesilent,7
+bind = SUPERSHIFT,8,movetoworkspacesilent,8
+bind = SUPERSHIFT,9,movetoworkspacesilent,9
+bind = SUPERSHIFT,0,movetoworkspacesilent,10
 bind = SUPER,comma,workspace,m-1
 bind = SUPER,period,workspace,m+1
-bind = SUPERSHIFT,less,movetoworkspacesilent,m-1
-bind = SUPERSHIFT,greater,movetoworkspacesilent,m+1
+bind = SUPERSHIFT,comma,movetoworkspacesilent,m-1
+bind = SUPERSHIFT,period,movetoworkspacesilent,m+1
 #+end_src
 
 The special workspace can toggle above any other workspace like a "scratchpad" workspace in other window managers. I'm using the slash key for related keybindings.
@@ -252,7 +252,7 @@ The special workspace can toggle above any other workspace like a "scratchpad" w
 + s-S-/ :: Move a window to the special workspace.
 #+begin_src conf
 bind = SUPER,slash,togglespecialworkspace
-bind = SUPERSHIFT,question,movetoworkspace,special
+bind = SUPERSHIFT,slash,movetoworkspace,special
 #+end_src
 ** Misc
 Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as well as Windows, I already use =s-l= but =C-s-q= is free to capture. A non-suspend lock also turns off monitors by calling the DPMS dispatcher through ~hyprctl~ (stacking bindings doesn't work).
@@ -261,7 +261,7 @@ Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as w
 #+begin_src conf
 bind = SUPER,grave,exec,swaylock -fF && hyprctl dispatch dpms off
 bind = SUPERCTRL,Q,exec,swaylock -fF && hyprctl dispatch dpms off
-bind = SUPERSHIFT,asciitilde,exec,swaylock -fF && systemctl suspend
+bind = SUPERSHIFT,grave,exec,swaylock -fF && systemctl suspend
 #+end_src
 
 Take a screenshot via ~grim~ and ~slurp~. Currently in a separate script since inlining it doesn't work, but I might try calling Bash sometime. *TODO*
