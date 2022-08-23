@@ -7,94 +7,40 @@ I use =Hyprland= on different devices, so their monitor setup is not always cons
 * General
 Settings that don't really belong anywhere else (although some of this arguably belongs in the =input= section, but oh well, it's not my code).
 
-+ ~sensitivity~ :: Self-explanatory.
-+ ~apply_sens_to_raw~ :: Disable applying mouse sensitivity customization to raw input (e.g. for games).
-
-+ ~main_mod~ :: Super as the default modifier key (Windows key on most keyboards).
-
++ ~border_size~ :: Border width of 3 pixels.
 + ~gaps_in~ :: Gap of 3 pixels between windows.
 + ~gaps_out~ :: Gap of 6 pixels between monitor edge and windows.
-+ ~border_size~ :: Border width of 3 pixels.
 
 The total distance between windows is equal to ~gaps_in~ + ~border_size~.
 
 + ~col.active_border~, ~col.inactive_border~ :: Self-explanatory.
-+ ~damage_tracking~ :: Only update the screen when something changes. Highly recommended to leave on =full=.
 
 #+begin_src conf
 general {
-    sensitivity         = 1.0
-    apply_sens_to_raw   = false
-
-    main_mod            = SUPER
-
+    border_size         = 2
     gaps_in             = 2
     gaps_out            = 6
-    border_size         = 2
+
     col.active_border   = 0xFF88C0D0
     col.inactive_border = 0x00000000
-
-    damage_tracking     = full
-}
-#+end_src
-* Input
-Settings related to input. Input also contains a subcategory =touchpad=.
-
-+ kb_layout, kb_variant, kb_model, kb_options, kb_rules :: Appropriate ~xkb~ keyboard settings, used to set keyboard variant to Colemak-DH.
-+ ~follow_mouse~ :: Focus follows the mouse cursor, and the mouse cursor follows focus.
-+ ~force_no_accel~ :: Mouse acceleration (usually) sucks.
-+ touchpad:natural_scroll :: I don't know why this is "natural", but it's how I prefer scrolling to work.
-
-#+begin_src conf
-input {
-    kb_layout      = us
-    kb_variant     = colemak_dh
-    kb_model       =
-    kb_rules       =
-
-    follow_mouse   = true
-
-    force_no_accel = true
-
-    touchpad {
-        natural_scroll = true
-    }
-}
-#+end_src
-* Layout
-=Hyprland= comes with two different layout schemes: =dwindle=, based off =bspwm=, and =master=, based off the master/stack layout popularized by =Xmonad=.
-
-** Dwindle
-Settings for the =dwindle= layout. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
-+ ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
-+ ~special_scale_factor~ :: Special workspace is 90% of full monitor.
-+ ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
-
-#+begin_src conf
-dwindle {
-    col.group_border        = 0xCCB48EAD
-    col.group_border_active = 0xFFD08870
-    special_scale_factor    = 0.9
-    force_split             = 2
-}
 #+end_src
 * Decoration
 Appearance-related settings.
 
 + ~rounding~ :: Round corners of windows by 8 pixels.
-+ ~multisample_edges~ :: Make rounding look better.
+
 + ~blur~ :: Enable dual kawase background blur of transparent windows.
 + ~blur_size~, ~blur_passes~ :: Blur amount depends on both ~blur_size~ and ~blur_passes~. Increasing ~blur_passes~ increases blur more, but comes at a performance cost, while increasing ~blur_size~ is more performant but begins to produce artifacts at higher values. I've found 3 and 3 work well for me.
-+ drop_shadow :: Enable drop shadows on windows.
++ blur_new_optimizations :: Enable optimizations to blur that help performance a lot. Defaults to ~false~ due to some people having graphical issues.
 
 #+begin_src conf
 decoration {
-    rounding          = 8
-    multisample_edges = true
-    blur              = true
-    blur_size         = 3
-    blur_passes       = 3
-    drop_shadow       = true
+    rounding               = 8
+
+    blur                   = true
+    blur_size              = 3
+    blur_passes            = 3
+    blur_new_optimizations = true
 }
 #+end_src
 * Animations
@@ -119,11 +65,32 @@ bezier = easein,0.1,0,1,1
 bezier = easeout,0,1,0.5,1
 
 animations {
-    enabled   = true
     animation = windows,1,7,overshot,slide
     animation = fade,1,7,default
     animation = border,1,10,default
     animation = workspaces,1,5,easeout,slidevert
+}
+#+end_src
+* Input
+Settings related to input. Input contains the subcategory =touchpad= for, well, touchpad-related settings.
+
++ kb_layout, kb_variant :: Appropriate ~xkb~ keyboard settings, used to set keyboard variant to Colemak-DH.
++ ~follow_mouse~ :: Focus follows the mouse cursor, and the mouse cursor follows focus.
++ ~force_no_accel~ :: Mouse acceleration (usually) sucks.
++ touchpad:naturaL_scroll :: Not sure what makes this "natural", but it's natural for me, so I guess it makes sense.
+
+#+begin_src conf
+input {
+    kb_layout      = us
+    kb_variant     = colemak_dh
+
+    follow_mouse   = 1
+
+    force_no_accel = true
+
+    touchpad {
+        natural_scroll = true
+    }
 }
 #+end_src
 * Miscellaneous
@@ -287,6 +254,23 @@ bind = SUPERSHIFT,return,exec,alacritty
 bind = SUPER,F,exec,emacsclient -c
 bind = SUPER,Z,exec,qutebrowser
 bind = SUPERSHIFT,Z,exec,brave
+#+end_src
+* Layout
+=Hyprland= comes with two different layout schemes: =dwindle=, based off =bspwm=, and =master=, based off the master/stack layout popularized by =Xmonad=.
+
+** Dwindle
+Settings for the =dwindle= layout. More information in the [[https:github.com/vaxerski/Hyprland/wiki/Dwindle-Layout][documentation]].
++ ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
++ ~special_scale_factor~ :: Special workspace is 90% of full monitor.
++ ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
+
+#+begin_src conf
+dwindle {
+    col.group_border        = 0xCCB48EAD
+    col.group_border_active = 0xFFD08870
+    special_scale_factor    = 0.9
+    force_split             = 2
+}
 #+end_src
 * Window Rules
 Window rules define actions that are automatically performed when a window with a matching class is *opened*.
