@@ -79,6 +79,8 @@ Settings related to input. Input contains the subcategory =touchpad= for, well, 
 + ~force_no_accel~ :: Mouse acceleration (usually) sucks.
 + touchpad:naturaL_scroll :: Not sure what makes this "natural", but it's natural for me, so I guess it makes sense.
 
+Per-device configurations are also possible, documented in detail here. They take the format ~device:name~. I use one to set the keyboard layout of my OnlyKey to QWERTY so it types out passwords correctly; QWERTY's =kb_variant= is simply an empty string.
+
 #+begin_src conf
 input {
     kb_layout      = us
@@ -91,6 +93,9 @@ input {
     touchpad {
         natural_scroll = true
     }
+}
+device:CRYPTOTRUST ONLYKEY {
+    kb_variant =
 }
 #+end_src
 * Miscellaneous
