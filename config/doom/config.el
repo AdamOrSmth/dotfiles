@@ -81,30 +81,34 @@
 
 (after! org
   (setq org-todo-keywords '((sequence
-                             "TODO(t/!)"
-                             "PROJ(p/!)"
-                             "STRT(s!/!)"
-                             "WAIT(w@/@)"
-                             "HOLD(h@/@)"
-                             "IDEA(i/@)"
-                             "READ(r/@)"
+                             "MISSION(m)"
+                             "QUEST(q)"
+                             "ACTIVE(a)"
+                             "WAITING(w)"
+                             "SCHEME(s)"
+                             "INVESTIGATE(i)"
                              "|"
-                             "DONE(d)"
-                             "KILL(k@/@)")
+                             "COMPLETE(c)"
+                             "FAILED(f)")
                             (sequence
-                             "[ ](T/!)"
-                             "[-](S!)"
-                             "[?](W@/@)"
+                             "[ ](M)"
+                             "[-](A)"
+                             "[?](W)"
                              "|"
-                             "[X](D)"))
+                             "[X](C)"
+                             "[#](F)"))
         org-todo-keyword-faces (append org-todo-keyword-faces
-                                       '(("LOOK" . +org-todo-active)))))
+                                       '(("QUEST"   . +org-todo-project)
+                                         ("ACTIVE"  . +org-todo-active)
+                                         ("WAITING" . +org-todo-onhold)
+                                         ("FAILED"  . +org-todo-cancel)
+                                         ("[#]"     . +org-todo-cancel)))))
 
 (setq org-log-into-drawer t
       org-log-done 'time)
 
 (add-hook! 'org-after-todo-state-change-hook
-  (when (and (string-equal org-state "STRT")
+  (when (and (string-equal org-state "ACTIVE")
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
 
@@ -118,26 +122,26 @@
          (file "inbox.org")
          "* %?\n<%(org-read-date)>\n"
          :prepend t)
-        ("t" "todo")
-        ("tt" "default" entry
+        ("m" "mission")
+        ("mm" "default" entry
          (file "inbox.org")
-         "* TODO %?\n"
+         "* MISSION %?\n"
          :prepend t)
-        ("ts" "scheduled" entry
+        ("ms" "scheduled" entry
          (file "inbox.org")
-         "* TODO %?\nSCHEDULED: <%(org-read-date)>\n"
+         "* MISSION %?\nSCHEDULED: <%(org-read-date)>\n"
          :prepend t)
-        ("td" "with deadline" entry
+        ("md" "with deadline" entry
          (file "inbox.org")
-         "* TODO %?\nDEADLINE: <%(org-read-date)>\n"
+         "* MISSION %?\nDEADLINE: <%(org-read-date)>\n"
          :prepend t)
-        ("i" "idea" entry
+        ("s" "scheme" entry
          (file "inbox.org")
-         "* IDEA %?\n"
+         "* SCHEME %?\n"
          :prepend t)
-        ("r" "read later" entry
+        ("i" "investigate" entry
          (file "inbox.org")
-         "* READ %?\n"
+         "* INVESTIGATE %?\n"
          :prepend t)))
 
 (setq org-roam-directory org-directory
@@ -234,7 +238,7 @@
 (setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
-      org-agenda-todo-ignore-scheduled t
+      org-agenda-todo-ignore-scheduled 'future
       org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
       org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
       org-agenda-time-grid

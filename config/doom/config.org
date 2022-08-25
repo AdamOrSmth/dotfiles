@@ -124,28 +124,51 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 
 #+end_src
 ** Progress Logging
-Agenda keywords, inspired by Doom's default keywords, just with logging and some custom ones. See https://orgmode.org/manual/Tracking-TODO-state-changes.html for more details. =DONE= doesn't have logging because otherwise custom time/note logs when moving away don't take effect; away-logging added to each word individually instead.
+=TODO= keywords, in video game lingo. I find it more amusing and light-hearted, which is a nice touch when looking at otherwise mundane tasks. Some of these are a stretch, but whatever.
+
++ MISSION :: Replacement for =TODO=: a task that's ready for me to start doing.
++ QUEST :: A project that contains multiple sequential or related =MISSION='s and is a larger endeavor, usually with a deadline and definitive finished state. Yes, mission and quest are generally synonymous, but one of them had to be for projects, and quests containing missions makes more sense than the opposite.
++ ACTIVE :: A mission that's I've started and is in progress.
++ WAITING :: Some factor is holding up the completion of this task.
++ SCHEME :: Replacement for =IDEA=: a thought that isn't completable, but instead needs further expansion/consideration.
++ INVESTIGATE :: An external source or information to look into later.
++ COMPLETE :: Replacement for =DONE=: a finished task.
++ FAILED :: Not really for failure, but it fits the "quest" vibe: a task that's no longer applicable or doable. Also could indicate an unviable idea.
++ =[ ]= :: Checkbox version of =MISSION=.
++ =[-]= :: Checkbox version of =ACTIVE=.
++ =[?]= :: Checkbox version of =WAITING=.
++ =[X]= :: Checkbox version of =COMPLETE=.
++ =[#]= :: Checkbox version of =FAILED=.
+
+# TODO - add logging
+
 #+begin_src elisp
 (after! org
   (setq org-todo-keywords '((sequence
-                             "TODO(t/!)"
-                             "PROJ(p/!)"
-                             "STRT(s!/!)"
-                             "WAIT(w@/@)"
-                             "HOLD(h@/@)"
-                             "IDEA(i/@)"
-                             "READ(r/@)"
+                             "MISSION(m)"
+                             "QUEST(q)"
+                             "ACTIVE(a)"
+                             "WAITING(w)"
+                             "SCHEME(s)"
+                             "INVESTIGATE(i)"
                              "|"
-                             "DONE(d)"
-                             "KILL(k@/@)")
+                             "COMPLETE(c)"
+                             "FAILED(f)")
                             (sequence
-                             "[ ](T/!)"
-                             "[-](S!)"
-                             "[?](W@/@)"
+                             "[ ](M)"
+                             "[-](A)"
+                             "[?](W)"
                              "|"
-                             "[X](D)"))
+                             "[X](C)"
+                             "[#](F)"))
         org-todo-keyword-faces (append org-todo-keyword-faces
-                                       '(("LOOK" . +org-todo-active)))))
+                                       '(("QUEST"   . +org-todo-project)
+                                         ("ACTIVE"  . +org-todo-active)
+                                         ("WAITING" . +org-todo-onhold)
+                                         ("FAILED"  . +org-todo-cancel)
+                                         ("[#]"     . +org-todo-cancel)))))
+
+
 #+end_src
 
 Log notes and timestamps into drawers.
@@ -154,10 +177,10 @@ Log notes and timestamps into drawers.
       org-log-done 'time)
 #+end_src
 
-Prompt to clock into a task when it's marked as 'STRT'.
+Prompt to clock into a task when it's marked as =ACTIVE=.
 #+begin_src elisp
 (add-hook! 'org-after-todo-state-change-hook
-  (when (and (string-equal org-state "STRT")
+  (when (and (string-equal org-state "ACTIVE")
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
 #+end_src
@@ -175,26 +198,26 @@ These capture templates are for random thoughts and notes I want to remember, an
          (file "inbox.org")
          "* %?\n<%(org-read-date)>\n"
          :prepend t)
-        ("t" "todo")
-        ("tt" "default" entry
+        ("m" "mission")
+        ("mm" "default" entry
          (file "inbox.org")
-         "* TODO %?\n"
+         "* MISSION %?\n"
          :prepend t)
-        ("ts" "scheduled" entry
+        ("ms" "scheduled" entry
          (file "inbox.org")
-         "* TODO %?\nSCHEDULED: <%(org-read-date)>\n"
+         "* MISSION %?\nSCHEDULED: <%(org-read-date)>\n"
          :prepend t)
-        ("td" "with deadline" entry
+        ("md" "with deadline" entry
          (file "inbox.org")
-         "* TODO %?\nDEADLINE: <%(org-read-date)>\n"
+         "* MISSION %?\nDEADLINE: <%(org-read-date)>\n"
          :prepend t)
-        ("i" "idea" entry
+        ("s" "scheme" entry
          (file "inbox.org")
-         "* IDEA %?\n"
+         "* SCHEME %?\n"
          :prepend t)
-        ("r" "read later" entry
+        ("i" "investigate" entry
          (file "inbox.org")
-         "* READ %?\n"
+         "* INVESTIGATE %?\n"
          :prepend t)))
 #+end_src
 ** Org-Roam
@@ -322,7 +345,7 @@ My dailies are the same as my journal entries; this just defines a capture templ
 (setq org-agenda-files `(,(expand-file-name "gtd/" org-directory))
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
-      org-agenda-todo-ignore-scheduled t
+      org-agenda-todo-ignore-scheduled 'future
       org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
       org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
       org-agenda-time-grid
