@@ -79,6 +79,8 @@
     [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   programs.adb.enable = true;
   my.user.extraGroups = [ "adbusers" ];
+  networking.firewall.allowedTCPPorts = [ 56392 ];
+  networking.firewall.allowedUDPPorts = [ 56392 ];
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
