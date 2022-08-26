@@ -188,37 +188,38 @@ Prompt to clock into a task when it's marked as =ACTIVE=.
 These capture templates are for random thoughts and notes I want to remember, and all go into my Inbox file for later. For specific notes, I use ~org-roam~ capture templates instead.
 
 #+begin_src elisp
-(setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
-      org-capture-templates
-      '(("d" "default" entry
-         (file "inbox.org")
-         "* %?\n"
-         :prepend t)
-        ("e" "event" entry
-         (file "inbox.org")
-         "* %?\n<%(org-read-date)>\n"
-         :prepend t)
-        ("m" "mission")
-        ("mm" "default" entry
-         (file "inbox.org")
-         "* MISSION %?\n"
-         :prepend t)
-        ("ms" "scheduled" entry
-         (file "inbox.org")
-         "* MISSION %?\nSCHEDULED: <%(org-read-date)>\n"
-         :prepend t)
-        ("md" "with deadline" entry
-         (file "inbox.org")
-         "* MISSION %?\nDEADLINE: <%(org-read-date)>\n"
-         :prepend t)
-        ("s" "scheme" entry
-         (file "inbox.org")
-         "* SCHEME %?\n"
-         :prepend t)
-        ("i" "investigate" entry
-         (file "inbox.org")
-         "* INVESTIGATE %?\n"
-         :prepend t)))
+(after! org
+  (setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
+         org-capture-templates
+         '(("d" "default" entry
+            (file "inbox.org")
+            "* %?\n"
+            :prepend t)
+           ("e" "event" entry
+            (file "inbox.org")
+            "* %?\n<%(org-read-date)>\n"
+            :prepend t)
+           ("m" "mission")
+           ("mm" "default" entry
+            (file "inbox.org")
+            "* MISSION %?\n"
+            :prepend t)
+           ("ms" "scheduled" entry
+            (file "inbox.org")
+            "* MISSION %?\nSCHEDULED: <%(org-read-date)>\n"
+            :prepend t)
+           ("md" "with deadline" entry
+            (file "inbox.org")
+            "* MISSION %?\nDEADLINE: <%(org-read-date)>\n"
+            :prepend t)
+           ("s" "scheme" entry
+            (file "inbox.org")
+            "* SCHEME %?\n"
+            :prepend t)
+           ("i" "investigate" entry
+            (file "inbox.org")
+            "* INVESTIGATE %?\n"
+            :prepend t))))
 #+end_src
 ** Org-Roam
 General settings.

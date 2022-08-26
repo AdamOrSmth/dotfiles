@@ -112,37 +112,38 @@
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
 
-(setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
-      org-capture-templates
-      '(("d" "default" entry
-         (file "inbox.org")
-         "* %?\n"
-         :prepend t)
-        ("e" "event" entry
-         (file "inbox.org")
-         "* %?\n<%(org-read-date)>\n"
-         :prepend t)
-        ("m" "mission")
-        ("mm" "default" entry
-         (file "inbox.org")
-         "* MISSION %?\n"
-         :prepend t)
-        ("ms" "scheduled" entry
-         (file "inbox.org")
-         "* MISSION %?\nSCHEDULED: <%(org-read-date)>\n"
-         :prepend t)
-        ("md" "with deadline" entry
-         (file "inbox.org")
-         "* MISSION %?\nDEADLINE: <%(org-read-date)>\n"
-         :prepend t)
-        ("s" "scheme" entry
-         (file "inbox.org")
-         "* SCHEME %?\n"
-         :prepend t)
-        ("i" "investigate" entry
-         (file "inbox.org")
-         "* INVESTIGATE %?\n"
-         :prepend t)))
+(after! org
+  (setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
+         org-capture-templates
+         '(("d" "default" entry
+            (file "inbox.org")
+            "* %?\n"
+            :prepend t)
+           ("e" "event" entry
+            (file "inbox.org")
+            "* %?\n<%(org-read-date)>\n"
+            :prepend t)
+           ("m" "mission")
+           ("mm" "default" entry
+            (file "inbox.org")
+            "* MISSION %?\n"
+            :prepend t)
+           ("ms" "scheduled" entry
+            (file "inbox.org")
+            "* MISSION %?\nSCHEDULED: <%(org-read-date)>\n"
+            :prepend t)
+           ("md" "with deadline" entry
+            (file "inbox.org")
+            "* MISSION %?\nDEADLINE: <%(org-read-date)>\n"
+            :prepend t)
+           ("s" "scheme" entry
+            (file "inbox.org")
+            "* SCHEME %?\n"
+            :prepend t)
+           ("i" "investigate" entry
+            (file "inbox.org")
+            "* INVESTIGATE %?\n"
+            :prepend t))))
 
 (setq org-roam-directory org-directory
       org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
