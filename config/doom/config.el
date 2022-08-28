@@ -249,7 +249,7 @@
       org-agenda-skip-deadline-if-done t
       org-agenda-todo-ignore-scheduled 'future
       org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-      org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32)  %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32)  %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
+      org-agenda-prefix-format '((agenda . " %i %(ad/custom-agenda-prefix 32) → %s%b") (todo . " %i %-32:(ad/custom-agenda-prefix 32) → %b") (tags . " %i %-12:c") (search . " %i %-12:c"))
       org-agenda-time-grid
       '((daily today require-timed)
         (800 1000 1200 1400 1600 1800 2000)
