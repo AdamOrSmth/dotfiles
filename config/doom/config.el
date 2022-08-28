@@ -87,6 +87,7 @@
                              "WAITING(w)"
                              "SCHEME(s)"
                              "INVESTIGATE(i)"
+                             "NEEDY(n)"
                              "|"
                              "COMPLETE(c)"
                              "FAILED(f)")
@@ -96,13 +97,20 @@
                              "[?](W)"
                              "|"
                              "[X](C)"
-                             "[#](F)"))
-        org-todo-keyword-faces (append org-todo-keyword-faces
-                                       '(("QUEST"   . +org-todo-project)
-                                         ("ACTIVE"  . +org-todo-active)
-                                         ("WAITING" . +org-todo-onhold)
-                                         ("FAILED"  . +org-todo-cancel)
-                                         ("[#]"     . +org-todo-cancel)))))
+                             "[#](F)")
+                            (sequence
+                             "TIP(t)"
+                             "EVENT(e)"))
+        org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
+                                 ("ACTIVE"  . +org-todo-active)
+                                 ("WAITING" . +org-todo-onhold)
+                                 ("SCHEME"  . ,(doom-color 'blue))
+                                 ("NEEDY"   . +org-todo-active)
+                                 ("FAILED"  . +org-todo-cancel)
+                                 ("[-]"     . +org-todo-active)
+                                 ("[?]"     . +org-todo-onhold)
+                                 ("[#]"     . +org-todo-cancel)
+                                 ("EVENT"   . ,(doom-color 'magenta)))))
 
 (setq org-log-into-drawer t
       org-log-done 'time)
