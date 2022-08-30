@@ -101,7 +101,8 @@
                              "[#](F)")
                             (sequence
                              "TIP(t)"
-                             "EVENT(e)"))
+                             "EVENT(e)"
+                             "|"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)

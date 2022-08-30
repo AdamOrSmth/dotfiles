@@ -144,8 +144,6 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 + TIP :: A note for a certain day, time, or event.
 + EVENT :: Something taking place at a certain date and time.
 
-# TODO - add logging
-
 #+begin_src elisp
 (after! org
   (setq org-todo-keywords '((sequence
@@ -168,7 +166,8 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
                              "[#](F)")
                             (sequence
                              "TIP(t)"
-                             "EVENT(e)"))
+                             "EVENT(e)"
+                             "|"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)
