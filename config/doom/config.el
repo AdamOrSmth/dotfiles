@@ -18,7 +18,7 @@
         (concat (if (> (length title) len)
                     (s-truncate len title "…")
                   (s-pad-right len " " title))
-                (unless (string-empty-p time) "  ")
+                (unless (string-empty-p time) " → ")
                 time))
     (concat (make-string (- len (length time)) ? ) time)))
 
