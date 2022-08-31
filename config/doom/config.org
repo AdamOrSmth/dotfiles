@@ -110,7 +110,8 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
       org-ellipsis " […] "
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+"))
       org-reverse-note-order t
-      org-cite-global-bibliography `(,(expand-file-name "refs.bib" org-directory)))
+      org-cite-global-bibliography `(,(expand-file-name "refs.bib" org-directory))
+      org-archive-location "%s.archive::datetree/")
 #+end_src
 ** Keybindings
 #+begin_src elisp
