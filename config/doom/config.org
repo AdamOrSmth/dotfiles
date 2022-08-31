@@ -103,13 +103,14 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 #+begin_src elisp
 (setq org-directory "/home/ad/Sync/APP/")
 #+end_src
-** Appearance
+** Miscellaneous Variables
 #+begin_src elisp
 (setq org-hide-emphasis-markers t
       org-startup-folded 'content
       org-ellipsis " […] "
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+"))
-      org-reverse-note-order t)
+      org-reverse-note-order t
+      org-cite-global-bibliography `(,(expand-file-name "refs.bib" org-directory)))
 #+end_src
 ** Keybindings
 #+begin_src elisp

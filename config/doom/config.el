@@ -68,7 +68,8 @@
       org-startup-folded 'content
       org-ellipsis " […] "
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+"))
-      org-reverse-note-order t)
+      org-reverse-note-order t
+      org-cite-global-bibliography `(,(expand-file-name "refs.bib" org-directory)))
 
 (map! (:map org-mode-map
        (:localleader
