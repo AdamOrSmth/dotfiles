@@ -208,13 +208,17 @@
                   (expand-file-name (concat template ".org")
                                     (expand-file-name "template/" org-roam-directory)))))
   (setq org-roam-capture-templates
-        `(("z" "zettel" plain
-           (file ,(apply template '("zettel")))
-           :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
+        `(("l" "log" plain
+           (file ,(apply template '("log")))
+           :target (file "log/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("o" "outline" plain
            (file ,(apply template '("outline")))
            :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
+           :unnarrowed t)
+          ("r" "ref" plain
+           (file ,(apply template '("ref")))
+           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("w" "work")
           ("ww" "default" plain
@@ -224,6 +228,10 @@
           ("wl" "lab report" plain
            (file ,(apply template '("lab-report")))
            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+           :unnarrowed t)
+          ("z" "zettel" plain
+           (file ,(apply template '("zettel")))
+           :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t))))
 
 (setq org-roam-dailies-capture-templates
