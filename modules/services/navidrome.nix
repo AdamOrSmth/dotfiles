@@ -18,7 +18,10 @@ in {
   config = mkIf cfg.enable {
     services.navidrome = {
       enable = true;
-      settings.MusicFolder = cfg.musicFolder;
+      settings = {
+        MusicFolder = cfg.musicFolder;
+        CoverArtPriority = "cover.*, embedded";
+      };
     };
     my.services.caddy.config = ''
       music.adamorsomething.xyz {
