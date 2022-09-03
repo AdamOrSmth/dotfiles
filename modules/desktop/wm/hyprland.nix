@@ -1,6 +1,6 @@
 path:
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, system, ... }:
 
 let
   inherit (lib)
@@ -19,7 +19,12 @@ in {
   };
 
   config = mkIf cfg.enable (mkMerge [{
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${system}.default.override {
+        nvidiaPatches = cfg.nvidia;
+      };
+    };
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
         alacritty bemenu dunst grim pcmanfm playerctl slurp swaybg
