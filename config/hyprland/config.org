@@ -269,6 +269,7 @@ Settings for the =dwindle= layout. More information in the [[https:github.com/va
 + ~col.group_border~, ~col.group_border_active~ :: Self-explanatory.
 + ~special_scale_factor~ :: Special workspace is 90% of full monitor.
 + ~force_split~ ::  Always split to the right and bottom, regardless of mouse position (default splits to direction of mouse cursor).
++ no_gaps_when_only :: Remove gaps when a window is the only one in the workspace ("smart" gaps).
 
 #+begin_src conf
 dwindle {
@@ -276,6 +277,7 @@ dwindle {
     col.group_border_active = 0xFFD08870
     special_scale_factor    = 0.9
     force_split             = 2
+    no_gaps_when_only       = true
 }
 #+end_src
 * Window Rules
