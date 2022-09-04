@@ -30,12 +30,6 @@ in {
     };
 
     # TODO Separate Discord into a separate module
-    my.home.configFiles = {
-      "BetterDiscord/themes".source = "${configDir}/themes";
-      "BetterDiscord/plugins" = {
-        source = "${configDir}/plugins";
-        recursive = true; # Need write access to the plugins directory
-      };
-    };
+    my.home.configFiles."BetterDiscord/themes".source = "${configDir}/themes";
   }]);
 }
