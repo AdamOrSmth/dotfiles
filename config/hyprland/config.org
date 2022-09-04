@@ -300,16 +300,10 @@ windowrule = pseudo,firefox
 * Startup Applications
 Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup.
 
-*TODO* Fix Electron and remove ~--no-sandbox~
-
 #+begin_src conf
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = dunst
 exec-once = swaybg -i ~/Sync/Wallpapers/0001.png
-
-exec-once = discord --no-sandbox
-exec-once = signal-desktop --ozone-platform=wayland
-exec-once = sonixd --no-sandbox
 #+end_src
 * Import Custom Configuration
 My Nix module for =Hyprland= exposes an ~extraConfig~ option to apply device-specific configuration; the configuration gets saved to the ~extra.conf~ file, so we source/import it here.
