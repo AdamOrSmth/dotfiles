@@ -99,11 +99,7 @@
                              "[?](W)"
                              "|"
                              "[X](C)"
-                             "[#](F)")
-                            (sequence
-                             "TIP(t)"
-                             "EVENT(e)"
-                             "|"))
+                             "[#](F)"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)
