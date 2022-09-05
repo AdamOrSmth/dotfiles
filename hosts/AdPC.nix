@@ -76,8 +76,6 @@
   };
   boot.initrd.kernelModules =
     [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-  programs.adb.enable = true;
-  my.user.extraGroups = [ "adbusers" ];
   networking.firewall.allowedTCPPorts = [ 56392 57084 ];
   networking.firewall.allowedUDPPorts = [ 56392 57084 ];
 
