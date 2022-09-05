@@ -59,6 +59,7 @@ in {
     my.home.configFiles = {
       "hypr/hyprland.conf".source = "${configDir}/hyprland/hyprland.conf";
       "hypr/extra.conf".text = cfg.extraConfig;
+      "alacritty/alacritty.yml".source = "${configDir}/alacritty.yml";
     };
   }]);
 }
