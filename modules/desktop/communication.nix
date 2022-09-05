@@ -27,6 +27,7 @@ in {
     };
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) element-desktop session-desktop-appimage signal-desktop;
+      inherit (pkgs.my) webcord;
     };
 
     # TODO Separate Discord into a separate module
