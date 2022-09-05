@@ -27,21 +27,17 @@
       gaming.enable = true;
       gimp.enable = true;
       multimedia.enable = true;
-      wm = {
-        bspwm.enable = true;
-        hyprland = {
-          enable = true;
-          nvidia = true;
-          extraConfig = ''
-            monitor   = DP-2,2560x1440@144,0x0,1
-            monitor   = HDMI-A-1,1920x1080@60,2560x360,1
-            workspace = DP-2,1
-            workspace = HDMI-A-1,10
+      wm.hyprland = {
+        enable = true;
+        nvidia = true;
+        extraConfig = ''
+          monitor   = DP-2,2560x1440@144,0x0,1
+          monitor   = HDMI-A-1,1920x1080@60,2560x360,1
+          workspace = DP-2,1
+          workspace = HDMI-A-1,10
 
-            exec-once = signal-desktop --ozone-platform=wayland
-            exec-once = sonixd --no-sandbox
-          '';
-        };
+          exec-once = sonixd --no-sandbox
+        '';
       };
     };
     hardware = {
