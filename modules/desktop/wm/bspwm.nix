@@ -6,7 +6,7 @@ let
   inherit (lib)
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
-  configDir = "${config.my.configDir}/bspwm";
+  configDir = "${config.my.configDir}";
 in {
   options =
     setAttrByPath path { enable = mkEnableOption "`bspwm` as window manager"; };
@@ -39,11 +39,11 @@ in {
     };
 
     my.home.configFiles = {
-      "alacritty/alacritty.yml".source = "${configDir}/alacritty.yml";
-      "bspwm/bspwmrc".source = "${configDir}/bspwmrc";
-      "dunst/dunstrc".source = "${configDir}/dunstrc";
-      "polybar/config.ini".source = "${configDir}/polybar.ini";
-      "sxhkd/sxhkdrc".source = "${configDir}/sxhkdrc";
+      "alacritty/alacritty.yml".source = "${configDir}/alacritty/alacritty.yml";
+      "bspwm/bspwmrc".source = "${configDir}/bspwm/bspwmrc";
+      "dunst/dunstrc".source = "${configDir}/bspwm/dunstrc";
+      "polybar/config.ini".source = "${configDir}/bspwm/polybar.ini";
+      "sxhkd/sxhkdrc".source = "${configDir}/bspwm/sxhkdrc";
     };
   }]);
 }
