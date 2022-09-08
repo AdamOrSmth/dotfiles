@@ -70,7 +70,8 @@
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+"))
       org-reverse-note-order t
       org-cite-global-bibliography `(,(expand-file-name "refs.bib" org-directory))
-      org-archive-location "%s.archive::datetree/")
+      org-archive-location "%s.archive::datetree/"
+      org-todo-repeat-to-state t)
 
 (map! (:map org-mode-map
        (:localleader
