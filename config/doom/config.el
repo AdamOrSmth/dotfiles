@@ -71,7 +71,8 @@
       org-reverse-note-order t
       org-cite-global-bibliography `(,(expand-file-name "refs.bib" org-directory))
       org-archive-location "%s.archive::datetree/"
-      org-todo-repeat-to-state t)
+      org-todo-repeat-to-state t
+      org-priority-start-cycle-with-default nil)
 
 (map! (:map org-mode-map
        (:localleader
