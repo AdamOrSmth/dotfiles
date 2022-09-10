@@ -32,19 +32,19 @@ in {
       inherit (pkgs.xorg) xeyes;
     };
 
-    # Actually start the darn thing + set relevant environment variables
-    # What the bloody hell is this? Well, Fish's `exec` command doesn't
-    # inherit its environment, but Bash's does (according to my testing),
-    # so we have to start a Bash instance in order for Hyprland to inherit
-    # our variables.
-    #services.xserver.displayManager.lightdm.enable = false;
+    # Start Hyprland + set relevant environment variables
     my.cli.fish.extraInit = let
-      nvidiaExtras = lib.optionalString cfg.nvidia
-        "GBM_BACKEND=nvidia-drm __GLX_VENDOR_LIBRARY_NAME=nvidia WLR_NO_HARDWARE_CURSORS=1 LIBVA_DRIVER_NAME=nvidia";
-      command = "SDL_VIDEODRIVER=wayland ${nvidiaExtras} exec Hyprland";
+      nvidiaExtras = lib.optionalString cfg.nvidia ''
+        export GBM_BACKEND=nvidia-drm
+        export __GLX_VENDOR_LIBRARY_NAME=nvidia
+        export WLR_NO_HARDWARE_CURSORS=1
+        export LIBVA_DRIVER_NAME=nvidia
+      '';
     in ''
       if test (tty) = /dev/tty1
-        exec bash -c '${command}'
+        ${nvidiaExtras}
+        export SDL_VIDEODRIVER=wayland
+        exec Hyprland
       end
     '';
 
