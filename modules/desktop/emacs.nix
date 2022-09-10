@@ -28,10 +28,9 @@ in {
         # Install Emacs PGTK from the bleeding-edge overlay with native
         # compilation support and the `alpha-background` patch, and include
         # the `Vterm` package as it doesn't compile on NixOS
-        # TODO Remove unneeded packages?
         ((pkgs.emacsPackagesFor
           (inputs.emacs-overlay.packages.${system}.emacsPgtkNativeComp)).emacsWithPackages
-          (epkgs: [ epkgs.vterm epkgs.f epkgs.pkg-info ])); # :term vterm
+          (epkgs: [ epkgs.vterm ])); # :term vterm
     };
 
     # TODO Separate some of these into a separate module
