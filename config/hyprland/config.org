@@ -288,6 +288,7 @@ Create a window rule with the ~windowrule~ keyword, which takes a rule to apply 
 + Tile the OnlyKey App automatically.
 + Move startup applications to my second monitor.
 + Automatically pseudo-tile Tor Browser (has the class =firefox=, but I don't use actual Firefox so it's fine).
++ A collection of rules to make =GLava= (a music visualizer) appear nicely.
 #+begin_src conf
 windowrule = tile,OnlyKey
 
@@ -296,6 +297,10 @@ windowrule = monitor 1,Signal
 windowrule = monitor 1,Sonixd
 
 windowrule = pseudo,firefox
+
+windowrule = float,GLava
+windowrule = center,GLava
+windowrule = noblur,GLava
 #+end_src
 * Startup Applications
 Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup.
