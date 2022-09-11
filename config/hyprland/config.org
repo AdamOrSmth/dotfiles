@@ -307,7 +307,6 @@ Define commands to run on startup with either ~exec~ or ~exec-once~. The former 
 
 #+begin_src conf
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec-once = dunst
 exec-once = swaybg -i ~/Sync/Wallpapers/0001.png
 #+end_src
 * Import Custom Configuration

@@ -27,8 +27,8 @@ in {
     };
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
-        alacritty bemenu dunst grim pcmanfm playerctl slurp swaybg
-        swaylock-effects wl-clipboard wofi;
+        alacritty grim mako pcmanfm playerctl slurp swaybg swaylock-effects
+        wl-clipboard wofi;
       inherit (pkgs.xorg) xeyes;
     };
 
@@ -59,6 +59,7 @@ in {
       "hypr/hyprland.conf".source = "${configDir}/hyprland/hyprland.conf";
       "hypr/extra.conf".text = cfg.extraConfig;
       "alacritty/alacritty.yml".source = "${configDir}/alacritty/alacritty.yml";
+      "mako/config".source = "${configDir}/hyprland/mako";
     };
   }]);
 }
