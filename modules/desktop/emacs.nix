@@ -64,7 +64,6 @@ in {
 
     fonts.fonts = builtins.attrValues {
       inherit (pkgs) comic-neue emacs-all-the-icons-fonts liberation_ttf;
-      inherit (pkgs.my) nerd-fonts-symbols-only;
     };
 
     my = {
