@@ -33,7 +33,7 @@ in {
           (epkgs: [ epkgs.vterm ])); # :term vterm
     };
 
-    # TODO Separate some of these into a separate module
+    # TODO Separate some of these into a separate module (mainly LaTeX)
     environment.systemPackages = with pkgs; [
       # Dependencies for base Doom
       git
@@ -54,8 +54,10 @@ in {
       # Exporting to LaTeX (https://nixos.wiki/wiki/TexLive)
       (texlive.combine {
         inherit (texlive)
-          scheme-basic latexmk wrapfig ulem capt-of dvipng # Required by default
-          biber biblatex biblatex-mla biblatex-apa; # Citations
+          scheme-medium latexmk wrapfig ulem capt-of
+          dvipng # Required by default by org-mode
+          biber biblatex biblatex-mla biblatex-apa # Citations
+          scalerel threeparttable apa7;
       })
       # :lang shell
       shellcheck
