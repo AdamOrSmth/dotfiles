@@ -405,29 +405,29 @@ Automatically turn on ~org-cdlatex-mode~ when opening files. A simple minor mode
 
 Add the =apa7= ~documentclass~ to LaTeX.
 #+begin_src elisp
-(setq! org-latex-classes '(("apa" "\\documentclass[11pt,stu]{apa7}\n\\usepackage{apa7}"
+(setq! org-latex-classes '(("apa" "\\documentclass[11pt]{apa7}"
                             ("\\section{%s}"       . "\\section{%s}")
                             ("\\subsection{%s}"    . "\\subsection{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection{%s}")
                             ("\\paragraph{%s}"     . "\\paragraph{%s}")
                             ("\\subparagraph{%s}"  . "\\subparagraph{%s}"))
                            ("article" "\\documentclass[11pt]{article}"
-                            ("\\section{%s}" . "\\section*{%s}")
-                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\section{%s}"       . "\\section*{%s}")
+                            ("\\subsection{%s}"    . "\\subsection*{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                            ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                            ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+                            ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+                            ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
                            ("report" "\\documentclass[11pt]{report}"
-                            ("\\part{%s}" . "\\part*{%s}")
-                            ("\\chapter{%s}" . "\\chapter*{%s}")
-                            ("\\section{%s}" . "\\section*{%s}")
-                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\part{%s}"          . "\\part*{%s}")
+                            ("\\chapter{%s}"       . "\\chapter*{%s}")
+                            ("\\section{%s}"       . "\\section*{%s}")
+                            ("\\subsection{%s}"    . "\\subsection*{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
                            ("book" "\\documentclass[11pt]{book}"
-                            ("\\part{%s}" . "\\part*{%s}")
-                            ("\\chapter{%s}" . "\\chapter*{%s}")
-                            ("\\section{%s}" . "\\section*{%s}")
-                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\part{%s}"          . "\\part*{%s}")
+                            ("\\chapter{%s}"       . "\\chapter*{%s}")
+                            ("\\section{%s}"       . "\\section*{%s}")
+                            ("\\subsection{%s}"    . "\\subsection*{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 #+end_src
 ** Personal Spellcheck Dictionary
