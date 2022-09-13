@@ -280,29 +280,34 @@
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
 
-(setq org-latex-compiler "lualatex"
-      org-latex-default-class "report")
+(setq org-latex-compiler "lualatex")
 
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 
-(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
-                          ("report" "\\documentclass[11pt]{report}"
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
-                          ("book" "\\documentclass[11pt]{book}"
-                           ("\\part{%s}"          . "\\part*{%s}")
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+(setq! org-latex-classes '(("apa" "\\documentclass[11pt,stu]{apa7}\n\\usepackage{apa7}"
+                            ("\\section{%s}"       . "\\section{%s}")
+                            ("\\subsection{%s}"    . "\\subsection{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection{%s}")
+                            ("\\paragraph{%s}"     . "\\paragraph{%s}")
+                            ("\\subparagraph{%s}"  . "\\subparagraph{%s}"))
+                           ("article" "\\documentclass[11pt]{article}"
+                            ("\\section{%s}" . "\\section*{%s}")
+                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                            ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                            ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+                           ("report" "\\documentclass[11pt]{report}"
+                            ("\\part{%s}" . "\\part*{%s}")
+                            ("\\chapter{%s}" . "\\chapter*{%s}")
+                            ("\\section{%s}" . "\\section*{%s}")
+                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+                           ("book" "\\documentclass[11pt]{book}"
+                            ("\\part{%s}" . "\\part*{%s}")
+                            ("\\chapter{%s}" . "\\chapter*{%s}")
+                            ("\\section{%s}" . "\\section*{%s}")
+                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
 (add-hook 'spell-fu-mode-hook
           (lambda () (spell-fu-dictionary-add

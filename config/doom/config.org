@@ -395,8 +395,7 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
 #+end_src
 ** LaTeX
 #+begin_src elisp
-(setq org-latex-compiler "lualatex"
-      org-latex-default-class "report")
+(setq org-latex-compiler "lualatex")
 #+end_src
 
 Automatically turn on ~org-cdlatex-mode~ when opening files. A simple minor mode that makes writing subscripts, superscripts, and math easier. See [[https://orgmode.org/manual/CDLaTeX-mode.html][here]] for more.
@@ -404,26 +403,32 @@ Automatically turn on ~org-cdlatex-mode~ when opening files. A simple minor mode
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 #+end_src
 
-One thing I need from LaTeX is for each top-level header to (generally) start on a new page, but not the part and chapter overkill that "report" comes with by default; this customizes the "report" class to do what I want, while leaving everything else default.
+Add the =apa7= ~documentclass~ to LaTeX.
 #+begin_src elisp
-(setq org-latex-classes '(("article" "\\documentclass[11pt]{article}"
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-                           ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))
-                          ("report" "\\documentclass[11pt]{report}"
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                           ("\\paragraph{%s}"     . "\\paragraph*{%s}"))
-                          ("book" "\\documentclass[11pt]{book}"
-                           ("\\part{%s}"          . "\\part*{%s}")
-                           ("\\chapter{%s}"       . "\\chapter*{%s}")
-                           ("\\section{%s}"       . "\\section*{%s}")
-                           ("\\subsection{%s}"    . "\\subsection*{%s}")
-                           ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+(setq! org-latex-classes '(("apa" "\\documentclass[11pt,stu]{apa7}\n\\usepackage{apa7}"
+                            ("\\section{%s}"       . "\\section{%s}")
+                            ("\\subsection{%s}"    . "\\subsection{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection{%s}")
+                            ("\\paragraph{%s}"     . "\\paragraph{%s}")
+                            ("\\subparagraph{%s}"  . "\\subparagraph{%s}"))
+                           ("article" "\\documentclass[11pt]{article}"
+                            ("\\section{%s}" . "\\section*{%s}")
+                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                            ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                            ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+                           ("report" "\\documentclass[11pt]{report}"
+                            ("\\part{%s}" . "\\part*{%s}")
+                            ("\\chapter{%s}" . "\\chapter*{%s}")
+                            ("\\section{%s}" . "\\section*{%s}")
+                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+                           ("book" "\\documentclass[11pt]{book}"
+                            ("\\part{%s}" . "\\part*{%s}")
+                            ("\\chapter{%s}" . "\\chapter*{%s}")
+                            ("\\section{%s}" . "\\section*{%s}")
+                            ("\\subsection{%s}" . "\\subsection*{%s}")
+                            ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 #+end_src
 ** Personal Spellcheck Dictionary
 #+begin_src elisp
