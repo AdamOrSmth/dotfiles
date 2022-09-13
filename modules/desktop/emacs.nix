@@ -57,7 +57,7 @@ in {
           scheme-medium latexmk wrapfig ulem capt-of
           dvipng # Required by default by org-mode
           biber biblatex biblatex-mla biblatex-apa # Citations
-          scalerel threeparttable apa7;
+          endfloat scalerel threeparttable apa7;
       })
       # :lang shell
       shellcheck
