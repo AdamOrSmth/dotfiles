@@ -284,7 +284,7 @@
 
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 
-(setq! org-latex-classes '(("apa" "\\documentclass[11pt]{apa7}"
+(setq! org-latex-classes '(("apa" "\\documentclass[11pt,stu,floatsintext]{apa7}"
                             ("\\section{%s}"       . "\\section{%s}")
                             ("\\subsection{%s}"    . "\\subsection{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection{%s}")
