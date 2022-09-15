@@ -237,9 +237,9 @@ bind = SUPERCTRL,Q,exec,swaylock -fF && hyprctl dispatch dpms off
 bind = SUPERSHIFT,grave,exec,swaylock -fF && systemctl suspend
 #+end_src
 
-Take a screenshot via ~grim~ and ~slurp~. Currently in a separate script since inlining it doesn't work, but I might try calling Bash sometime. *TODO*
+Take a screenshot via ~grim~ and ~slurp~.
 #+begin_src conf
-bind = ,print,exec,shootscreen
+bind = ,print,exec,grim -g "$(slurp)" - | wl-copy -t image/png
 #+end_src
 
 Music control with the media keys via ~playerctl~.
