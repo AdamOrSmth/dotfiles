@@ -303,10 +303,12 @@ windowrule = center,GLava
 windowrule = noblur,GLava
 #+end_src
 * Startup Applications
-Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup.
+Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup. The first two commands import variables required for certain functions on Wayland, such as screensharing.
 
 #+begin_src conf
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
 exec-once = swaybg -i ~/Sync/Wallpapers/0001.png
 #+end_src
 * Import Custom Configuration
