@@ -1,0 +1,9 @@
+configuration {
+    modi: "run,ssh,drun";
+	  font: "ComicCodeLigatures 14";
+    timeout {
+        action: "kb-cancel";
+        delay:  0;
+    }
+}
+@theme "onedark"

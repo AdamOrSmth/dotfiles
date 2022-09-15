@@ -60,6 +60,7 @@ in {
       "hypr/extra.conf".text = cfg.extraConfig;
       "alacritty/alacritty.yml".source = "${configDir}/alacritty/alacritty.yml";
       "mako/config".source = "${configDir}/hyprland/mako";
+      "rofi".source = "${configDir}/rofi";
     };
   }]);
 }
