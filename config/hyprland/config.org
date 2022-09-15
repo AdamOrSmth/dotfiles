@@ -249,13 +249,13 @@ bind = ,xf86audioprev,exec,playerctl previous
 bind = ,xf86audionext,exec,playerctl next
 #+end_src
 ** Applications
-+ s-return :: Wofi
++ s-return :: Rofi
 + s-S-return :: Alacritty
 + s-e :: Emacs client window
 + s-b :: Qutebrowser
 + s-S-b :: Brave
 #+begin_src conf
-bind = SUPER,return,exec,wofi --show drun
+bind = SUPER,return,exec,rofi -show drun
 bind = SUPERSHIFT,return,exec,alacritty
 bind = SUPER,F,exec,emacsclient -c
 bind = SUPER,Z,exec,qutebrowser

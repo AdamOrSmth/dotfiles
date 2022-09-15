@@ -27,8 +27,8 @@ in {
     };
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
-        alacritty grim mako pcmanfm playerctl slurp swaybg swaylock-effects
-        wl-clipboard wofi;
+        alacritty grim mako pcmanfm playerctl rofi-wayland slurp swaybg
+        swaylock-effects wl-clipboard;
       inherit (pkgs.xorg) xeyes;
     };
 
