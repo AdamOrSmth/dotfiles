@@ -44,6 +44,7 @@ in {
       if test (tty) = /dev/tty1
         ${nvidiaExtras}
         export SDL_VIDEODRIVER=wayland
+        export GTK_THEME="Adwaita-One-Dark" # TODO Install theme in Nix
         exec Hyprland
       end
     '';
