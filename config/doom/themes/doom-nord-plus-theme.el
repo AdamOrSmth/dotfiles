@@ -28,7 +28,7 @@ determine the exact padding."
   :group 'doom-nord-plus-theme
   :type '(choice integer boolean))
 
-(defcustom doom-nord-plus-variable-font-weight 'light
+(defcustom doom-nord-plus-variable-font-weight 'medium
   "If non-nil, weight used to style variable pitch headings."
   :group 'doom-nord-plus-theme
   :type 'symbol)
