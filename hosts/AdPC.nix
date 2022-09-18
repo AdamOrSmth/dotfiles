@@ -26,6 +26,7 @@
       emacs.enable = true;
       gaming.enable = true;
       gimp.enable = true;
+      gtk.enable = true;
       multimedia.enable = true;
       wm.hyprland = {
         enable = true;

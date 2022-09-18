@@ -35,6 +35,7 @@
       emacs.enable = false;
       gaming.enable = false;
       gimp.enable = false;
+      gtk.enable = false;
       multimedia.enable = false;
       wm = {
         bspwm.enable = false;
