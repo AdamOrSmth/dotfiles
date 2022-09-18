@@ -23,7 +23,7 @@
     (concat (make-string (- len (length time)) ? ) time)))
 
 (setq display-line-numbers-type t
-      doom-theme 'doom-one
+      doom-theme 'doom-nord-plus
       doom-font (font-spec :family "Comic Code Ligatures" :size 16)
       doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
       doom-big-font-increment 6)
@@ -31,18 +31,6 @@
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
-
-(custom-set-faces!
-  `(org-document-info  :inherit variable-pitch :height 1.0  :weight light  :slant italic)
-  `(org-document-title :inherit variable-pitch :height 1.80 :weight bold   :slant italic)
-  `(org-level-1        :inherit variable-pitch :height 1.70 :weight medium :foreground ,(doom-color 'blue))
-  `(org-level-2        :inherit variable-pitch :height 1.60 :weight medium :foreground ,(doom-color 'magenta))
-  `(org-level-3        :inherit variable-pitch :height 1.50 :weight medium :foreground ,(doom-color 'cyan))
-  `(org-level-4        :inherit variable-pitch :height 1.40 :weight medium :foreground ,(doom-color 'violet))
-  `(org-level-5        :inherit variable-pitch :height 1.30 :weight medium :foreground ,(doom-color 'teal))
-  `(org-level-6        :inherit variable-pitch :height 1.20 :weight medium :foreground ,(doom-color 'green))
-  `(org-level-7        :inherit variable-pitch :height 1.10 :weight medium :foreground ,(doom-color 'yellow))
-  `(org-level-8        :inherit variable-pitch :height 1.00 :weight medium :foreground ,(doom-color 'orange)))
 
 (use-package! beacon
   :custom
