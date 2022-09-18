@@ -82,7 +82,8 @@ determine the exact padding."
    (vertical-bar   base5)
    (selection      dark-blue)
    (builtin        blue)
-   (comments       (if doom-nord-plus-brighter-comments dark-cyan (doom-lighten base5 0.2)))
+   ; See 'https://github.com/arcticicestudio/nord/issues/94'
+   (comments       "#616e88")
    (doc-comments   (doom-lighten (if doom-nord-plus-brighter-comments dark-cyan base5) 0.25))
    (constants      teal)
    (functions      cyan)
