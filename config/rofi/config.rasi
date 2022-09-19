@@ -1,9 +1,26 @@
 configuration {
     modi: "run,ssh,drun";
-	  font: "ComicCodeLigatures 14";
+
+    font: "ComicCodeLigatures 14";
+
     timeout {
         action: "kb-cancel";
         delay:  0;
     }
+
+    line-margin: 10;
+
+    show-icons: true;
+    display-drun: "";
 }
-@theme "onedark"
+
+@theme "nord"
+
+listview {
+	lines: 14;
+	columns: 2;
+}
+
+window {
+	width: 60%;
+}
