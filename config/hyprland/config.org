@@ -187,6 +187,14 @@ bind = SUPER,G,togglegroup
 bind = SUPER,H,changegroupactive,f
 bind = SUPER,K,changegroupactive,b
 #+end_src
+
+=Hyprland= does not have default mouse binds, but allows creating them with the =m= flag. These binds used to be the defaults, and just allow moving and resizing windows with SUPER + left and right mouse button, respectively.
++ s-LMB :: Move the dragged window.
++ s-RMB :: Resize the dragged window.
+#+begin_src conf
+bindm=SUPER,mouse:272,movewindow
+bindm=SUPER,mouse:273,resizewindow
+#+end_src
 ** Workspaces
 + s-{0-9} :: Switch between workspaces.
 + s-S-{0-9} :: Move the focused window to workspace. I prefer to not switch focus when doing this, so I use ~movetoworkspacesilent~.
