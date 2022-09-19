@@ -65,11 +65,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1662808262,
-        "narHash": "sha256-NCavxa3knCEJHwP4J0Om15ZfL6BqH+ksz+LbgpYV4ac=",
+        "lastModified": 1663584251,
+        "narHash": "sha256-ep1/IgA6kVkA6DQ4qNOCVFgz/Jh3J8RCVzp5XvmSZ3A=",
         "owner": "vaxerski",
         "repo": "Hyprland",
-        "rev": "d94fe3d063a910cab64fbdc132f6aa168a52e14d",
+        "rev": "abb6db9c379737bf36009f0de35cfd8f1198852f",
         "type": "github"
       },
       "original": {
