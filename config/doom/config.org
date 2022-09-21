@@ -417,9 +417,7 @@ Add the =apa7= ~documentclass~ to LaTeX.
 #+end_src
 ** Personal Spellcheck Dictionary
 #+begin_src elisp
-(add-hook 'spell-fu-mode-hook
-          (lambda () (spell-fu-dictionary-add
-                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
+(setq ispell-personal-dictionary (expand-file-name ".pws" org-directory))
 #+end_src
 ** Anki-Editor
 #+begin_src elisp

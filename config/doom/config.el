@@ -297,9 +297,7 @@
                             ("\\subsection{%s}"    . "\\subsection*{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
-(add-hook 'spell-fu-mode-hook
-          (lambda () (spell-fu-dictionary-add
-                      (spell-fu-get-personal-dictionary "personal" (expand-file-name ".aspell.pws" org-directory)))))
+(setq ispell-personal-dictionary (expand-file-name ".pws" org-directory))
 
 (use-package! anki-editor
   :hook (org-mode . anki-editor-mode)
