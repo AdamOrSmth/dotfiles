@@ -152,7 +152,7 @@ bind = SUPERSHIFT,S,movewindow,mon:r
 #+begin_src conf
 # Toggle floating/fullscreen
 bind = SUPER,T,fullscreen,0
-bind = SUPERSHIFT,T,togglefloating
+bind = SUPERSHIFT,T,togglefloating,active
 bind = SUPER,B,pseudo
 #+end_src
 
