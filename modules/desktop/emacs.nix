@@ -62,6 +62,8 @@ in {
       # :lang shell
       shellcheck
       nodePackages.bash-language-server
+      # GitHub Copilot
+      nodejs-16_x
     ];
 
     fonts.fonts = builtins.attrValues {
