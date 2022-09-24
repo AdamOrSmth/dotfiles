@@ -319,17 +319,16 @@
          ("TAB" . 'copilot-accept-completion)))
 
 (setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
-(map! :leader
-      (:prefix "t"
-       :desc "Transparency" "t"
-       (cmd!
-        (set-frame-parameter
-         nil 'alpha-background
-         (let* ((parameter (frame-parameter nil 'alpha-background))
-                (alpha (or (car-safe parameter) parameter)))
-           (if (or (= alpha 1.0) (= alpha 100))
-               0.75
-             1.0))))))
+(map! :map doom-leader-toggle-map
+      :desc "Transparency" "t"
+      (cmd!
+       (set-frame-parameter
+        nil 'alpha-background
+        (let* ((parameter (frame-parameter nil 'alpha-background))
+               (alpha (or (car-safe parameter) parameter)))
+          (if (or (= alpha 1.0) (= alpha 100))
+              0.75
+            1.0)))))
 
 (after! (evil-org)
   (setq evil-org-movement-bindings '((left  . "m")

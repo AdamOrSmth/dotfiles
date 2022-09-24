@@ -448,17 +448,16 @@ Yes, I'm really lazy enough to sell my soul to Microsoft.
 It may be useless and impractical, but it's hot. Background-only transparency requires either [[https://github.com/TheVaffel/emacs/blob/master/emacs_background_transparency.patch][this patch]] or Emacs 29+.
 #+begin_src elisp
 (setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
-(map! :leader
-      (:prefix "t"
-       :desc "Transparency" "t"
-       (cmd!
-        (set-frame-parameter
-         nil 'alpha-background
-         (let* ((parameter (frame-parameter nil 'alpha-background))
-                (alpha (or (car-safe parameter) parameter)))
-           (if (or (= alpha 1.0) (= alpha 100))
-               0.75
-             1.0))))))
+(map! :map doom-leader-toggle-map
+      :desc "Transparency" "t"
+      (cmd!
+       (set-frame-parameter
+        nil 'alpha-background
+        (let* ((parameter (frame-parameter nil 'alpha-background))
+               (alpha (or (car-safe parameter) parameter)))
+          (if (or (= alpha 1.0) (= alpha 100))
+              0.75
+            1.0)))))
 #+end_src
 * Colemak-DH
 The general consensus in the community is to just get used to the new positions of things, but I can't live without my =hjkl= navigation, and I don't feel like going through the work of making a proper extend layer (yet). So I'm just swapping the QWERTY and Colemak-DH positions, as well as deal with the few cascading changes, keeping things as minimal as possible. Where I have the luxury, I swap some of the positions I've already changed as well. Also there are some random variables to update, very fun. Luckily, the ~evil-collection-translate-key~ function makes it pretty easy to swap out all the keys in the appropriate keymaps. Also Magit doesn't work, I have to manually map; no idea why.
