@@ -311,12 +311,10 @@
            :desc "insert note" "i" #'anki-editor-insert-note)))))
 
 (use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
-         ("C-<tab>" . 'copilot-accept-completion-by-word)
+  :bind (:map doom-leader-toggle-map
+         ("C" . #'copilot-mode)
          :map copilot-completion-map
-         ("<tab>" . 'copilot-accept-completion)
-         ("TAB" . 'copilot-accept-completion)))
+         ("M-RET" . #'copilot-accept-completion)))
 
 (setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
 (map! :map doom-leader-toggle-map
