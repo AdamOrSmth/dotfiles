@@ -3,24 +3,9 @@
 (setq auto-save-default t
       user-full-name "Ad"
       user-mail-address "me@adamorsomething.xyz"
-      langtool-bin "/run/current-system/sw/bin/languagetool-commandline" ; (ref:langtool-fix)
-      evil-want-fine-undo t)                                             ; (ref:fine-undo)
-(global-subword-mode t)                                                  ; (ref:subword-mode)
-
-(defun ad/get-org-buffer-title (&optional buffer)
-  (with-current-buffer (or buffer (current-buffer))
-    (nth 1 (car (org-collect-keywords '("TITLE"))))))
-
-(defun ad/custom-agenda-prefix (len)
-  (if buffer-file-name
-      (let ((len (if (string-empty-p time) len (- len (length time) 3)))
-            (title (ad/get-org-buffer-title (find-file-noselect buffer-file-name))))
-        (concat (if (> (length title) len)
-                    (s-truncate len title "…")
-                  (s-pad-right len " " title))
-                (unless (string-empty-p time) " → ")
-                time))
-    (concat (make-string (- len (length time)) ? ) time)))
+      langtool-bin "/run/current-system/sw/bin/languagetool-commandline"
+      evil-want-fine-undo t)
+(global-subword-mode t)
 
 (setq display-line-numbers-type t
       doom-theme 'doom-nord-plus
@@ -31,16 +16,6 @@
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
-
-(use-package! beacon
-  :custom
-  (beacon-blink-when-point-moves-vertically 10)
-  (beacon-blink-when-point-moves-horizontally 20)
-  (beacon-color "#D8DEE9")
-  :config
-  (beacon-mode t)
-  (advice-add 'evil-scroll-up :after (lambda (&rest _) (beacon-blink)))
-  (advice-add 'evil-scroll-down :after (lambda (&rest _) (beacon-blink))))
 
 (define-advice doom--sudo-file-path (:around (orig-fun file))
   (s-replace "sudo" "doas" (apply orig-fun file nil)))
@@ -105,9 +80,17 @@
       org-log-done 'time)
 
 (add-hook! 'org-after-todo-state-change-hook
-  (when (and (string-equal org-state "ACTIVE")
+  (when (and (or (string-equal org-state "ACTIVE")
+                 (string-equal org-state "[-]"))
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
+(advice-add #'org-clock-in :after
+            (lambda (&rest _) (when (and (string-equal org-state "MISSION")
+                                  (y-or-n-p "Change this task to active?"))
+                         (org-todo "ACTIVE"))
+              (when (and (string-equal org-state "[ ]")
+                         (y-or-n-p "Change this task to active?"))
+                (org-todo "[-]"))))
 
 (after! org
   (setq org-default-notes-file (expand-file-name "inbox.org" org-directory)
@@ -254,6 +237,21 @@
       org-agenda-time-leading-zero t
       org-agenda-current-time-string "———————————————— now")
 
+(defun ad/get-org-buffer-title (&optional buffer)
+  (with-current-buffer (or buffer (current-buffer))
+    (nth 1 (car (org-collect-keywords '("TITLE"))))))
+
+(defun ad/custom-agenda-prefix (len)
+  (if buffer-file-name
+      (let ((len (if (string-empty-p time) len (- len (length time) 3)))
+            (title (ad/get-org-buffer-title (find-file-noselect buffer-file-name))))
+        (concat (if (> (length title) len)
+                    (s-truncate len title "…")
+                  (s-pad-right len " " title))
+                (unless (string-empty-p time) " → ")
+                time))
+    (concat (make-string (- len (length time)) ? ) time)))
+
 (setq org-export-with-section-numbers nil
       org-export-with-toc nil
       org-export-with-tags nil)
@@ -270,9 +268,14 @@
 
 (setq org-latex-compiler "lualatex")
 
-(add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+(add-hook
+ 'org-mode-hook
+ (lambda ()
+   (when (and (org-roam-node-at-point)
+          (string-equal (org-roam-node-doom-type (org-roam-node-at-point)) "work"))
+      (turn-on-org-cdlatex))))
 
-(setq! org-latex-classes '(("apa" "\\documentclass[11pt,stu,floatsintext]{apa7}"
+(setq! org-latex-classes '(("apa" "\\documentclass[11pt]{apa7}"
                             ("\\section{%s}"       . "\\section{%s}")
                             ("\\subsection{%s}"    . "\\subsection{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection{%s}")
@@ -367,12 +370,6 @@
       :nmv "k" #'evil-ex-search-next
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
-
-(map! (:leader
-       (:prefix ("l" . "langtool")
-        :desc "langtool-check" "c" #'langtool-check
-        :desc "langtool-correct-buffer" "l" #'langtool-correct-buffer
-        :desc "langtool-check-done" "d" #'langtool-check-done)))
 
 (use-package! titlecase
   :after evil

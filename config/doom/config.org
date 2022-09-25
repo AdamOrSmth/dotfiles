@@ -9,38 +9,13 @@ Enable native compilation of Emacs-Lisp.
 (setq native-comp-deferred-compilation t)
 #+end_src
 * Variables
-+ [[(langtool-fix)]] :: Fix for =LanguageTool= on NixOS (since the JAR isn't available).
-+ [[(fine-undo)]] :: Instead of undo-ing an entire insert operation.
-+ [[(subword-mode)]] :: Word navigation (with evil) respects CamelCase.
-
 #+begin_src elisp
 (setq auto-save-default t
       user-full-name "Ad"
       user-mail-address "me@adamorsomething.xyz"
-      langtool-bin "/run/current-system/sw/bin/languagetool-commandline" ; (ref:langtool-fix)
-      evil-want-fine-undo t)                                             ; (ref:fine-undo)
-(global-subword-mode t)                                                  ; (ref:subword-mode)
-#+end_src
-* Functions
-Given an ~org-mode~ buffer =BUFFER= (default current buffer), return its =TITLE= property.
-#+begin_src elisp
-(defun ad/get-org-buffer-title (&optional buffer)
-  (with-current-buffer (or buffer (current-buffer))
-    (nth 1 (car (org-collect-keywords '("TITLE"))))))
-#+end_src
-
-Create a custom ~org-agenda~ prefix of =LEN=.
-#+begin_src elisp
-(defun ad/custom-agenda-prefix (len)
-  (if buffer-file-name
-      (let ((len (if (string-empty-p time) len (- len (length time) 3)))
-            (title (ad/get-org-buffer-title (find-file-noselect buffer-file-name))))
-        (concat (if (> (length title) len)
-                    (s-truncate len title "…")
-                  (s-pad-right len " " title))
-                (unless (string-empty-p time) " → ")
-                time))
-    (concat (make-string (- len (length time)) ? ) time)))
+      langtool-bin "/run/current-system/sw/bin/languagetool-commandline"
+      evil-want-fine-undo t)
+(global-subword-mode t)
 #+end_src
 * Appearance
 #+begin_src elisp
@@ -51,24 +26,11 @@ Create a custom ~org-agenda~ prefix of =LEN=.
       doom-big-font-increment 6)
 #+end_src
 
-Enable italics for comments and keywords.
+Italicize comments and keywords.
 #+begin_src elisp
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
-#+end_src
-
-Enable =beacon.el= for cursor blinking on move. Perhaps replace this with Doom's =nav-flash= module one day? See [[https://github.com/doomemacs/doomemacs/issues/6169][this issue]].
-#+begin_src elisp
-(use-package! beacon
-  :custom
-  (beacon-blink-when-point-moves-vertically 10)
-  (beacon-blink-when-point-moves-horizontally 20)
-  (beacon-color "#D8DEE9")
-  :config
-  (beacon-mode t)
-  (advice-add 'evil-scroll-up :after (lambda (&rest _) (beacon-blink)))
-  (advice-add 'evil-scroll-down :after (lambda (&rest _) (beacon-blink))))
 #+end_src
 * Advice
 Replace =sudo= with =doas=.
@@ -170,12 +132,20 @@ Log notes and timestamps into drawers.
       org-log-done 'time)
 #+end_src
 
-Prompt to clock into a task when it's marked as =ACTIVE=.
+Prompt to clock into a task when it's marked as =ACTIVE= and vice versa.
 #+begin_src elisp
 (add-hook! 'org-after-todo-state-change-hook
-  (when (and (string-equal org-state "ACTIVE")
+  (when (and (or (string-equal org-state "ACTIVE")
+                 (string-equal org-state "[-]"))
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
+(advice-add #'org-clock-in :after
+            (lambda (&rest _) (when (and (string-equal org-state "MISSION")
+                                  (y-or-n-p "Change this task to active?"))
+                         (org-todo "ACTIVE"))
+              (when (and (string-equal org-state "[ ]")
+                         (y-or-n-p "Change this task to active?"))
+                (org-todo "[-]"))))
 #+end_src
 ** Capture Templates
 These capture templates are for random thoughts and notes I want to remember, and all go into my Inbox file for later. For specific notes, I use ~org-roam~ capture templates instead.
@@ -357,6 +327,27 @@ My dailies are the same as my journal entries; this just defines a capture templ
       org-agenda-time-leading-zero t
       org-agenda-current-time-string "———————————————— now")
 #+end_src
+*** Functions
+Given an ~org-mode~ buffer =BUFFER= (default current buffer), return its =TITLE= property.
+#+begin_src elisp
+(defun ad/get-org-buffer-title (&optional buffer)
+  (with-current-buffer (or buffer (current-buffer))
+    (nth 1 (car (org-collect-keywords '("TITLE"))))))
+#+end_src
+
+Create a custom ~org-agenda~ prefix of =LEN=.
+#+begin_src elisp
+(defun ad/custom-agenda-prefix (len)
+  (if buffer-file-name
+      (let ((len (if (string-empty-p time) len (- len (length time) 3)))
+            (title (ad/get-org-buffer-title (find-file-noselect buffer-file-name))))
+        (concat (if (> (length title) len)
+                    (s-truncate len title "…")
+                  (s-pad-right len " " title))
+                (unless (string-empty-p time) " → ")
+                time))
+    (concat (make-string (- len (length time)) ? ) time)))
+#+end_src
 ** Org-Export
 #+begin_src elisp
 (setq org-export-with-section-numbers nil
@@ -383,14 +374,19 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
 (setq org-latex-compiler "lualatex")
 #+end_src
 
-Automatically turn on ~org-cdlatex-mode~ when opening files. A simple minor mode that makes writing subscripts, superscripts, and math easier. See [[https://orgmode.org/manual/CDLaTeX-mode.html][here]] for more.
+Automatically turn on ~org-cdlatex-mode~ when opening files in my =work= directory, which is mainly where I'm using LaTeX. A simple minor mode that makes writing subscripts, superscripts, and math easier. See [[https://orgmode.org/manual/CDLaTeX-mode.html][here]] for more.
 #+begin_src elisp
-(add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+(add-hook
+ 'org-mode-hook
+ (lambda ()
+   (when (and (org-roam-node-at-point)
+          (string-equal (org-roam-node-doom-type (org-roam-node-at-point)) "work"))
+      (turn-on-org-cdlatex))))
 #+end_src
 
 Add the =apa7= ~documentclass~ to LaTeX.
 #+begin_src elisp
-(setq! org-latex-classes '(("apa" "\\documentclass[11pt,stu,floatsintext]{apa7}"
+(setq! org-latex-classes '(("apa" "\\documentclass[11pt]{apa7}"
                             ("\\section{%s}"       . "\\section{%s}")
                             ("\\subsection{%s}"    . "\\subsection{%s}")
                             ("\\subsubsection{%s}" . "\\subsubsection{%s}")
@@ -500,14 +496,6 @@ The general consensus in the community is to just get used to the new positions 
       :nmv "k" #'evil-ex-search-next
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
-#+end_src
-* =Langtool=
-#+begin_src elisp
-(map! (:leader
-       (:prefix ("l" . "langtool")
-        :desc "langtool-check" "c" #'langtool-check
-        :desc "langtool-correct-buffer" "l" #'langtool-correct-buffer
-        :desc "langtool-check-done" "d" #'langtool-check-done)))
 #+end_src
 * =titlecase.el=
 #+begin_src elisp
