@@ -7,6 +7,7 @@ let
     getAttrFromPath setAttrByPath mkEnableOption mkOption types mkIf mkMerge;
   cfg = getAttrFromPath path config;
   inherit (config.my) configDir;
+  hyprlandPkgs = inputs.hyprland.packages.${system};
 in {
   options = setAttrByPath path {
     enable = mkEnableOption "Hyprland Wayland compositor";
@@ -21,8 +22,16 @@ in {
   config = mkIf cfg.enable (mkMerge [{
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${system}.default.override {
+      package = hyprlandPkgs.default.override {
         nvidiaPatches = cfg.nvidia;
+        wlroots = if cfg.nvidia then
+          hyprlandPkgs.wlroots-hyprland.overrideAttrs (oldAttrs: {
+            patches = oldAttrs.patches
+              # Yes, this file should go somewhere else, but whatever
+              ++ [ ./_wlroots-nvidia-screenshare.patch ];
+          })
+        else
+          hyprlandPkgs.wlroots-hyprland;
       };
     };
     environment.systemPackages = builtins.attrValues {
