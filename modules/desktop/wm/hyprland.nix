@@ -57,10 +57,6 @@ in {
       end
     '';
 
-    # Includes fix for Hyprland, need to override the default package set by the module
-    xdg.portal.extraPortals =
-      lib.mkForce [ pkgs.my.xdg-desktop-portal-wlr-hyprland ];
-
     # Required by swaylock
     security.pam.services.swaylock = { };
 
