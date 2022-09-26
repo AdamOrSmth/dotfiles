@@ -371,6 +371,10 @@
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
 
+(use-package! gpt
+  :load-path doom-user-dir
+  :commands (gpt/prompt gpt/edit gpt/insert))
+
 (use-package! titlecase
   :after evil
   :config
