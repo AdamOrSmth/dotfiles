@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, cmake, pkgconfig, libuv, libsodium, unbound, zeromq
+{ stdenv, fetchFromGitHub, cmake, pkg-config, libuv, libsodium, unbound, zeromq
 , sqlite, openssl, libevent, curl, jemalloc, libcap }:
 
 stdenv.mkDerivation rec {
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake pkgconfig ];
+  nativeBuildInputs = [ cmake pkg-config ];
   buildInputs = [
     libuv
     libsodium
