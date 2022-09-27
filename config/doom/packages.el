@@ -56,3 +56,4 @@
 (package! anki-editor)
 (package! org-auto-tangle)
 (package! copilot :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+(package! parsebib)
