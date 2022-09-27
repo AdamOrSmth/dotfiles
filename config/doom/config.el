@@ -373,7 +373,7 @@
 
 (use-package! gpt
   :load-path doom-user-dir
-  :commands (gpt/prompt gpt/edit gpt/insert))
+  :commands (gpt/prompt gpt/edit gpt/insert gpt/chat))
 
 (use-package! titlecase
   :after evil
