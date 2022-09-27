@@ -204,7 +204,7 @@ for the human."
                              (forward-line -4)
                              (point))
                            (point))))
-         (prompt (if (> (line-number-at-pos) 4)
+         (prompt (if (> (line-number-at-pos) 5)
                      (concat
                       (save-excursion
                         (goto-char (point-min))
@@ -213,13 +213,13 @@ for the human."
                          (line-end-position)))
                       "\n\n")
                    ""))
-         (params `(("prompt" . ,(s-trim (concat prompt context)))
-                   ("max_tokens" . 64)
-                   ("temperature" . 0.8)
-                   ("top_p" . 1.0)
+         (params `(("prompt"           . ,(s-trim (concat prompt context)))
+                   ("max_tokens"       . 64)
+                   ("temperature"      . 0.8)
+                   ("top_p"            . 1.0)
                    ("presence_penalty" . 0.4)
-                   ("stop" . "\n")
-                   ("model" . "text-davinci-002")))
+                   ("stop"             . ("\nHuman:" "\nGPT:"))
+                   ("model"            . "text-davinci-002")))
          (callback (lambda (response)
                      (let ((text (alist-get 'text (aref (alist-get 'choices response) 0))))
                        (with-current-buffer "*GPT-Chat*"
