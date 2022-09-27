@@ -221,11 +221,15 @@ for the human."
                    ("stop"             . ("\nHuman:" "\nGPT:"))
                    ("model"            . "text-davinci-002")))
          (callback (lambda (response)
-                     (let ((text (alist-get 'text (aref (alist-get 'choices response) 0))))
-                       (with-current-buffer "*GPT-Chat*"
-                         (insert text "\nHuman: ")
-                         (goto-char (point-max)))))))
-    (gpt-make-request "completions" params callback)))
+                     (let* ((text (alist-get 'text (aref (alist-get 'choices response) 0))))
+                        (with-current-buffer "*GPT-Chat*"
+                            ;; GPT likes to sometimes start with two newlines,
+                            ;; so we get rid of those. We still need to prepend
+                            ;; a space since the prompt doesn't include one after
+                            ;; the colon.
+                          (insert " " (s-trim text) "\nHuman: ")
+                          (goto-char (point-max)))))))
+        (gpt-make-request "completions" params callback)))
 
 
 
