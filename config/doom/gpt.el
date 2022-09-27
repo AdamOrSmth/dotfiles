@@ -214,7 +214,7 @@ for the human."
                       "\n\n")
                    ""))
          (params `(("prompt"           . ,(s-trim (concat prompt context)))
-                   ("max_tokens"       . 64)
+                   ("max_tokens"       . 128)
                    ("temperature"      . 0.8)
                    ("top_p"            . 1.0)
                    ("presence_penalty" . 0.4)
