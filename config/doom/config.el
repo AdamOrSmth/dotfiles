@@ -174,33 +174,45 @@
       (make-directory attach-dir t))
     attach-dir))
 
+(defun ad/get-html-title (url)
+  "Retrieve the contents of URL and return the HTML title. "
+  (with-current-buffer (url-retrieve-synchronously url)
+    (goto-char (point-min))
+    (re-search-forward "<title>\\([^<]*\\)</title>")
+    (match-string 1)))
+
 (let ((template (lambda (template)
                   (expand-file-name (concat template ".org")
                                     (expand-file-name "template/" org-roam-directory)))))
   (setq org-roam-capture-templates
         `(("l" "log" plain
-           (file ,(apply template '("log")))
+           (file ,(funcall template "log"))
            :target (file "log/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("o" "outline" plain
-           (file ,(apply template '("outline")))
+           (file ,(funcall template "outline"))
            :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
-          ("r" "ref" plain
-           (file ,(apply template '("ref")))
+          ("r" "ref")
+          ("rw" "website" plain
+           (file ,(funcall template "website"))
+           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
+           :unnarrowed t)
+          ("rc" "citekey" plain
+           (file ,(funcall template "citekey"))
            :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("w" "work")
           ("ww" "default" plain
-           (file ,(apply template '("work")))
+           (file ,(funcall template "work"))
            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("wl" "lab report" plain
-           (file ,(apply template '("lab-report")))
+           (file ,(funcall template "lab-report"))
            :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("z" "zettel" plain
-           (file ,(apply template '("zettel")))
+           (file ,(funcall template "zettel"))
            :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t))))
 
