@@ -157,8 +157,6 @@ stop sequence (default none), and frequency penalty
            (text (alist-get 'text (aref (alist-get 'choices response) 0))))
       (insert text))))
 
-(provide 'gpt)
-
 (defvar-local gpt-chat-prompt ""
   "The prompt for the current chat buffer.
 Prepended to all requests.")
@@ -168,6 +166,15 @@ Prepended to all requests.")
 
 (defvar-local gpt-chat-ai-prefix "GPT:"
   "The prefix inserted for the AI's response.")
+
+(defvar-local gpt-chat-temperature 0.8
+  "The temperature used for the AI's response.")
+
+(defvar-local gpt-chat-presence-penalty 0.0
+  "The presence penalty used for the AI's response.")
+
+(defvar-local gpt-chat-top-p 1.0
+  "The top-p used for the AI's response.")
 
 (defvar gpt-chat-mode-map
   (let ((map (make-sparse-keymap)))
@@ -179,27 +186,7 @@ Prepended to all requests.")
   "Major mode for having a virtual chat with GPT-3."
   ;; Delete all text in case the buffer is old
   (delete-region (point-min) (point-max))
-  (insert (concat
-           gpt-chat-human-prefix
-           " Hello, who are you?\n"
-           gpt-chat-ai-prefix
-           " I am an AI named GPT. How can I help you?\n"
-           gpt-chat-human-prefix
-           " "))
   (goto-char (point-max)))
-
-(defun gpt/chat ()
-  "Start a chat with GPT-3. Opens a `gpt-chat-mode'
-buffer and inserts some initial text. The last 4 lines
-of the buffer, along with the current line,
-are appended to the prompt and then sent to the API
-when the user hits return. The result is appended to the
-end of the buffer."
-  (interactive)
-  (switch-to-buffer (generate-new-buffer "*GPT-Chat*"))
-  (gpt-chat-mode)
-  (setq gpt-chat-prompt "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable."))
-
 
 (defun gpt-chat-send ()
   "Send the current line along with the last four lines
@@ -216,10 +203,10 @@ chat buffer, as well as a new prompt for the human."
                      (point))
                    (point)))
          (params `(("prompt"           . ,(concat gpt-chat-prompt "\n\n" context))
-                   ("max_tokens"       . 128)
-                   ("temperature"      . 0.8)
-                   ("top_p"            . 1.0)
-                   ("presence_penalty" . 0.5)
+                   ("max_tokens"       . 256)
+                   ("temperature"      . ,gpt-chat-temperature)
+                   ("presence_penalty" . ,gpt-chat-presence-penalty)
+                   ("top_p"            . ,gpt-chat-top-p)
                    ("stop"             . (,(concat "\n" gpt-chat-human-prefix)
                                           ,(concat "\n" gpt-chat-ai-prefix)))
                    ("model"            . "text-davinci-002")))
@@ -234,5 +221,45 @@ chat buffer, as well as a new prompt for the human."
                          (insert " " (s-trim text) "\n" gpt-chat-human-prefix " ")
                          (goto-char (point-max)))))))
     (gpt-make-request "completions" params callback)))
+
+;;;###autoload
+(defun gpt/chat ()
+  "Start a chat with GPT-3. Opens a `gpt-chat-mode'
+buffer and sets the appropriate variables."
+  (interactive)
+  (switch-to-buffer (generate-new-buffer "*GPT-Chat*"))
+  (gpt-chat-mode)
+  (setq gpt-chat-prompt "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable."
+        gpt-chat-presence-penalty 0.5)
+  (insert (concat
+           gpt-chat-human-prefix
+           " Hello, who are you?\n"
+           gpt-chat-ai-prefix
+           " I am an AI named GPT. How can I help you?\n"
+           gpt-chat-human-prefix
+           " ")))
+
+;;;###autoload
+(defun gpt/q-and-a ()
+  "Start a Q&A session with GPT-3. Opens a `gpt-chat-mode'
+buffer and sets the appropriate variables."
+  (interactive)
+  (switch-to-buffer (generate-new-buffer "*GPT-Q&A*"))
+  (gpt-chat-mode)
+  (setq gpt-chat-prompt "I am a highly intelligent question answering bot. I will answer all questions truthfully with lots of detail and explanation."
+        gpt-chat-human-prefix "Q:"
+        gpt-chat-ai-prefix "A:"
+        gpt-chat-temperature 1.0
+        gpt-chat-presence-penalty 0.0
+        gpt-chat-top-p 0.4)
+  (insert (concat
+           gpt-chat-human-prefix
+           " Who was president of the United States in 1955?\n"
+           gpt-chat-ai-prefix
+           " Dwight D. Eisenhower was the 34th president of the United States from 1953 until 1961. He was a five-star general in the United States Army during World War II and served as Supreme Commander of the Allied Expeditionary Forces in Europe. He was president of Columbia University from 1948 to 1953 and commander of NATO from 1959 to 1961\n"
+           gpt-chat-human-prefix
+           " ")))
+
+(provide 'gpt)
 
 ;;; gpt.el ends here

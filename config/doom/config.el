@@ -391,7 +391,7 @@
 
 (use-package! gpt
   :load-path doom-user-dir
-  :commands (gpt/prompt gpt/edit gpt/insert gpt/chat))
+  :commands (gpt/prompt gpt/edit gpt/insert gpt/chat gpt/q-and-a))
 
 (use-package! titlecase
   :after evil
