@@ -316,15 +316,20 @@
 (setq ispell-personal-dictionary (expand-file-name ".pws" org-directory))
 
 (use-package! anki-editor
-  :hook (org-mode . anki-editor-mode)
+  :hook (org-mode . (lambda (&rest _)
+                      (when-let ((node (org-roam-node-at-point))
+                                 (type (org-roam-node-doom-type node))
+                                 (_ (string-equal type "fc")))
+                        (anki-editor-mode))));)))))
   :config
   (map! (:map org-mode-map
-         (:localleader
-          (:prefix ("F" . "anki")
-           :desc "cloze" :nv "c" #'anki-editor-cloze-dwim
-           :desc "push" "p" #'anki-editor-push-notes
-           :desc "retry failed" "r" #'anki-editor-retry-failure-notes
-           :desc "insert note" "i" #'anki-editor-insert-note)))))
+              (:localleader
+               (:localleader
+                (:prefix ("F" . "anki")
+                 :desc "cloze" :nv "c" #'anki-editor-cloze-dwim
+                 :desc "push" "p" #'anki-editor-push-notes
+                 :desc "retry failed" "r" #'anki-editor-retry-failure-notes
+                 :desc "insert note" "i" #'anki-editor-insert-note))))))
 
 (use-package! copilot
   :bind (:map doom-leader-toggle-map
