@@ -449,7 +449,7 @@ Yes, I'm really lazy enough to sell my soul to Microsoft.
 (use-package! copilot
   :bind (:map doom-leader-toggle-map
          ("C" . #'copilot-mode)
-         :map copilot-completion-map
+         :map copilot-mode-map
          ("M-RET" . #'copilot-accept-completion)))
 #+end_src
 * Partial Window Transparency

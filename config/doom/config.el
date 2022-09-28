@@ -329,7 +329,7 @@
 (use-package! copilot
   :bind (:map doom-leader-toggle-map
          ("C" . #'copilot-mode)
-         :map copilot-completion-map
+         :map copilot-mode-map
          ("M-RET" . #'copilot-accept-completion)))
 
 (setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
