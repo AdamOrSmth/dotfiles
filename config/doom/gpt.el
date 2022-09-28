@@ -197,8 +197,8 @@ when the user hits return. The result is appended to the
 end of the buffer."
   (interactive)
   (switch-to-buffer (generate-new-buffer "*GPT-Chat*"))
-  (setq gpt-chat-prompt "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable.")
-  (gpt-chat-mode))
+  (gpt-chat-mode)
+  (setq gpt-chat-prompt "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable."))
 
 
 (defun gpt-chat-send ()
@@ -220,8 +220,8 @@ chat buffer, as well as a new prompt for the human."
                    ("temperature"      . 0.8)
                    ("top_p"            . 1.0)
                    ("presence_penalty" . 0.5)
-                   ("stop"             . `(,(concat "\n" gpt-chat-human-prefix)
-                                           ,(concat "\n" gpt-chat-ai-prefix)))
+                   ("stop"             . (,(concat "\n" gpt-chat-human-prefix)
+                                          ,(concat "\n" gpt-chat-ai-prefix)))
                    ("model"            . "text-davinci-002")))
          (buffer (current-buffer))
          (callback (lambda (response)
