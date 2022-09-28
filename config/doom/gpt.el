@@ -170,24 +170,18 @@ stop sequence (default none), and frequency penalty
 
 (defun gpt/chat ()
   "Start a chat with GPT-3. Opens a `gpt-chat-mode'
-buffer and prompts the user for a topic. The topic
-is appended to the prompt and put at the beginning
-of the buffer, along with some initial text. The
-last 4 lines of the buffer, along with the current line,
+buffer and inserts some initial text. The last 4 lines
+of the buffer, along with the current line,
 are appended to the prompt and then sent to the API
 when the user hits return. The result is appended to the
 end of the buffer."
   (interactive)
-  (let* ((topic (read-string "Topic: "))
-         (prompt (concat "The following is a conversation with an AI assistant named GPT. The assistant is helpful, smart, and creative. The topic is "
-                         topic
-                         ".\n\nHuman: Hello, who are you?\nGPT: I am an AI named GPT. How can I help you?\nHuman: ")))
-    (switch-to-buffer (get-buffer-create "*GPT-Chat*"))
-    ;; Delete all text in case the buffer is old
-    (delete-region (point-min) (point-max))
-    (gpt-chat-mode)
-    (insert prompt)
-    (goto-char (point-max))))
+  (switch-to-buffer (get-buffer-create "*GPT-Chat*"))
+  ;; Delete all text in case the buffer is old
+  (delete-region (point-min) (point-max))
+  (gpt-chat-mode)
+  (insert "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable.\n\nHuman: Hello, who are you?\nGPT: I am an AI named GPT. How can I help you?\nHuman: ")
+  (goto-char (point-max)))
 
 (defun gpt-chat-send ()
   "Send the last 4 lines of the buffer, along with the
@@ -217,7 +211,7 @@ for the human."
                    ("max_tokens"       . 128)
                    ("temperature"      . 0.8)
                    ("top_p"            . 1.0)
-                   ("presence_penalty" . 0.4)
+                   ("presence_penalty" . 0.5)
                    ("stop"             . ("\nHuman:" "\nGPT:"))
                    ("model"            . "text-davinci-002")))
          (callback (lambda (response)
