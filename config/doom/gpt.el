@@ -184,7 +184,8 @@ Prepended to all requests.")
            " Hello, who are you?\n"
            gpt-chat-ai-prefix
            " I am an AI named GPT. How can I help you?\n"
-           gpt-chat-human-prefix))
+           gpt-chat-human-prefix
+           " "))
   (goto-char (point-max)))
 
 (defun gpt/chat ()
