@@ -85,10 +85,11 @@
              (y-or-n-p "Clock into this task?"))
     (org-clock-in)))
 (advice-add #'org-clock-in :after
-            (lambda (&rest _) (when (and (string-equal org-state "MISSION")
-                                  (y-or-n-p "Change this task to active?"))
-                         (org-todo "ACTIVE"))
-              (when (and (string-equal org-state "[ ]")
+            (lambda (&rest _)
+              (when (and (string-equal (org-get-todo-state) "MISSION")
+                         (y-or-n-p "Change this task to active?"))
+                (org-todo "ACTIVE"))
+              (when (and (string-equal (org-get-todo-state) "[ ]")
                          (y-or-n-p "Change this task to active?"))
                 (org-todo "[-]"))))
 
