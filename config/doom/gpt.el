@@ -21,21 +21,21 @@ and return the response."
   (message "Making request to OpenAI...")
   (request-response-data
    (request
-    (concat "https://api.openai.com/v1/" endpoint)
-    :type "POST"
-    :headers `(("Authorization" . ,(concat "Bearer " gpt/openai-key))
-               ("Content-Type" . "application/json"))
-    :data (json-encode params)
-    :parser 'json-read
-    :error (cl-function
-            (lambda (&key error-thrown &allow-other-keys)
-              (error "OpenAI request threw error: %S" error-thrown)))
-    :success (cl-function
-              (lambda (&key data &allow-other-keys)
-                (message "OpenAI request succeeded.")
-                (when callback
-                  (funcall callback data))))
-    :sync (not callback))))
+     (concat "https://api.openai.com/v1/" endpoint)
+     :type "POST"
+     :headers `(("Authorization" . ,(concat "Bearer " gpt/openai-key))
+                ("Content-Type" . "application/json"))
+     :data (json-encode params)
+     :parser 'json-read
+     :error (cl-function
+             (lambda (&key error-thrown &allow-other-keys)
+               (error "OpenAI request threw error: %S" error-thrown)))
+     :success (cl-function
+               (lambda (&key data &allow-other-keys)
+                 (message "OpenAI request succeeded.")
+                 (when callback
+                   (funcall callback data))))
+     :sync (not callback))))
 
 ;;;###autoload
 (defun gpt/prompt (arg)
@@ -222,16 +222,13 @@ for the human."
                    ("model"            . "text-davinci-002")))
          (callback (lambda (response)
                      (let* ((text (alist-get 'text (aref (alist-get 'choices response) 0))))
-                        (with-current-buffer "*GPT-Chat*"
-                            ;; GPT likes to sometimes start with two newlines,
-                            ;; so we get rid of those. We still need to prepend
-                            ;; a space since the prompt doesn't include one after
-                            ;; the colon.
-                          (insert " " (s-trim text) "\nHuman: ")
-                          (goto-char (point-max)))))))
-        (gpt-make-request "completions" params callback)))
-
-
-
+                       (with-current-buffer "*GPT-Chat*"
+                         ;; GPT likes to sometimes start with two newlines,
+                         ;; so we get rid of those. We still need to prepend
+                         ;; a space since the prompt doesn't include one after
+                         ;; the colon.
+                         (insert " " (s-trim text) "\nHuman: ")
+                         (goto-char (point-max)))))))
+    (gpt-make-request "completions" params callback)))
 
 ;;; gpt.el ends here
