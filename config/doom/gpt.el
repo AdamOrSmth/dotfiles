@@ -159,6 +159,16 @@ stop sequence (default none), and frequency penalty
 
 (provide 'gpt)
 
+(defvar-local gpt-chat-prompt ""
+  "The prompt for the current chat buffer.
+Prepended to all requests.")
+
+(defvar-local gpt-chat-human-prefix "Human:"
+  "The prefix inserted for the human's response.")
+
+(defvar-local gpt-chat-ai-prefix "GPT:"
+  "The prefix inserted for the AI's response.")
+
 (defvar gpt-chat-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "RET") 'gpt-chat-send)
@@ -166,7 +176,16 @@ stop sequence (default none), and frequency penalty
   "Keymap for `gpt-chat-mode'.")
 
 (define-derived-mode gpt-chat-mode text-mode "GPT-Chat"
-  "Major mode for having a virtual chat with GPT-3.")
+  "Major mode for having a virtual chat with GPT-3."
+  ;; Delete all text in case the buffer is old
+  (delete-region (point-min) (point-max))
+  (insert (concat
+           gpt-chat-human-prefix
+           " Hello, who are you?\n"
+           gpt-chat-ai-prefix
+           " I am an AI named GPT. How can I help you?\n"
+           gpt-chat-human-prefix))
+  (goto-char (point-max)))
 
 (defun gpt/chat ()
   "Start a chat with GPT-3. Opens a `gpt-chat-mode'
@@ -176,52 +195,42 @@ are appended to the prompt and then sent to the API
 when the user hits return. The result is appended to the
 end of the buffer."
   (interactive)
-  (switch-to-buffer (get-buffer-create "*GPT-Chat*"))
-  ;; Delete all text in case the buffer is old
-  (delete-region (point-min) (point-max))
-  (gpt-chat-mode)
-  (insert "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable.\n\nHuman: Hello, who are you?\nGPT: I am an AI named GPT. How can I help you?\nHuman: ")
-  (goto-char (point-max)))
+  (switch-to-buffer (generate-new-buffer "*GPT-Chat*"))
+  (setq gpt-chat-prompt "The following is a conversation with an AI named GPT. GPT is helpful and knowledgeable.")
+  (gpt-chat-mode))
+
 
 (defun gpt-chat-send ()
-  "Send the last 4 lines of the buffer, along with the
-current line and first line of the buffer (if the last
-4 lines don't already include it) for context to the
-OpenAI API asychronously and append the result to the
-end of the `*GPT-Chat*' buffer,as well as a new prompt
-for the human."
+  "Send the current line along with the last four lines
+(for context) appended to the prompt to the OpenAI API
+asychronously and append the result to the end of the
+chat buffer, as well as a new prompt for the human."
   (interactive)
-  ;; Append a new prompt for GPT first
-  (insert "\nGPT:")
-  (let* ((context (s-trim (buffer-substring-no-properties
-                           (save-excursion
-                             (forward-line -4)
-                             (point))
-                           (point))))
-         (prompt (if (> (line-number-at-pos) 5)
-                     (concat
-                      (save-excursion
-                        (goto-char (point-min))
-                        (buffer-substring-no-properties
-                         (point)
-                         (line-end-position)))
-                      "\n\n")
-                   ""))
-         (params `(("prompt"           . ,(s-trim (concat prompt context)))
+  ;; Append a new prompt for the AI first
+  (insert "\n" gpt-chat-ai-prefix)
+  (let* ((context (buffer-substring-no-properties
+                   (save-excursion
+                     ;; A newline was appended, so the last four becomes five
+                     (forward-line -5)
+                     (point))
+                   (point)))
+         (params `(("prompt"           . ,(concat gpt-chat-prompt "\n\n" context))
                    ("max_tokens"       . 128)
                    ("temperature"      . 0.8)
                    ("top_p"            . 1.0)
                    ("presence_penalty" . 0.5)
-                   ("stop"             . ("\nHuman:" "\nGPT:"))
+                   ("stop"             . `(,(concat "\n" gpt-chat-human-prefix)
+                                           ,(concat "\n" gpt-chat-ai-prefix)))
                    ("model"            . "text-davinci-002")))
+         (buffer (current-buffer))
          (callback (lambda (response)
                      (let* ((text (alist-get 'text (aref (alist-get 'choices response) 0))))
-                       (with-current-buffer "*GPT-Chat*"
+                       (with-current-buffer buffer
                          ;; GPT likes to sometimes start with two newlines,
                          ;; so we get rid of those. We still need to prepend
                          ;; a space since the prompt doesn't include one after
                          ;; the colon.
-                         (insert " " (s-trim text) "\nHuman: ")
+                         (insert " " (s-trim text) "\n" gpt-chat-human-prefix " ")
                          (goto-char (point-max)))))))
     (gpt-make-request "completions" params callback)))
 
