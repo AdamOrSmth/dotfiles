@@ -192,8 +192,3 @@
        :config
        ;;literate
        (default +bindings +smartparens))
-
-;; Temporary fix for 'https://github.com/doomemacs/doomemacs/issues/6813' until it gets fixed upstream
-(defadvice! fixed-doom-module-list (fn &rest args)
-  :around #'doom-module-list
-  (nreverse (apply fn args)))
