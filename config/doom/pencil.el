@@ -11,10 +11,11 @@
 (require 'request)
 (require 's)
 
-(defvar pencil/nlp-cloud-key (when (file-exists-p "~/.nlp-cloud.key")
-                               (s-trim (with-temp-buffer
-                                         (insert-file-contents "~/.nlp-cloud.key")
-                                         (buffer-string)))))
+(defvar pencil/nlp-cloud-key (let ((file (expand-file-name ".nlp-cloud.key" doom-user-dir)))
+                               (when (file-exists-p file)
+                                 (s-trim (with-temp-buffer
+                                           (insert-file-contents file)
+                                           (buffer-string))))))
 
 (defvar pencil/debug-requests nil
   "When non-nil, print all request and response data to the *Messages* buffer.")

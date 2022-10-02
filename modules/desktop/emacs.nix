@@ -74,7 +74,11 @@ in {
     };
 
     my = {
-      home.configFiles."doom".source = "${configDir}/doom";
+      home = {
+        configFiles."doom".source = "${configDir}/doom";
+        # TODO Okay, this seriously needs to get split into separate modules
+        files.".mbsyncrc".source = "${configDir}/doom/.mbsyncrc.crypt";
+      };
       cli.fish.path = [ "${config.my.user.home}/.config/emacs/bin" ];
     };
   }]);
