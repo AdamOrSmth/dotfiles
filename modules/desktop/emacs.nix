@@ -62,6 +62,9 @@ in {
       # :lang shell
       shellcheck
       nodePackages.bash-language-server
+      # :email mu4e
+      mu
+      isync
       # GitHub Copilot
       nodejs-16_x
     ];
