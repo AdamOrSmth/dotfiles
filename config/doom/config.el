@@ -389,9 +389,9 @@
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
 
-(use-package! gpt
+(use-package! pencil
   :load-path doom-user-dir
-  :commands (gpt/prompt gpt/edit gpt/insert gpt/chat gpt/q-and-a))
+  :commands (pencil/prompt pencil/summarize pencil/answer pencil/paraphrase pencil/spelling-and-grammar pencil/chat))
 
 (use-package! titlecase
   :after evil

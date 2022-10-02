@@ -516,13 +516,13 @@ The general consensus in the community is to just get used to the new positions 
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
 #+end_src
-* =gpt.el=
-Look, I wrote my own package! Except it's not really a package cause it doesn't have its own repository or anything, it's just here. Time to sell my soul to OpenAI as well. I'm loading the package using the magical black box of =use-package=; I add my Doom configuration directory to the load path and also provide a list of commands so that the file gets loaded lazily.
+* =pencil.el=
+Look, I wrote my own package! Except it's not really a package cause it doesn't have its own repository or anything, it's just here. I'm loading the package using the magical black box of =use-package=; I add my Doom configuration directory to the load path and also provide a list of commands so that the file gets loaded lazily.
 
 #+begin_src elisp
-(use-package! gpt
+(use-package! pencil
   :load-path doom-user-dir
-  :commands (gpt/prompt gpt/edit gpt/insert gpt/chat gpt/q-and-a))
+  :commands (pencil/prompt pencil/summarize pencil/answer pencil/paraphrase pencil/spelling-and-grammar pencil/chat))
 #+end_src
 * =titlecase.el=
 #+begin_src elisp
