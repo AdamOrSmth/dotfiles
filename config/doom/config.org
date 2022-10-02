@@ -447,16 +447,6 @@ Add the =apa7= ~documentclass~ to LaTeX.
                  :desc "retry failed" "r" #'anki-editor-retry-failure-notes
                  :desc "insert note" "i" #'anki-editor-insert-note))))))
 #+end_src
-* GitHub Copilot
-Yes, I'm really lazy enough to sell my soul to Microsoft.
-
-#+begin_src elisp
-(use-package! copilot
-  :bind (:map doom-leader-toggle-map
-         ("C" . #'copilot-mode)
-         :map copilot-mode-map
-         ("M-RET" . #'copilot-accept-completion)))
-#+end_src
 * Partial Window Transparency
 It may be useless and impractical, but it's hot. Background-only transparency requires either [[https://github.com/TheVaffel/emacs/blob/master/emacs_background_transparency.patch][this patch]] or Emacs 29+.
 #+begin_src elisp
@@ -515,6 +505,22 @@ The general consensus in the community is to just get used to the new positions 
       :nmv "k" #'evil-ex-search-next
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
+#+end_src
+* mu4e
+Putting my private email in public view for all to see probably isn't the most brilliant idea ever, so the relevant ~set-email-account!~ calls are in a file encrypted using =git-crypt= instead. That file gets loaded here.
+
+#+begin_src elisp
+(load! "mu4e.el.crypt")
+#+end_src
+* GitHub Copilot
+Yes, I'm really lazy enough to sell my soul to Microsoft.
+
+#+begin_src elisp
+(use-package! copilot
+  :bind (:map doom-leader-toggle-map
+         ("C" . #'copilot-mode)
+         :map copilot-mode-map
+         ("M-RET" . #'copilot-accept-completion)))
 #+end_src
 * =pencil.el=
 Look, I wrote my own package! Except it's not really a package cause it doesn't have its own repository or anything, it's just here. I'm loading the package using the magical black box of =use-package=; I add my Doom configuration directory to the load path and also provide a list of commands so that the file gets loaded lazily.

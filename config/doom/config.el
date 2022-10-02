@@ -331,12 +331,6 @@
                  :desc "retry failed" "r" #'anki-editor-retry-failure-notes
                  :desc "insert note" "i" #'anki-editor-insert-note))))))
 
-(use-package! copilot
-  :bind (:map doom-leader-toggle-map
-         ("C" . #'copilot-mode)
-         :map copilot-mode-map
-         ("M-RET" . #'copilot-accept-completion)))
-
 (setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
 (map! :map doom-leader-toggle-map
       :desc "Transparency" "t"
@@ -388,6 +382,14 @@
       :nmv "k" #'evil-ex-search-next
       :nmv "K" #'evil-ex-search-previous
       :nmv "E" #'+lookup/documentation)
+
+(load! "mu4e.el.crypt")
+
+(use-package! copilot
+  :bind (:map doom-leader-toggle-map
+         ("C" . #'copilot-mode)
+         :map copilot-mode-map
+         ("M-RET" . #'copilot-accept-completion)))
 
 (use-package! pencil
   :load-path doom-user-dir
