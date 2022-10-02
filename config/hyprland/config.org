@@ -100,11 +100,14 @@ device:CRYPTOTRUST ONLYKEY {
 }
 #+end_src
 * Miscellaneous
-Wake up the monitors on mouse move (the lock keybind triggers DPMS).
++ Wake up the monitors on mouse move (the lock keybind triggers DPMS).
++ Perform window swallowing with Alacritty (my terminal).
 
 #+begin_src conf
 misc {
      mouse_move_enables_dpms = true
+     enable_swallow          = true
+     swallow_regex           = Alacritty
 }
 #+end_src
 * Keybindings
