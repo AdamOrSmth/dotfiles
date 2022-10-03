@@ -98,6 +98,16 @@ and stop sequence (default dependent upon scenario)."
     (insert body)))
 
 ;;;###autoload
+(defun pencil/code ()
+  "Get a prompt from the user and send it to the code generation API."
+  (interactive)
+  (let* ((prompt (read-string "Prompt: "))
+         (params `((instruction . ,prompt)))
+         (response (pencil-make-request "finetuned-gpt-neox-20b" "code-generation" params))
+         (body (alist-get 'generated_code response)))
+    (insert body)))
+
+;;;###autoload
 (defun pencil/summarize ()
   "Send the active region to the summarization API and insert the response.
 If no region is active, ask the user if they would like to use the current
@@ -135,7 +145,7 @@ echoed in the minibuffer."
                       (read-string "Context: "))))
          (response (pencil-make-request "finetuned-gpt-neox-20b" "question"
                                         `(("question" . ,question)
-                                          ("context" . ,context))))
+                                          ("context"  . ,context))))
          (answer (alist-get 'answer response)))
     (message "Answer: %s" answer)))
 
