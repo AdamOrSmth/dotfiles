@@ -164,9 +164,9 @@ line. The response replaces the region/line."
 
 ;;;###autoload
 (defun pencil/spelling-and-grammar ()
-  "Send the active region to the spelling and grammar correction API
-and insert the response. If no region is active, ask the user if they
-would like to use the current line. The response replaces the region/line."
+  "Send the active region to the spelling and grammar correction API.
+If no region is active, ask the user if they would like to use the
+current line. Replace the region/line with the response."
   (interactive)
   (unless (use-region-p)
     (if (y-or-n-p "No region active; use current line? ")
@@ -198,6 +198,10 @@ would like to use the current line. The response replaces the region/line."
 (defvar-local pencil-chat-history nil
   "History of the current chat buffer.")
 
+(defvar-local pencil-chat-history-length 3
+  "Number of previous history messages to keep sending as context.
+Note that a message and a response is one history entry.")
+
 (define-derived-mode pencil-chat-mode text-mode "Virtual Chat"
   "Major mode for having a virtual conversation with AI."
   (erase-buffer)
@@ -205,7 +209,8 @@ would like to use the current line. The response replaces the region/line."
   (goto-char (point-max)))
 
 (defun pencil-chat-send ()
-  "Send the current input to the chat API and insert the response."
+  "Send the current input to the chat API and insert the response.
+Additionally, trim returned history and make the request asychronously."
   (interactive)
   (let* ((input (s-trim (buffer-substring-no-properties
                          ;; Skip the "Human: " prompt
@@ -214,12 +219,15 @@ would like to use the current line. The response replaces the region/line."
          (params `(("input"   . ,input)
                    ("context" . ,pencil-chat-context)
                    ("history" . ,pencil-chat-history)))
-         (response (pencil-make-request "finetuned-gpt-neox-20b" "chatbot" params))
-         (text (alist-get 'response response))
-         (history (alist-get 'history response)))
-    (goto-char (point-max))
-    (insert "\nAI: " text "\nHuman: ")
-    (setq pencil-chat-history history)))
+         (buffer (current-buffer))
+         (callback (lambda (response)
+                     (with-current-buffer buffer
+                       (let* ((text (alist-get 'response response))
+                              (history (alist-get 'history response)))
+                         (setq pencil-chat-history (seq-drop history (- (length history) pencil-chat-history-length)))
+                         (goto-char (point-max))
+                         (insert "\nAI: " text "\nHuman: "))))))
+    (pencil-make-request "finetuned-gpt-neox-20b" "chatbot" params callback)))
 
 ;;;###autoload
 (defun pencil/chat ()
@@ -227,7 +235,7 @@ would like to use the current line. The response replaces the region/line."
   (interactive)
   (switch-to-buffer (generate-new-buffer "*Virtual Chat*"))
   (pencil-chat-mode)
-  (setq pencil-chat-context "This is a casual conversation between a human and an AI. The AI is knowledgeable, creative, and humorous."))
+  (setq pencil-chat-context "This is a casual conversation between a human and an AI. The AI is knowledgeable, creative, funny, and very talkative."))
 
 (provide 'pencil)
 ;;; pencil.el ends here
