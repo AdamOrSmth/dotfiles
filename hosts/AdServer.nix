@@ -12,6 +12,7 @@
     };
     hardware.networking = { interface = "enp1s0"; };
     services = {
+      ankisyncd.enable = true;
       caddy.enable = true;
       git-hosting.enable = true;
       navidrome = {
