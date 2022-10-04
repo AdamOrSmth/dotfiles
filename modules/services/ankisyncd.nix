@@ -18,9 +18,10 @@ in {
       port = 27702;
     };
     my.services.caddy.config = ''
-      anki.adamorsomething.xyz {
+      adamorsomething.xyz:27701 {
         reverse_proxy 127.0.0.1:27702
       }
     '';
+    networking.firewall.allowedTCPPorts = [ 27701 ];
   }]);
 }
