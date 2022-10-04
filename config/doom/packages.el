@@ -53,6 +53,6 @@
 (package! cdlatex)
 (package! auctex)
 (package! titlecase)
-(package! anki-editor)
 (package! org-auto-tangle)
 (package! copilot :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+(package! org-anki)
