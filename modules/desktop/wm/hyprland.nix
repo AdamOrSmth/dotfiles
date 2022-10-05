@@ -58,10 +58,10 @@ in {
       if test (tty) = /dev/tty1
         ${nvidiaExtras}
         export SDL_VIDEODRIVER=wayland
-        export _JAVA_AWT_WM_NONREPARENTING = "1";
-        export NIXOS_OZONE_WL = "1";
-        export XCURSOR_SIZE = "24";
-        export XDG_SESSION_TYPE = "wayland";
+        export _JAVA_AWT_WM_NONREPARENTING=1;
+        export NIXOS_OZONE_WL=1;
+        export XCURSOR_SIZE=24;
+        export XDG_SESSION_TYPE="wayland";
         exec Hyprland
       end
     '';
