@@ -18,7 +18,7 @@ in {
 
     environment = {
       systemPackages = [ onlykey-bin onlykey-cli onlykey-agent libfido2 gnupg ];
-      variables.GNUPGHOME = "~/.gnupg/onlykey";
+      sessionVariables.GNUPGHOME = "~/.gnupg/onlykey";
     };
   };
 }
