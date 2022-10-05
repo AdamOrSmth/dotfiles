@@ -132,7 +132,8 @@
       +org-roam-open-buffer-on-find-file nil)
 
 (defvar ad/org-roam-icons
-  '(("gtd"     . "🗓")
+  '(("fc"      . "🎴")
+    ("gtd"     . "🗓")
     ("journal" . "📖")
     ("log"     . "🗃")
     ("ref"     . "📚")

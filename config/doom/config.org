@@ -198,7 +198,8 @@ Each subdirectory in my ~org-directory~ corresponds to a "type" of ~org-roam~ no
 Define an associative list for the names of each subdirectory to their respective icon. You could also simply use the subdirectory name alone, but I like having some pretty icons as well. Given the subdirectory name, fetching the icon is as simple as using the ~assoc~ function. ~nil~ is my Inbox file, which is the only file that resides in the root ~org-roam-directory~.
 #+begin_src elisp
 (defvar ad/org-roam-icons
-  '(("gtd"     . "🗓")
+  '(("fc"      . "🎴")
+    ("gtd"     . "🗓")
     ("journal" . "📖")
     ("log"     . "🗃")
     ("ref"     . "📚")
