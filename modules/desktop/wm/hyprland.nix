@@ -43,6 +43,7 @@ in {
         alacritty grim mako pcmanfm playerctl rofi-wayland slurp swaybg
         swaylock-effects wl-clipboard;
       inherit (pkgs.xorg) xeyes;
+      inherit (pkgs.qt6) qtwayland;
     };
 
     # Start Hyprland + set relevant environment variables
