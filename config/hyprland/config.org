@@ -263,13 +263,13 @@ bind = ,xf86audionext,exec,playerctl next
 + s-return :: Rofi
 + s-S-return :: Alacritty
 + s-e :: Emacs client window
-+ s-b :: Qutebrowser
++ s-b :: Librewolf
 + s-S-b :: Brave
 #+begin_src conf
 bind = SUPER     ,return,exec,rofi -show drun
 bind = SUPERSHIFT,return,exec,alacritty
 bind = SUPER     ,F     ,exec,emacsclient -c
-bind = SUPER     ,Z     ,exec,qutebrowser
+bind = SUPER     ,Z     ,exec,librewolf
 bind = SUPERSHIFT,Z     ,exec,brave
 #+end_src
 * Layout
