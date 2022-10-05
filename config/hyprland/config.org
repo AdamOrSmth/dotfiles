@@ -62,14 +62,14 @@ Each animation takes parameters =enabled=, =duration=, and =curve=. ~windows~ an
 
 #+begin_src conf
 bezier = overshot,0.1,0.7,0.1,1.1
-bezier = easein,0.1,0,1,1
-bezier = easeout,0,1,0.5,1
+bezier = easein  ,0.1,0  ,1  ,1
+bezier = easeout ,0  ,1  ,0.5,1
 
 animations {
-    animation = windows,1,7,overshot,slide
-    animation = fade,1,7,default
-    animation = border,1,10,default
-    animation = workspaces,1,5,easeout,slidevert
+    animation = windows   ,1,7 ,overshot,slide
+    animation = fade      ,1,7 ,default
+    animation = border    ,1,10,default
+    animation = workspaces,1,5 ,easeout ,slidevert
 }
 #+end_src
 * Input
@@ -124,10 +124,10 @@ bind = SUPERSHIFT,P,exec,hyprctl reload
 + s-{h/j/k/l} :: Switch focus, Vi-like.
 + s-S-{h/j/k/l} :: Swap windows.
 #+begin_src conf
-bind = SUPER,M,movefocus,l
-bind = SUPER,N,movefocus,d
-bind = SUPER,E,movefocus,u
-bind = SUPER,I,movefocus,r
+bind = SUPER     ,M,movefocus ,l
+bind = SUPER     ,N,movefocus ,d
+bind = SUPER     ,E,movefocus ,u
+bind = SUPER     ,I,movefocus ,r
 bind = SUPERSHIFT,M,movewindow,l
 bind = SUPERSHIFT,N,movewindow,d
 bind = SUPERSHIFT,E,movewindow,u
@@ -143,10 +143,10 @@ Switch & move windows between monitors.
 + s-{s/d} :: Switch focus to the leftward/rightward monitor.
 + s-S-{s/d} :: Move the focused window to the leftward/rightward monitor.
 #+begin_src conf
-bind = SUPER,R,focusmonitor,l
-bind = SUPER,S,focusmonitor,r
-bind = SUPERSHIFT,R,movewindow,mon:l
-bind = SUPERSHIFT,S,movewindow,mon:r
+bind = SUPER     ,R,focusmonitor,l
+bind = SUPER     ,S,focusmonitor,r
+bind = SUPERSHIFT,R,movewindow  ,mon:l
+bind = SUPERSHIFT,S,movewindow  ,mon:r
 #+end_src
 
 + s-f :: Toggle fullscreen for the focused window. The argument decides whether or not to truly fullscreen or simply "maximize" the window and leave gaps + bars; I choose to fully fullscreen.
@@ -154,9 +154,9 @@ bind = SUPERSHIFT,S,movewindow,mon:r
 + s-t :: Toggle pseudo-tiled for the focused window. A pseudo-tiled window automatically shrinks with the layout, but will not grow larger than its floating size (useful for e.g. dialog boxes, TOR browser).
 #+begin_src conf
 # Toggle floating/fullscreen
-bind = SUPER,T,fullscreen,0
+bind = SUPER     ,T,fullscreen    ,0
 bind = SUPERSHIFT,T,togglefloating,active
-bind = SUPER,B,pseudo
+bind = SUPER     ,B,pseudo
 #+end_src
 
 Resizing windows uses a sub-map activated with =s-r= and exited using =ESC=. This sub-map allows me to resize windows as desired before exiting using =ESC=, like a Hydra in Emacs. To create a sub-map, use the ~submap~ dispatcher and give it a sub-map name. Start defining a sub-map with the ~submap~ keyword and a name, and use =reset= to end the sub-map. Additionally, bind has the =e= flag given, which makes it automatically repeat, convenient for this map. *Don't forget to add a keybinding to exit the sub-map!* See the full documentation [[https://github.com/hyprwm/Hyprland/wiki/Advanced-config/#submaps][here]].
@@ -168,10 +168,10 @@ bind   = SUPER,P,submap,resize
 
 submap = resize
 
-binde  = ,M,resizeactive,-100 0
-binde  = ,N,resizeactive,0 100
-binde  = ,E,resizeactive,0 -100
-binde  = ,I,resizeactive,100 0
+binde  =      ,M,resizeactive,-100 0
+binde  =      ,N,resizeactive,0 100
+binde  =      ,E,resizeactive,0 -100
+binde  =      ,I,resizeactive,100 0
 binde  = SHIFT,M,resizeactive,-20 0
 binde  = SHIFT,N,resizeactive,0 20
 binde  = SHIFT,E,resizeactive,0 -20
@@ -205,29 +205,29 @@ bindm=SUPER,mouse:273,resizewindow
 + s-S-{comma,period} :: Move the focused window to the leftward/rightward workspace.
   ~m±1~ specifies the workspace ID one down/up on the current monitor.
 #+begin_src conf
-bind = SUPER,1,workspace,1
-bind = SUPER,2,workspace,2
-bind = SUPER,3,workspace,3
-bind = SUPER,4,workspace,4
-bind = SUPER,5,workspace,5
-bind = SUPER,6,workspace,6
-bind = SUPER,7,workspace,7
-bind = SUPER,8,workspace,8
-bind = SUPER,9,workspace,9
-bind = SUPER,0,workspace,10
-bind = SUPERSHIFT,1,movetoworkspacesilent,1
-bind = SUPERSHIFT,2,movetoworkspacesilent,2
-bind = SUPERSHIFT,3,movetoworkspacesilent,3
-bind = SUPERSHIFT,4,movetoworkspacesilent,4
-bind = SUPERSHIFT,5,movetoworkspacesilent,5
-bind = SUPERSHIFT,6,movetoworkspacesilent,6
-bind = SUPERSHIFT,7,movetoworkspacesilent,7
-bind = SUPERSHIFT,8,movetoworkspacesilent,8
-bind = SUPERSHIFT,9,movetoworkspacesilent,9
-bind = SUPERSHIFT,0,movetoworkspacesilent,10
-bind = SUPER,comma,workspace,m-1
-bind = SUPER,period,workspace,m+1
-bind = SUPERSHIFT,comma,movetoworkspacesilent,m-1
+bind = SUPER     ,1     ,workspace            ,1
+bind = SUPER     ,2     ,workspace            ,2
+bind = SUPER     ,3     ,workspace            ,3
+bind = SUPER     ,4     ,workspace            ,4
+bind = SUPER     ,5     ,workspace            ,5
+bind = SUPER     ,6     ,workspace            ,6
+bind = SUPER     ,7     ,workspace            ,7
+bind = SUPER     ,8     ,workspace            ,8
+bind = SUPER     ,9     ,workspace            ,9
+bind = SUPER     ,0     ,workspace            ,10
+bind = SUPERSHIFT,1     ,movetoworkspacesilent,1
+bind = SUPERSHIFT,2     ,movetoworkspacesilent,2
+bind = SUPERSHIFT,3     ,movetoworkspacesilent,3
+bind = SUPERSHIFT,4     ,movetoworkspacesilent,4
+bind = SUPERSHIFT,5     ,movetoworkspacesilent,5
+bind = SUPERSHIFT,6     ,movetoworkspacesilent,6
+bind = SUPERSHIFT,7     ,movetoworkspacesilent,7
+bind = SUPERSHIFT,8     ,movetoworkspacesilent,8
+bind = SUPERSHIFT,9     ,movetoworkspacesilent,9
+bind = SUPERSHIFT,0     ,movetoworkspacesilent,10
+bind = SUPER     ,comma ,workspace            ,m-1
+bind = SUPER     ,period,workspace            ,m+1
+bind = SUPERSHIFT,comma ,movetoworkspacesilent,m-1
 bind = SUPERSHIFT,period,movetoworkspacesilent,m+1
 #+end_src
 
@@ -235,7 +235,7 @@ The special workspace can toggle above any other workspace like a "scratchpad" w
 + s-/ :: Toggle special workspace.
 + s-S-/ :: Move a window to the special workspace.
 #+begin_src conf
-bind = SUPER,slash,togglespecialworkspace
+bind = SUPER     ,slash,togglespecialworkspace
 bind = SUPERSHIFT,slash,movetoworkspace,special
 #+end_src
 ** Misc
@@ -243,8 +243,8 @@ Screen-locking commands using ~swaylock~. OnlyKey sends the command for Mac as w
 + s-`, C-s-q :: Lock the current session and disable DPMS (turn off monitors).
 + s-~ :: Lock and suspend the current session.
 #+begin_src conf
-bind = SUPER,grave,exec,swaylock -fF && hyprctl dispatch dpms off
-bind = SUPERCTRL,Q,exec,swaylock -fF && hyprctl dispatch dpms off
+bind = SUPER     ,grave,exec,swaylock -fF && hyprctl dispatch dpms off
+bind = SUPERCTRL ,Q    ,exec,swaylock -fF && hyprctl dispatch dpms off
 bind = SUPERSHIFT,grave,exec,swaylock -fF && systemctl suspend
 #+end_src
 
@@ -266,11 +266,11 @@ bind = ,xf86audionext,exec,playerctl next
 + s-b :: Qutebrowser
 + s-S-b :: Brave
 #+begin_src conf
-bind = SUPER,return,exec,rofi -show drun
+bind = SUPER     ,return,exec,rofi -show drun
 bind = SUPERSHIFT,return,exec,alacritty
-bind = SUPER,F,exec,emacsclient -c
-bind = SUPER,Z,exec,qutebrowser
-bind = SUPERSHIFT,Z,exec,brave
+bind = SUPER     ,F     ,exec,emacsclient -c
+bind = SUPER     ,Z     ,exec,qutebrowser
+bind = SUPERSHIFT,Z     ,exec,brave
 #+end_src
 * Layout
 =Hyprland= comes with two different layout schemes: =dwindle=, based off =bspwm=, and =master=, based off the master/stack layout popularized by =Xmonad=.
@@ -301,17 +301,17 @@ Create a window rule with the ~windowrule~ keyword, which takes a rule to apply 
 + Automatically pseudo-tile Tor Browser (has the class =firefox=, but I don't use actual Firefox so it's fine).
 + A collection of rules to make =GLava= (a music visualizer) appear nicely.
 #+begin_src conf
-windowrule = tile,OnlyKey
+windowrule = tile     ,OnlyKey
 
 windowrule = monitor 1,discord
 windowrule = monitor 1,Signal
 windowrule = monitor 1,Sonixd
 
-windowrule = pseudo,firefox
+windowrule = pseudo   ,firefox
 
-windowrule = float,GLava
-windowrule = center,GLava
-windowrule = noblur,GLava
+windowrule = float    ,GLava
+windowrule = center   ,GLava
+windowrule = noblur   ,GLava
 #+end_src
 * Startup Applications
 Define commands to run on startup with either ~exec~ or ~exec-once~. The former executes on every reload, while the latter only on startup. The first two commands import variables required for certain functions on Wayland, such as screensharing.
