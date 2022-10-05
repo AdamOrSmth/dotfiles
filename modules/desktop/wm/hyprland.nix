@@ -33,6 +33,10 @@ in {
         else
           hyprlandPkgs.wlroots-hyprland;
       };
+      # We set these manually, since I don't like some of the variables set by the module
+      # (GDK_BACKEND should not be set). Also, if we were ever to launch X, the variables
+      # I set would not interfere, as they're not set globally, whereas the module does.
+      recommendedEnvironment = false;
     };
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
@@ -53,6 +57,10 @@ in {
       if test (tty) = /dev/tty1
         ${nvidiaExtras}
         export SDL_VIDEODRIVER=wayland
+        export _JAVA_AWT_WM_NONREPARENTING = "1";
+        export NIXOS_OZONE_WL = "1";
+        export XCURSOR_SIZE = "24";
+        export XDG_SESSION_TYPE = "wayland";
         exec Hyprland
       end
     '';
