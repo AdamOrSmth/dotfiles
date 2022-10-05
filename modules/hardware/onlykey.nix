@@ -20,5 +20,30 @@ in {
       systemPackages = [ onlykey-bin onlykey-cli onlykey-agent libfido2 gnupg ];
       sessionVariables.GNUPGHOME = "~/.gnupg/onlykey";
     };
+
+    systemd.user = {
+      services.onlykey-gpg-agent = {
+        description = "onlykey-gpg-agent";
+        requires = [ "onlykey-gpg-agent.socket" ];
+
+        path = [ gnupg ];
+
+        serviceConfig = {
+          Type = "simple";
+          Environment = [ "GNUPGHOME=%h/.gnupg/onlykey" ];
+          ExecStart = "${onlykey-agent}/bin/onlykey-gpg-agent -vv";
+        };
+      };
+      sockets.onlykey-gpg-agent = {
+        description = "onlykey-gpg-agent socket";
+        listenStreams = [ "%t/gnupg/S.gpg-agent" ];
+        socketConfig = {
+          FileDescriptorName = "std";
+          SocketMode = 600;
+          DirectoryMode = 700;
+        };
+        wantedBy = [ "sockets.target" ];
+      };
+    };
   };
 }
