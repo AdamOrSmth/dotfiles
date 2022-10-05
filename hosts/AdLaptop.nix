@@ -47,11 +47,11 @@
         wireless = true;
         mullvad = true;
       };
+      onlykey.enable = true;
       pam-u2f.enable = true;
       sound.enable = true;
     };
     services = {
-      onlykey.enable = true;
       syncthing = {
         enable = true;
         dataDir = "/home/ad";

@@ -48,12 +48,12 @@
         interface = "enp37s0";
         mullvad = true;
       };
+      onlykey.enable = true;
       pam-u2f.enable = true;
       sound.enable = true;
     };
     services = {
       lokinet.enable = true;
-      onlykey.enable = true;
       openssh = {
         enable = true;
         key =

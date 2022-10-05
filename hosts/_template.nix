@@ -54,6 +54,7 @@
         wireless = false;
         mullvad = false;
       };
+      onlykey.enable = false;
       pam-u2f.enable = false;
       sound.enable = false;
     };
@@ -65,7 +66,6 @@
         enable = false;
         musicFolder = null;
       };
-      onlykey.enable = false;
       openssh = {
         enable = false;
         user = null;
