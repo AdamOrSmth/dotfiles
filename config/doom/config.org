@@ -223,6 +223,7 @@ Defining a custom method is how ~org-roam~ allows you to add custom properties t
 I have my titles in my ~org-roam~ file names, as well as the timestamp of creation (which helps serve as a unique file name). I like to automatically have the file name titles in sync with the ~org-mode~ titles, which the following custom function does. I then add it as a hook to run right after save, since the ~org-roam~ values don't get updated before save. It first ensures that it's a file in a folder with managed file names, and then does some string parsing and whatnot to get a new file name, before running the Doom function to rename the file. I've found the Doom function works the best with Doom Emacs, since it's functionally equivalent to the interactive keybinding to move a file, which is what it should be. Keeps everything running smoothly.
 #+begin_src elisp
 (defun ad/update-roam-filename ()
+  "Update org-roam file names when their titles change."
   (interactive)
   (when (and (org-roam-file-p)
              (-contains-p '("fc" "log" "outline" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
@@ -245,7 +246,7 @@ I have my titles in my ~org-roam~ file names, as well as the timestamp of creati
 In some templates, I fill in the ~org-attach~ directory automatically, useful for things like export paths for =gnuplot= or =graphviz=. However, by default, there's no function that both creates the directory and returns it; ~org-attach-dir-get-create~ doesn't accept an ID parameter, and the ID technically doesn't exist in the capture template, since it doesn't have an associated file until its initial save. No other method accepts an ID parameter /and/ creates the directory, so here's a simple one to fill my need.
 #+begin_src elisp
 (defun ad/org-attach-dir-get-create (id)
-  "Return existing or new directory associated with the given ID"
+  "Return existing or new directory associated with the given ID."
   (let ((attach-dir (org-attach-dir-from-id id)))
     (unless (file-directory-p attach-dir)
       (make-directory attach-dir t))
@@ -255,7 +256,7 @@ In some templates, I fill in the ~org-attach~ directory automatically, useful fo
 This is just used to automagically get the HTML title of a URL, used in my website capture template.
 #+begin_src elisp
 (defun ad/get-html-title (url)
-  "Retrieve the contents of URL and return the HTML title. "
+  "Retrieve a URL and return the HTML title. "
   (with-current-buffer (url-retrieve-synchronously url)
     (goto-char (point-min))
     (re-search-forward "<title>\\([^<]*\\)</title>")
@@ -350,6 +351,7 @@ My dailies are the same as my journal entries; this just defines a capture templ
 Given an ~org-mode~ buffer =BUFFER= (default current buffer), return its =TITLE= property.
 #+begin_src elisp
 (defun ad/get-org-buffer-title (&optional buffer)
+  "Given an org-mode BUFFER, return its title property."
   (with-current-buffer (or buffer (current-buffer))
     (nth 1 (car (org-collect-keywords '("TITLE"))))))
 #+end_src
@@ -357,6 +359,7 @@ Given an ~org-mode~ buffer =BUFFER= (default current buffer), return its =TITLE=
 Create a custom ~org-agenda~ prefix of =LEN=.
 #+begin_src elisp
 (defun ad/custom-agenda-prefix (len)
+  "Create a customized agenda prefix of LEN."
   (if buffer-file-name
       (let ((len (if (string-empty-p time) len (- len (length time) 3)))
             (title (ad/get-org-buffer-title (find-file-noselect buffer-file-name))))

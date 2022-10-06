@@ -151,6 +151,7 @@
                                          (face org-tag))))
 
 (defun ad/update-roam-filename ()
+  "Update org-roam file names when their titles change."
   (interactive)
   (when (and (org-roam-file-p)
              (-contains-p '("fc" "log" "outline" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
@@ -170,14 +171,14 @@
 (add-hook 'after-save-hook #'ad/update-roam-filename)
 
 (defun ad/org-attach-dir-get-create (id)
-  "Return existing or new directory associated with the given ID"
+  "Return existing or new directory associated with the given ID."
   (let ((attach-dir (org-attach-dir-from-id id)))
     (unless (file-directory-p attach-dir)
       (make-directory attach-dir t))
     attach-dir))
 
 (defun ad/get-html-title (url)
-  "Retrieve the contents of URL and return the HTML title. "
+  "Retrieve a URL and return the HTML title. "
   (with-current-buffer (url-retrieve-synchronously url)
     (goto-char (point-min))
     (re-search-forward "<title>\\([^<]*\\)</title>")
@@ -256,10 +257,12 @@
       org-agenda-current-time-string "———————————————— now")
 
 (defun ad/get-org-buffer-title (&optional buffer)
+  "Given an org-mode BUFFER, return its title property."
   (with-current-buffer (or buffer (current-buffer))
     (nth 1 (car (org-collect-keywords '("TITLE"))))))
 
 (defun ad/custom-agenda-prefix (len)
+  "Create a customized agenda prefix of LEN."
   (if buffer-file-name
       (let ((len (if (string-empty-p time) len (- len (length time) 3)))
             (title (ad/get-org-buffer-title (find-file-noselect buffer-file-name))))
