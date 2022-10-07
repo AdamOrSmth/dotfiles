@@ -50,21 +50,21 @@
   (setq org-todo-keywords '((sequence
                              "MISSION(m)"
                              "QUEST(q)"
-                             "ACTIVE(a)"
-                             "WAITING(w)"
+                             "ACTIVE(a!)"
+                             "WAITING(w@/@)"
                              "SCHEME(s)"
                              "INVESTIGATE(i)"
                              "NEEDY(n)"
                              "|"
-                             "COMPLETE(c)"
-                             "FAILED(f)")
+                             "COMPLETE(c!)"
+                             "FAILED(f@)")
                             (sequence
                              "[ ](M)"
-                             "[-](A)"
-                             "[?](W)"
+                             "[-](A!)"
+                             "[?](W@/@)"
                              "|"
-                             "[X](C)"
-                             "[#](F)"))
+                             "[X](C!)"
+                             "[#](F@)"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)
