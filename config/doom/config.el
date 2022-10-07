@@ -155,8 +155,7 @@
   (interactive)
   (when (and (org-roam-file-p)
              (-contains-p '("fc" "log" "outline" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
-    (let
-        ((new-file-location
+    (let ((new-file-location
           (concat
            (file-name-directory buffer-file-name)
            (s-replace-regexp "^\\([0-9]\\{14\\}\\).*" "\\1" (file-name-base buffer-file-name))
@@ -184,44 +183,45 @@
     (re-search-forward "<title>\\([^<]*\\)</title>")
     (match-string 1)))
 
-(let ((template (lambda (template)
-                  (expand-file-name (concat template ".org")
-                                    (expand-file-name "template/" org-roam-directory)))))
-  (setq org-roam-capture-templates
-        `(("f" "fc" plain
-           (file ,(funcall template "fc"))
-           :target (file "fc/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("l" "log" plain
-           (file ,(funcall template "log"))
-           :target (file "log/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("o" "outline" plain
-           (file ,(funcall template "outline"))
-           :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("r" "ref")
-          ("rw" "website" plain
-           (file ,(funcall template "website"))
-           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("rc" "citekey" plain
-           (file ,(funcall template "citekey"))
-           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("w" "work")
-          ("ww" "default" plain
-           (file ,(funcall template "work"))
-           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("wl" "lab report" plain
-           (file ,(funcall template "lab-report"))
-           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("z" "zettel" plain
-           (file ,(funcall template "zettel"))
-           :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t))))
+(defun ad/roam-template-path (template)
+  "Given a template name, return the org-roam template path."
+  (expand-file-name (concat template ".org")
+                    (expand-file-name "template/" org-roam-directory)))
+(setq org-roam-capture-templates
+      `(("f" "fc" plain
+         (file ,(ad/roam-template-path "fc"))
+         :target (file "fc/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("l" "log" plain
+         (file ,(ad/roam-template-path "log"))
+         :target (file "log/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("o" "outline" plain
+         (file ,(ad/roam-template-path "outline"))
+         :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("r" "ref")
+        ("rw" "website" plain
+         (file ,(ad/roam-template-path "website"))
+         :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("rc" "citekey" plain
+         (file ,(ad/roam-template-path "citekey"))
+         :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("w" "work")
+        ("ww" "default" plain
+         (file ,(ad/roam-template-path "work"))
+         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("wl" "lab report" plain
+         (file ,(ad/roam-template-path "lab-report"))
+         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("z" "zettel" plain
+         (file ,(ad/roam-template-path "zettel"))
+         :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)))
 
 (setq org-roam-dailies-capture-templates
       `(("d" "default" entry
@@ -233,8 +233,9 @@
          :clock-resume)))
 
 (use-package! org-roam-ui
-  :after (org-roam)
-  :bind (:map doom-leader-notes-map ("r u" . org-roam-ui-mode))
+  :after org-roam
+  :bind (:map doom-leader-notes-map
+              ("r u" . org-roam-ui-mode))
   :init
   (use-package! websocket)
   :custom
@@ -327,7 +328,7 @@
   :config
   (map! (:map org-mode-map
          (:localleader
-          (:prefix ("F" . "anki")
+          (:prefix ("F" . "org-anki")
            :desc "cloze" :nv "c" #'org-anki-cloze-dwim
            :desc "sync" "s" #'org-anki-sync-entry
            :desc "sync all" "S" #'org-anki-sync-all

@@ -227,8 +227,7 @@ I have my titles in my ~org-roam~ file names, as well as the timestamp of creati
   (interactive)
   (when (and (org-roam-file-p)
              (-contains-p '("fc" "log" "outline" "ref" "work" "zettel") (f-filename (f-parent buffer-file-name))))
-    (let
-        ((new-file-location
+    (let ((new-file-location
           (concat
            (file-name-directory buffer-file-name)
            (s-replace-regexp "^\\([0-9]\\{14\\}\\).*" "\\1" (file-name-base buffer-file-name))
@@ -265,44 +264,45 @@ This is just used to automagically get the HTML title of a URL, used in my websi
 
 Just a different capture template for each different "type" of note. I do define a short helper function to avoid having to type out the expression for my templates directory over and over again. Otherwise, nothing too interesting going on. For assorted thoughts and tasks, I use normal ~org-mode~ capture templates into my Inbox instead.
 #+begin_src elisp
-(let ((template (lambda (template)
-                  (expand-file-name (concat template ".org")
-                                    (expand-file-name "template/" org-roam-directory)))))
-  (setq org-roam-capture-templates
-        `(("f" "fc" plain
-           (file ,(funcall template "fc"))
-           :target (file "fc/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("l" "log" plain
-           (file ,(funcall template "log"))
-           :target (file "log/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("o" "outline" plain
-           (file ,(funcall template "outline"))
-           :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("r" "ref")
-          ("rw" "website" plain
-           (file ,(funcall template "website"))
-           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("rc" "citekey" plain
-           (file ,(funcall template "citekey"))
-           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("w" "work")
-          ("ww" "default" plain
-           (file ,(funcall template "work"))
-           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("wl" "lab report" plain
-           (file ,(funcall template "lab-report"))
-           :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("z" "zettel" plain
-           (file ,(funcall template "zettel"))
-           :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t))))
+(defun ad/roam-template-path (template)
+  "Given a template name, return the org-roam template path."
+  (expand-file-name (concat template ".org")
+                    (expand-file-name "template/" org-roam-directory)))
+(setq org-roam-capture-templates
+      `(("f" "fc" plain
+         (file ,(ad/roam-template-path "fc"))
+         :target (file "fc/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("l" "log" plain
+         (file ,(ad/roam-template-path "log"))
+         :target (file "log/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("o" "outline" plain
+         (file ,(ad/roam-template-path "outline"))
+         :target (file "outline/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("r" "ref")
+        ("rw" "website" plain
+         (file ,(ad/roam-template-path "website"))
+         :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("rc" "citekey" plain
+         (file ,(ad/roam-template-path "citekey"))
+         :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("w" "work")
+        ("ww" "default" plain
+         (file ,(ad/roam-template-path "work"))
+         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("wl" "lab report" plain
+         (file ,(ad/roam-template-path "lab-report"))
+         :target (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)
+        ("z" "zettel" plain
+         (file ,(ad/roam-template-path "zettel"))
+         :target (file "zettel/%<%Y%m%d%H%M%S>-${slug}.org")
+         :unnarrowed t)))
 #+end_src
 *** Dailies/Journals
 My dailies are the same as my journal entries; this just defines a capture template and some default contents for each file.
@@ -322,8 +322,9 @@ My dailies are the same as my journal entries; this just defines a capture templ
 
 #+begin_src elisp
 (use-package! org-roam-ui
-  :after (org-roam)
-  :bind (:map doom-leader-notes-map ("r u" . org-roam-ui-mode))
+  :after org-roam
+  :bind (:map doom-leader-notes-map
+              ("r u" . org-roam-ui-mode))
   :init
   (use-package! websocket)
   :custom
@@ -443,7 +444,7 @@ Add the =apa7= ~documentclass~ to LaTeX.
   :config
   (map! (:map org-mode-map
          (:localleader
-          (:prefix ("F" . "anki")
+          (:prefix ("F" . "org-anki")
            :desc "cloze" :nv "c" #'org-anki-cloze-dwim
            :desc "sync" "s" #'org-anki-sync-entry
            :desc "sync all" "S" #'org-anki-sync-all
