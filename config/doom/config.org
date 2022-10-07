@@ -392,6 +392,13 @@ Default export sub-directory, see https://stackoverflow.com/questions/9559753/em
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
 #+end_src
+** Org-Noter
+I'm assuming this is simply a byproduct of me mass-remapping keys for [[*Colemak-DH]], but I no longer have an insert keybind in ~org-noter~ document buffers. So let's bind that to the old =I= instead.
+
+#+begin_src elisp
+(map! :map org-noter-doc-mode-map
+      "u" #'org-noter-insert-note)
+#+end_src
 ** LaTeX
 #+begin_src elisp
 (setq org-latex-compiler "lualatex")

@@ -288,6 +288,9 @@
 (use-package! org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
 
+(map! :map org-noter-doc-mode-map
+      "u" #'org-noter-insert-note)
+
 (setq org-latex-compiler "lualatex")
 
 (add-hook
