@@ -392,6 +392,10 @@
 
 (load! "mu4e.el.crypt")
 
+(map! :map doom-leader-open-map
+      :desc "Elfeed" "e" #'elfeed)
+(add-hook 'elfeed-search-mode-hook #'elfeed-update)
+
 (use-package! copilot
   :bind (:map doom-leader-toggle-map
          ("C" . #'copilot-mode)

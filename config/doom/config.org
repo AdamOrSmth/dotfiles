@@ -523,6 +523,14 @@ Putting my private email in public view for all to see probably isn't the most b
 #+begin_src elisp
 (load! "mu4e.el.crypt")
 #+end_src
+* Elfeed
+By default Doom Emacs doesn't actually come with a keybind to open Elfeed, even though =SPC o e= doesn't have anything assigned to it, a perfect key to assign to opening Elfeed. Also I add ~elfeed-update~ to ~elfeed-search-mode-hook~ to automatically update the feed.
+
+#+begin_src elisp
+(map! :map doom-leader-open-map
+      :desc "Elfeed" "e" #'elfeed)
+(add-hook 'elfeed-search-mode-hook #'elfeed-update)
+#+end_src
 * GitHub Copilot
 Yes, I'm really lazy enough to sell my soul to Microsoft.
 
