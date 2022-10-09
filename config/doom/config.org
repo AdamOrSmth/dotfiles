@@ -22,7 +22,8 @@ Enable native compilation of Emacs-Lisp.
       doom-theme 'doom-nord-plus
       doom-font (font-spec :family "Comic Code Ligatures" :size 16)
       doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
-      doom-big-font-increment 6)
+      doom-big-font-increment 6
+      vertico-posframe-width 164)
 #+end_src
 
 Italicize comments and keywords.

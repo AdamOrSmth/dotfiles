@@ -11,7 +11,8 @@
       doom-theme 'doom-nord-plus
       doom-font (font-spec :family "Comic Code Ligatures" :size 16)
       doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
-      doom-big-font-increment 6)
+      doom-big-font-increment 6
+      vertico-posframe-width 164)
 
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
