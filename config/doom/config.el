@@ -399,7 +399,7 @@
 
 (use-package! pencil
   :load-path doom-user-dir
-  :commands (pencil/prompt pencil/code pencil/summarize pencil/answer pencil/paraphrase pencil/spelling-and-grammar pencil/chat))
+  :commands (pencil/complete-line))
 
 (use-package! titlecase
   :after evil
