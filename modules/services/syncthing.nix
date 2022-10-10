@@ -32,6 +32,12 @@ in {
         (l: all (f: elem f folders) (attrNames l));
       default = { };
     };
+    receiveEncrypted = mkOption {
+      description = "List of folders to set to `receiveencrypted`";
+      type = types.addCheck (types.listOf types.nonEmptyStr)
+        (l: all (f: elem f folders) l);
+      default = [ ];
+    };
   };
 
   config = mkIf cfg.enable ({
@@ -57,6 +63,10 @@ in {
         inherit devices;
         path = cfg.folderLocations.${n} or "${cfg.dataDir}/${n}";
         enable = elem n cfg.enabledFolders;
+        type = if elem n cfg.receiveEncrypted then
+          "receiveencrypted"
+        else
+          "sendreceive";
       });
     };
   });

@@ -27,6 +27,7 @@
       syncthing = {
         enable = true;
         system = true;
+        receiveEncrypted = [ "Sync" ];
       };
     };
   };
