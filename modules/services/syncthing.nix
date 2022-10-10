@@ -8,7 +8,7 @@ let
     genAttrs;
   inherit (builtins) elem attrNames;
   cfg = getAttrFromPath path config;
-  folders = [ "Pass" "Music" "Sync" ];
+  folders = [ "Music" "Sync" ];
   user = if cfg.system then "syncthing" else config.my.user.username;
   home = if cfg.system then "/var/lib/syncthing" else config.my.user.home;
 in {
