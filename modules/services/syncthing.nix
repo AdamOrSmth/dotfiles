@@ -68,6 +68,8 @@ in {
         else
           "sendreceive";
       });
+      # Needed for the `receiveencrypted` type, otherwise the module overrides the password to nothing
+      overrideFolders = false;
     };
   });
 }
