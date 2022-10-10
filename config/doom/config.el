@@ -233,19 +233,6 @@
          :clock-in
          :clock-resume)))
 
-(defun ad/mount-org-roam-dailies ()
-  "Checks if `org-roam-dailies-directory' is mounted.
-If not, prompts to mount. Returns non-nil when mounted."
-  (interactive)
-  (cond ((file-exists-p (expand-file-name "2022-04-20.org" org-roam-dailies-directory)))
-        ((and (y-or-n-p "Dailies directory not mounted; mount it?")
-              (= 0 (call-process-shell-command (format "gocryptfs -ko noatime -badname '*sync*' -fido2 (fido2-token -L | cut -d ':' -f 1) -i 1m %s %s"
-                                                     (expand-file-name ".journal.enc" org-roam-directory)
-                                                     (expand-file-name "journal" org-roam-directory))))))))
-(define-advice org-roam-dailies--capture (:around (orig-fun &rest args))
-  (when (ad/mount-org-roam-dailies)
-    (apply orig-fun args)))
-
 (use-package! org-roam-ui
   :after org-roam
   :bind (:map doom-leader-notes-map

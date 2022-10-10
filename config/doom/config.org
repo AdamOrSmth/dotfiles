@@ -318,22 +318,6 @@ My dailies are the same as my journal entries; this just defines a capture templ
          :clock-resume)))
 
 #+end_src
-
-However, I store my journal entries in a directory encrypted using [[https://github.com/rfjakob/gocryptfs][gocryptfs]] that auto-unmounts on idle. Here, I advise ~org-roam-dailies--capture~, which is the function called whenever visiting or capturing to a daily file. This advice checks if the directory is currently mounted; if not, then we should of course mount it.
-#+begin_src elisp
-(defun ad/mount-org-roam-dailies ()
-  "Checks if `org-roam-dailies-directory' is mounted.
-If not, prompts to mount. Returns non-nil when mounted."
-  (interactive)
-  (cond ((file-exists-p (expand-file-name "2022-04-20.org" org-roam-dailies-directory)))
-        ((and (y-or-n-p "Dailies directory not mounted; mount it?")
-              (= 0 (call-process-shell-command (format "gocryptfs -ko noatime -badname '*sync*' -fido2 (fido2-token -L | cut -d ':' -f 1) -i 1m %s %s"
-                                                     (expand-file-name ".journal.enc" org-roam-directory)
-                                                     (expand-file-name "journal" org-roam-directory))))))))
-(define-advice org-roam-dailies--capture (:around (orig-fun &rest args))
-  (when (ad/mount-org-roam-dailies)
-    (apply orig-fun args)))
-#+end_src
 *** Org-Roam-UI
 =Org-Roam-UI= is a really cool visualization of ~org-roam~, that unfortunately doesn't come built-in. I set it up here, toggled with the keybinding =SPC n r u=, in line with the rest of the ~org-roam~ binds.
 
