@@ -54,6 +54,8 @@ in {
           "AENWMMW-DELUEVT-QXCO45X-TO55E7B-3JU25OD-ACDVOIN-FTQT7CJ-CKBCEQH";
         AdServer.id =
           "XPDW2XO-HPQPHCH-5GXJOW2-BQH7R6Z-FDIFJ5X-MSFOOZR-PC3W2N6-XLV5BQ7";
+        AdPhone.id =
+          "RO5TY6V-LMFGKOR-PXHHPQ4-AXKEL3B-TEVMWTE-XD2MCOS-F4GNERR-4RGUOAE";
       };
       folders = let
         # Generate a list of devices from the devices attribute
