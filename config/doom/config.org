@@ -203,6 +203,7 @@ Define an associative list for the names of each subdirectory to their respectiv
     ("gtd"     . "🗓")
     ("journal" . "📖")
     ("log"     . "🗃")
+    ("outline" . "📂")
     ("ref"     . "📚")
     ("work"    . "✏")
     ("zettel"  . "🗒")
@@ -212,10 +213,10 @@ Define an associative list for the names of each subdirectory to their respectiv
 Defining a custom method is how ~org-roam~ allows you to add custom properties to ~org-roam-node-display-template~, which controls the format of functions like ~org-roam-find-file~. I copied the extra font stuff from Doom's default setting for this variable, since I don't really understand how the font stuff works. This code partially comes from =hlissner='s own private configuration, as well as some of Doom's defaults. See the documentation of ~org-roam-node-display-template~ for more information. This has to run after ~org-roam~ loads, else it errors out from the method definition.
 #+begin_src elisp
 (after! org-roam
-   (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
-     (cdr (assoc (org-roam-node-doom-type node)
-                 ad/org-roam-icons)))
-  (setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:*} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
+  (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
+    (cdr (assoc (org-roam-node-doom-type node)
+                ad/org-roam-icons)))
+  (setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:96} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
                                          (face font-lock-keyword-face)
                                          36 51
                                          (face org-tag))))

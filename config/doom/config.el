@@ -137,16 +137,17 @@
     ("gtd"     . "🗓")
     ("journal" . "📖")
     ("log"     . "🗃")
+    ("outline" . "📂")
     ("ref"     . "📚")
     ("work"    . "✏")
     ("zettel"  . "🗒")
     (nil       . "📥")))
 
 (after! org-roam
-   (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
-     (cdr (assoc (org-roam-node-doom-type node)
-                 ad/org-roam-icons)))
-  (setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:*} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
+  (cl-defmethod org-roam-node-doom-prefix ((node org-roam-node))
+    (cdr (assoc (org-roam-node-doom-type node)
+                ad/org-roam-icons)))
+  (setq org-roam-node-display-template #("${doom-prefix} ${doom-hierarchy:96} ${todo:8} ${doom-type:12} ${doom-tags:24}" 20 35
                                          (face font-lock-keyword-face)
                                          36 51
                                          (face org-tag))))
