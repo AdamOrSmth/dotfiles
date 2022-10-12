@@ -48,6 +48,8 @@
         :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
 (after! org
+  (custom-declare-face 'ad/org-todo-scheme  `((t (:inherit (bold font-lock-builtin-face org-todo)))) "")
+  (custom-declare-face 'ad/org-todo-needy   `((t (:inherit (bold highlight-numbers-number org-todo)))) "")
   (setq org-todo-keywords '((sequence
                              "MISSION(m/!)"
                              "QUEST(q/!)"
@@ -66,11 +68,11 @@
                              "|"
                              "[X](C!)"
                              "[#](F@)"))
-        org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
+        org-todo-keyword-faces '(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)
-                                 ("SCHEME"  . ,(doom-color 'blue))
-                                 ("NEEDY"   . ,(doom-color 'magenta))
+                                 ("SCHEME"  . ad/org-todo-scheme)
+                                 ("NEEDY"   . ad/org-todo-needy)
                                  ("FAILED"  . +org-todo-cancel)
                                  ("[-]"     . +org-todo-active)
                                  ("[?]"     . +org-todo-onhold)
