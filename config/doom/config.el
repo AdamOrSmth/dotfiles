@@ -49,14 +49,15 @@
 
 (after! org
   (setq org-todo-keywords '((sequence
-                             "MISSION(m)"
-                             "QUEST(q)"
-                             "ACTIVE(a!)"
+                             "MISSION(m/!)"
+                             "QUEST(q/!)"
+                             "ACTIVE(a!/!)"
                              "WAITING(w@/@)"
                              "SCHEME(s/@)"
-                             "NEEDY(n)"
+                             "INVESTIGATE(i/@)"
+                             "NEEDY(n/!)"
                              "|"
-                             "COMPLETE(c!)"
+                             "COMPLETE(c)"
                              "FAILED(f@)")
                             (sequence
                              "[ ](M)"
@@ -64,21 +65,16 @@
                              "[?](W@/@)"
                              "|"
                              "[X](C!)"
-                             "[#](F@)")
-                            (sequence
-                             "INVESTIGATE(i/@)"
-                             "|"
-                             "COMPLETE(c)"))
+                             "[#](F@)"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)
                                  ("SCHEME"  . ,(doom-color 'blue))
-                                 ("NEEDY"   . +org-todo-active)
+                                 ("NEEDY"   . ,(doom-color 'magenta))
                                  ("FAILED"  . +org-todo-cancel)
                                  ("[-]"     . +org-todo-active)
                                  ("[?]"     . +org-todo-onhold)
-                                 ("[#]"     . +org-todo-cancel)
-                                 ("EVENT"   . ,(doom-color 'magenta)))))
+                                 ("[#]"     . +org-todo-cancel))))
 
 (setq org-log-into-drawer t
       org-log-done 'time)
