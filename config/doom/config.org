@@ -74,7 +74,7 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
         :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
 #+end_src
-** Progress Logging
+** Progress Tracking
 =TODO= keywords, in video game lingo. I find it more amusing and light-hearted, which is a nice touch when looking at otherwise mundane tasks. Some of these are a stretch, but whatever.
 
 + MISSION :: Replacement for =TODO=: a task that's ready for me to start doing.
@@ -82,7 +82,6 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 + ACTIVE :: A mission that's I've started and is in progress.
 + WAITING :: Some factor is holding up the completion of this task.
 + SCHEME :: Replacement for =IDEA=: a thought that isn't completable, but instead needs further expansion/consideration.
-+ INVESTIGATE :: An external source or information to look into later.
 + NEEDY :: Named after needy modules from =Keep Talking and Nobody Explodes=; a habit or repeating task.
 + COMPLETE :: Replacement for =DONE=: a finished task.
 + FAILED :: Not really for failure, but it fits the "quest" vibe: a task that's no longer applicable or doable. Also could indicate an unviable idea.
@@ -91,6 +90,7 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 + =[?]= :: Checkbox version of =WAITING=.
 + =[X]= :: Checkbox version of =COMPLETE=.
 + =[#]= :: Checkbox version of =FAILED=.
++ INVESTIGATE :: An external source or information to look into later. In its own lonely sequence because it's the only keyword I want to log a note when moving away from, and which also moves to =COMPLETE=. Would otherwise override note logging with only time instead, since the final state's logging takes precedence over the starting state.
 
 #+begin_src elisp
 (after! org
@@ -99,8 +99,7 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
                              "QUEST(q)"
                              "ACTIVE(a!)"
                              "WAITING(w@/@)"
-                             "SCHEME(s)"
-                             "INVESTIGATE(i)"
+                             "SCHEME(s/@)"
                              "NEEDY(n)"
                              "|"
                              "COMPLETE(c!)"
@@ -111,7 +110,11 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
                              "[?](W@/@)"
                              "|"
                              "[X](C!)"
-                             "[#](F@)"))
+                             "[#](F@)")
+                            (sequence
+                             "INVESTIGATE(i/@)"
+                             "|"
+                             "COMPLETE(c)"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)

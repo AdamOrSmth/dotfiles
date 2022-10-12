@@ -53,8 +53,7 @@
                              "QUEST(q)"
                              "ACTIVE(a!)"
                              "WAITING(w@/@)"
-                             "SCHEME(s)"
-                             "INVESTIGATE(i)"
+                             "SCHEME(s/@)"
                              "NEEDY(n)"
                              "|"
                              "COMPLETE(c!)"
@@ -65,7 +64,11 @@
                              "[?](W@/@)"
                              "|"
                              "[X](C!)"
-                             "[#](F@)"))
+                             "[#](F@)")
+                            (sequence
+                             "INVESTIGATE(i/@)"
+                             "|"
+                             "COMPLETE(c)"))
         org-todo-keyword-faces `(("QUEST"   . +org-todo-project)
                                  ("ACTIVE"  . +org-todo-active)
                                  ("WAITING" . +org-todo-onhold)
