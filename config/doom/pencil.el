@@ -31,6 +31,20 @@ callback function. The callback function should take a single
 argument, the response data. Should also respect `pencil-debug-requests'.
 Should return a list of completions.")
 
+;; There's probably a proper way to do this with methods, but whatever.
+(defun pencil-params-defaults (params)
+  "Return a copy of PARAMS with default values filled in."
+  (make-pencil-params :prompt (or (pencil-params-prompt params) (error "No prompt"))
+                      :max-tokens (or (pencil-params-max-tokens params) 256)
+                      :min-tokens (or (pencil-params-min-tokens params) 0)
+                      :num-completions (or (pencil-params-num-completions params) 1)
+                      :temperature (or (pencil-params-temperature params) 0.8)
+                      :top-p (or (pencil-params-top-p params) 1)
+                      :stop-sequences (or (pencil-params-stop-sequences params) ["<|endoftext|>"])
+                      :presence-penalty (or (pencil-params-presence-penalty params) 0)
+                      :frequency-penalty (or (pencil-params-frequency-penalty params) 0)
+                      :echo (or (pencil-params-echo params) t)))
+
 (defun pencil-choose-completion (completions)
   "Choose and insert a completion from COMPLETIONS.
 Preview completions using Vertico."
@@ -56,7 +70,7 @@ active region, or point if the region is inactive.
 otherwise append. Append if the region is inactive.
 - `always-replace' - Always replace the active region. Append
 if the region is inactive."
-  (let ((completions (funcall pencil-request-function params callback))
+  (let ((completions (funcall pencil-request-function (pencil-params-default params) callback))
         (echo (pencil-params-echo params))
         (append-point (if (region-active-p)
                           (region-end)
@@ -89,16 +103,16 @@ See `pencil-request-function' for details on PARAMS and CALLBACK."
             :type "POST"
             :headers `(("Authorization" . ,(concat "Bearer " pencil/goose-ai-key))
                        ("Content-Type" . "application/json"))
-            :data (json-encode `((prompt            . ,(or (pencil-params-prompt params) (error "No prompt provided")))
-                                 (max_tokens        . ,(or (pencil-params-max-tokens params) 256))
-                                 (min_tokens        . ,(or (pencil-params-min-tokens params) 0))
-                                 (n                 . ,(or (pencil-params-num-completions params) 1))
-                                 (temperature       . ,(or (pencil-params-temperature params) 0.8))
-                                 (top_p             . ,(or (pencil-params-top-p params) 1.0))
-                                 (stop              . ,(or (pencil-params-stop-sequences params) []))
-                                 (presence_penalty  . ,(or (pencil-params-presence-penalty params) 0.0))
-                                 (frequency_penalty . ,(or (pencil-params-frequency-penalty params) 0.0))
-                                 (echo              . ,(or (pencil-params-echo params) nil))))
+            :data (json-encode `((prompt            . ,(pencil-params-prompt params) (error "No prompt provided"))
+                                 (max_tokens        . ,(pencil-params-max-tokens params))
+                                 (min_tokens        . ,(pencil-params-min-tokens params))
+                                 (n                 . ,(pencil-params-num-completions params))
+                                 (temperature       . ,(pencil-params-temperature params))
+                                 (top_p             . ,(pencil-params-top-p params))
+                                 (stop              . ,(pencil-params-stop-sequences params))
+                                 (presence_penalty  . ,(pencil-params-presence-penalty params))
+                                 (frequency_penalty . ,(pencil-params-frequency-penalty params))
+                                 (echo              . ,(pencil-params-echo params))))
             :parser 'json-read
             :error (cl-function
                     (lambda (&key error-thrown &allow-other-keys)
