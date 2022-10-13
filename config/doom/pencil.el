@@ -34,7 +34,7 @@ Should return a list of completions.")
 ;; There's probably a proper way to do this with methods, but whatever.
 (defun pencil-params-defaults (params)
   "Return a copy of PARAMS with default values filled in."
-  (make-pencil-params :prompt (or (pencil-params-prompt params) (error "No prompt"))
+  (make-pencil-params :prompt (s-trim (or (pencil-params-prompt params) (error "No prompt")))
                       :max-tokens (or (pencil-params-max-tokens params) 256)
                       :min-tokens (or (pencil-params-min-tokens params) 0)
                       :num-completions (or (pencil-params-num-completions params) 3)
