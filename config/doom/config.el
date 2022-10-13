@@ -130,7 +130,6 @@
 
 (setq org-roam-directory org-directory
       org-roam-dailies-directory (expand-file-name "journal/" org-roam-directory)
-      org-roam-db-location (expand-file-name ".org-roam.db" org-roam-directory)
       +org-roam-open-buffer-on-find-file nil)
 
 (defvar ad/org-roam-icons
