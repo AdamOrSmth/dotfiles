@@ -12,8 +12,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [{
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs)
-        brave qutebrowser tor-browser-bundle-bin ungoogled-chromium librewolf;
+      inherit (pkgs) brave librewolf tor-browser-bundle-bin ungoogled-chromium;
     };
   }]);
 }
