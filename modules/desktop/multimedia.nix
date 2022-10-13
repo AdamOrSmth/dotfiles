@@ -14,8 +14,8 @@ in {
   config = mkIf cfg.enable (mkMerge [{
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
-        anki-bin calibre drawio feh flameshot glava keepassxc libreoffice mpv
-        obs-studio pavucontrol qbittorrent sonixd tenacity zotero;
+        anki-bin calibre drawio feh flameshot glava jabref keepassxc libreoffice
+        mpv obs-studio pavucontrol qbittorrent sonixd tenacity zotero;
       inherit (pkgs.gnome) simple-scan;
     };
   }]);
