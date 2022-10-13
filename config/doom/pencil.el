@@ -130,11 +130,7 @@ See `pencil-request-function' for details on PARAMS and CALLBACK."
             (alist-get 'choices data))))
 
 (defun pencil/complete-line (arg)
-  "Complete the current line using the Goose AI API.
-If a region is selected, use that as the prompt instead.
-Request three completions and allow the user to choose one.
-Insert the chosen completion at the end of the line/region.
-
+  "Complete the current line using GPT.
 With a prefix argument ARG, prompt the user for a prompt
 to replace/prepend to the current line/region, respectively."
   (interactive "P")
