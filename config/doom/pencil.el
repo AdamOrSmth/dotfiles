@@ -37,13 +37,13 @@ Should return a list of completions.")
   (make-pencil-params :prompt (or (pencil-params-prompt params) (error "No prompt"))
                       :max-tokens (or (pencil-params-max-tokens params) 256)
                       :min-tokens (or (pencil-params-min-tokens params) 0)
-                      :num-completions (or (pencil-params-num-completions params) 1)
+                      :num-completions (or (pencil-params-num-completions params) 3)
                       :temperature (or (pencil-params-temperature params) 0.8)
                       :top-p (or (pencil-params-top-p params) 1)
                       :stop-sequences (or (pencil-params-stop-sequences params) ["<|endoftext|>"])
                       :presence-penalty (or (pencil-params-presence-penalty params) 0)
                       :frequency-penalty (or (pencil-params-frequency-penalty params) 0)
-                      :echo (or (pencil-params-echo params) t)))
+                      :echo (or (pencil-params-echo params) nil)))
 
 (defun pencil-choose-completion (completions)
   "Choose and insert a completion from COMPLETIONS.
@@ -70,7 +70,9 @@ active region, or point if the region is inactive.
 otherwise append. Append if the region is inactive.
 - `always-replace' - Always replace the active region. Append
 if the region is inactive."
-  (let ((completions (funcall pencil-request-function (pencil-params-default params) callback))
+  (when pencil/debug-requests
+    (message "Request data: %s" params))
+  (let ((completions (funcall pencil-request-function (pencil-params-defaults params) callback))
         (echo (pencil-params-echo params))
         (append-point (if (region-active-p)
                           (region-end)
@@ -103,7 +105,7 @@ See `pencil-request-function' for details on PARAMS and CALLBACK."
             :type "POST"
             :headers `(("Authorization" . ,(concat "Bearer " pencil/goose-ai-key))
                        ("Content-Type" . "application/json"))
-            :data (json-encode `((prompt            . ,(pencil-params-prompt params) (error "No prompt provided"))
+            :data (json-encode `((prompt            . ,(pencil-params-prompt params))
                                  (max_tokens        . ,(pencil-params-max-tokens params))
                                  (min_tokens        . ,(pencil-params-min-tokens params))
                                  (n                 . ,(pencil-params-num-completions params))
@@ -145,10 +147,21 @@ to replace/prepend to the current line/region, respectively."
                           (buffer-substring-no-properties (region-beginning) (region-end))))))
          (params (make-pencil-params :prompt prompt
                                      :max-tokens 128
-                                     :num-completions 3
                                      :stop-sequences ["\n" "<|endoftext|>"]
                                      :echo arg)))
     (pencil-make-request params 'replace-if-echo)))
+
+(defun pencil/complete-long ()
+  "Complete using GPT, with more context and no stop sequences.
+If a region is not active, use the last 2000 characters of the
+buffer as prompt."
+  (interactive)
+  (let* ((prompt (if (region-active-p)
+                     (buffer-substring-no-properties (region-beginning) (region-end))
+                   (buffer-substring-no-properties (max (- (point) 2000) (point-min)) (point))))
+         (params (make-pencil-params :prompt prompt
+                                     :max-tokens 512)))
+    (pencil-make-request params 'always-append)))
 
 (provide 'pencil)
 ;;; pencil.el ends here
