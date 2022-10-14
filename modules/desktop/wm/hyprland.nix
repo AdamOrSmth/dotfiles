@@ -40,7 +40,7 @@ in {
     };
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
-        alacritty grim mako pcmanfm playerctl rofi-wayland slurp swaybg
+        alacritty grim mako mpvpaper pcmanfm playerctl rofi-wayland slurp swaybg
         swaylock-effects wl-clipboard;
       inherit (pkgs.xorg) xeyes;
       inherit (pkgs.qt6) qtwayland;
