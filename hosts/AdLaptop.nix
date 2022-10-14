@@ -36,6 +36,12 @@
           input {
               kb_options = caps:escape
           }
+
+          decoration {
+              blur_new_optimizations = true
+          }
+
+          exec-once = swaybg -i ~/Sync/Wallpapers/Static/0001.png
         '';
       };
     };

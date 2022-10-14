@@ -32,7 +32,6 @@ Appearance-related settings.
 
 + ~blur~ :: Enable dual kawase background blur of transparent windows.
 + ~blur_size~, ~blur_passes~ :: Blur amount depends on both ~blur_size~ and ~blur_passes~. Increasing ~blur_passes~ increases blur more, but comes at a performance cost, while increasing ~blur_size~ is more performant but begins to produce artifacts at higher values. I've found 3 and 3 work well for me.
-+ blur_new_optimizations :: Enable optimizations to blur that help performance a lot. Defaults to ~false~ due to some people having graphical issues.
 
 #+begin_src conf
 decoration {
@@ -41,7 +40,6 @@ decoration {
     blur                   = true
     blur_size              = 3
     blur_passes            = 3
-    blur_new_optimizations = true
 }
 #+end_src
 * Animations
@@ -319,8 +317,6 @@ Define commands to run on startup with either ~exec~ or ~exec-once~. The former 
 #+begin_src conf
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
-exec-once = swaybg -i ~/Sync/Wallpapers/0001.png
 #+end_src
 * Import Custom Configuration
 My Nix module for =Hyprland= exposes an ~extraConfig~ option to apply device-specific configuration; the configuration gets saved to the ~extra.conf~ file, so we source/import it here.

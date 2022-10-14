@@ -37,6 +37,7 @@
           workspace = DP-2,1
           workspace = HDMI-A-1,10
 
+          exec-once = mpvpaper -sn 300 DP-2 ~/Sync/Wallpapers/Animated
           exec-once = sonixd --no-sandbox
         '';
       };
