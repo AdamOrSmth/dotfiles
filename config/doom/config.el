@@ -405,7 +405,7 @@
 
 (use-package! pencil
   :load-path doom-user-dir
-  :commands (pencil/complete-line))
+  :commands (pencil/complete-line pencil/complete-long))
 
 (use-package! titlecase
   :after evil

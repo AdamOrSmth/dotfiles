@@ -550,7 +550,7 @@ Look, I wrote my own package! Except it's not really a package cause it doesn't 
 #+begin_src elisp
 (use-package! pencil
   :load-path doom-user-dir
-  :commands (pencil/complete-line))
+  :commands (pencil/complete-line pencil/complete-long))
 #+end_src
 * =titlecase.el=
 #+begin_src elisp
