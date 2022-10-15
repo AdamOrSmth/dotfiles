@@ -15,6 +15,8 @@ The total distance between windows is equal to ~gaps_in~ + ~border_size~.
 
 + ~col.active_border~, ~col.inactive_border~ :: Self-explanatory.
 
++ no_cursor_warps :: Do not warp the cursor when focusing windows using the keyboard.
+
 #+begin_src conf
 general {
     border_size         = 2
@@ -23,6 +25,8 @@ general {
 
     col.active_border   = 0xFF88C0D0
     col.inactive_border = 0x00000000
+
+    no_cursor_warps     = true
 }
 #+end_src
 * Decoration
@@ -74,7 +78,7 @@ animations {
 Settings related to input. Input contains the subcategory =touchpad= for, well, touchpad-related settings.
 
 + kb_layout, kb_variant :: Appropriate ~xkb~ keyboard settings, used to set keyboard variant to Colemak-DH.
-+ ~follow_mouse~ :: Focus follows the mouse cursor, and the mouse cursor follows focus.
++ ~follow_mouse~ :: Detach mouse focus from keyboard.
 + ~force_no_accel~ :: Mouse acceleration (usually) sucks.
 + touchpad:naturaL_scroll :: Not sure what makes this "natural", but it's natural for me, so I guess it makes sense.
 
@@ -85,7 +89,7 @@ input {
     kb_layout      = us
     kb_variant     = colemak_dh
 
-    follow_mouse   = 1
+    follow_mouse   = 2
 
     force_no_accel = true
 
