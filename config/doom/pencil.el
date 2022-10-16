@@ -36,7 +36,7 @@ Should return a list of completions.")
   "Return a copy of PARAMS with default values filled in."
   (make-pencil-params :prompt (s-trim (or (pencil-params-prompt params) (error "No prompt")))
                       :max-tokens (or (pencil-params-max-tokens params) 256)
-                      :min-tokens (or (pencil-params-min-tokens params) 0)
+                      :min-tokens (or (pencil-params-min-tokens params) 1)
                       :num-completions (or (pencil-params-num-completions params) 3)
                       :temperature (or (pencil-params-temperature params) 0.8)
                       :top-p (or (pencil-params-top-p params) 1)
