@@ -1,6 +1,6 @@
 { lib, appimageTools, fetchurl, }:
 
-let version = "3.8.6";
+let version = "3.8.8";
 in appimageTools.wrapType2 {
   pname = "webcord";
   inherit version;
@@ -11,9 +11,9 @@ in appimageTools.wrapType2 {
   src = fetchurl {
     url =
       "https://github.com/SpacingBat3/WebCord/releases/download/v${version}/WebCord-${version}-x64.AppImage";
-    sha256 = "1k7svhww1z2ix77x94zi980b2vnhcvwgnmp5zrkpjccx63nsk6pm";
+    sha256 = "0c2jjmfnwfbmkr3ml1fj0vvxhszpym6q4cmlp205w6hqab1cxnpv";
   };
 
-  # For screensharing
+  # Screensharing on Wayland
   extraPkgs = pkgs: [ pkgs.pipewire ];
 }
