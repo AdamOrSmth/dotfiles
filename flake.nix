@@ -47,7 +47,7 @@
             "nvidia-settings"
             "steam"
             "steam-original"
-            "discord"
+            "steam-run"
           ];
         # Import this flake's overlays. Lazy evaluation is great!
         overlays = builtins.attrValues self.overlays;
