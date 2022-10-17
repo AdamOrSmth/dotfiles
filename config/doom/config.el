@@ -8,7 +8,7 @@
 (global-subword-mode t)
 
 (setq display-line-numbers-type t
-      doom-theme 'doom-nord-plus
+      doom-theme 'doom-dracula-plus
       doom-font (font-spec :family "Comic Code Ligatures" :size 16)
       doom-variable-pitch-font (font-spec :family "Comic Neue" :size 16)
       doom-big-font-increment 6
@@ -48,8 +48,8 @@
         :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
 (after! org
-  (custom-declare-face 'ad/org-todo-scheme  `((t (:inherit (bold font-lock-builtin-face org-todo)))) "")
-  (custom-declare-face 'ad/org-todo-needy   `((t (:inherit (bold highlight-numbers-number org-todo)))) "")
+  (custom-declare-face 'ad/org-todo-scheme `((t (:inherit (bold font-lock-builtin-face org-todo)))) "")
+  (custom-declare-face 'ad/org-todo-needy  `((t (:inherit (bold font-lock-preprocessor-face org-todo)))) "")
   (setq org-todo-keywords '((sequence
                              "MISSION(m/!)"
                              "QUEST(q/!)"
