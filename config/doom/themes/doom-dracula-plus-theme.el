@@ -226,6 +226,7 @@ determine the exact padding."
    (org-todo :foreground orange :bold 'inherit :background (doom-darken base1 0.02))
    (org-upcoming-deadline :foreground yellow)
    (org-warning :foreground magenta)
+   (+org-todo-project :inherit '(bold org-todo) :foreground green)
    ;;;; rjsx-mode
    (rjsx-tag :foreground magenta)
    (rjsx-attr :foreground green :slant 'italic :weight 'medium)

@@ -47,9 +47,9 @@
         :prefix "i"
         :desc "org-attach-dir" "a" (cmd! (insert (org-attach-dir-get-create))))))
 
-(after! org
-  (custom-declare-face 'ad/org-todo-scheme `((t (:inherit (bold font-lock-builtin-face org-todo)))) "")
-  (custom-declare-face 'ad/org-todo-needy  `((t (:inherit (bold font-lock-preprocessor-face org-todo)))) "")
+(after! (org)
+  (custom-declare-face 'ad/org-todo-scheme '((t :inherit (bold font-lock-builtin-face org-todo))) "")
+  (custom-declare-face 'ad/org-todo-needy  '((t :inherit (bold font-lock-preprocessor-face org-todo))) "")
   (setq org-todo-keywords '((sequence
                              "MISSION(m/!)"
                              "QUEST(q/!)"

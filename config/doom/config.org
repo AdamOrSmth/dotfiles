@@ -94,12 +94,12 @@ Make ~j~ and ~k~ navigate through visual lines instead of logical lines by defau
 
 I set time logging for moving /away/ from a task instead of /to/ =COMPLETE= because I want =INVESTIGATE= to log a note when moving to =COMPLETE=, which would otherwise get overridden. Having no logging on =COMPLETE= and everything else logging time on leave is a simple workaround (although a bit cluttered).
 
-I also declare some custom faces for some of my keywords. Simply embedding the color in ~org-todo-keyword-faces~ using ~doom-color~ doesn't seem to work, so I'm doing it the way Doom does it in its source code.
+I also declare some custom faces for some of my keywords. Simply embedding the color in ~org-todo-keyword-faces~ using ~doom-color~ doesn't seem to work, so I'm doing how Doom does it in its source code.
 
 #+begin_src elisp
-(after! org
-  (custom-declare-face 'ad/org-todo-scheme `((t (:inherit (bold font-lock-builtin-face org-todo)))) "")
-  (custom-declare-face 'ad/org-todo-needy  `((t (:inherit (bold font-lock-preprocessor-face org-todo)))) "")
+(after! (org)
+  (custom-declare-face 'ad/org-todo-scheme '((t :inherit (bold font-lock-builtin-face org-todo))) "")
+  (custom-declare-face 'ad/org-todo-needy  '((t :inherit (bold font-lock-preprocessor-face org-todo))) "")
   (setq org-todo-keywords '((sequence
                              "MISSION(m/!)"
                              "QUEST(q/!)"
