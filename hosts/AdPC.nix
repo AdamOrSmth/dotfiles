@@ -71,11 +71,7 @@
   # Custom per-host configuration options
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  hardware.nvidia = {
-    modesetting.enable = true;
-    # Fixes graphical glitches on suspend
-    powerManagement.enable = true;
-  };
+  hardware.nvidia.powerManagement.enable = true;
   boot.initrd.kernelModules =
     [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   networking.firewall.allowedTCPPorts = [ 56392 57084 ];
