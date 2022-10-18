@@ -11,8 +11,9 @@ in {
   options = setAttrByPath path { enable = mkEnableOption "Git configuration"; };
 
   config = mkIf cfg.enable (mkMerge [{
-    environment.systemPackages =
-      builtins.attrValues { inherit (pkgs) git git-crypt; };
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs) git git-crypt git-annex git-annex-remote-googledrive;
+    };
     my.home.configFiles."git/config".source = "${configDir}/git/config";
   }]);
 }
