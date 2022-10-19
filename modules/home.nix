@@ -36,6 +36,8 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       users.${config.my.user.username} = {
+        # TODO Remove when fixed upstream (https://github.com/NixOS/nixpkgs/issues/196651)
+        manual.manpages.enable = false;
         home = {
           file = cfg.files;
           stateVersion = config.system.stateVersion;
