@@ -71,7 +71,10 @@
   # Custom per-host configuration options
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  hardware.nvidia.powerManagement.enable = true;
+  hardware.nvidia = {
+    open = true;
+    powerManagement.enable = true;
+  };
   boot.initrd.kernelModules =
     [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   networking.firewall.allowedTCPPorts = [ 56392 57084 ];
