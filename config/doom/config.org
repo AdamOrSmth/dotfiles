@@ -452,6 +452,8 @@ Add the =apa7= ~documentclass~ to LaTeX.
 ** =org-anki=
 #+begin_src elisp
 (use-package! org-anki
+  :custom
+  (org-anki-inherit-tags nil)
   :config
   (map! (:map org-mode-map
          (:localleader
@@ -459,7 +461,9 @@ Add the =apa7= ~documentclass~ to LaTeX.
            :desc "cloze" :nv "c" #'org-anki-cloze-dwim
            :desc "sync" "s" #'org-anki-sync-entry
            :desc "sync all" "S" #'org-anki-sync-all
-           :desc "update all" "u" #'org-anki-update-all)))))
+           :desc "update all" "u" #'org-anki-update-all
+           :desc "delete" "d" #'org-anki-delete-entry
+           :desc "delete all" "D" #'org-anki-delete-all)))))
 #+end_src
 * Partial Window Transparency
 It may be useless and impractical, but it's hot. Background-only transparency requires either [[https://github.com/TheVaffel/emacs/blob/master/emacs_background_transparency.patch][this patch]] or Emacs 29+.

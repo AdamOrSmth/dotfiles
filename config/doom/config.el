@@ -330,6 +330,8 @@
 (setq ispell-personal-dictionary (expand-file-name ".pws" org-directory))
 
 (use-package! org-anki
+  :custom
+  (org-anki-inherit-tags nil)
   :config
   (map! (:map org-mode-map
          (:localleader
@@ -337,7 +339,9 @@
            :desc "cloze" :nv "c" #'org-anki-cloze-dwim
            :desc "sync" "s" #'org-anki-sync-entry
            :desc "sync all" "S" #'org-anki-sync-all
-           :desc "update all" "u" #'org-anki-update-all)))))
+           :desc "update all" "u" #'org-anki-update-all
+           :desc "delete" "d" #'org-anki-delete-entry
+           :desc "delete all" "D" #'org-anki-delete-all)))))
 
 (setq default-frame-alist (append default-frame-alist '((alpha-background . 0.75))))
 (map! :map doom-leader-toggle-map
