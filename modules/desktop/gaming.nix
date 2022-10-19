@@ -18,7 +18,7 @@ in {
       gamemode.enable = true;
     };
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) lutris polymc;
+      inherit (pkgs) lutris;
       inherit (pkgs.my) tetrio-desktop;
     };
   }]);
