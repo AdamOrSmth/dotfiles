@@ -207,7 +207,7 @@ determine the exact padding."
    ((org-code &override) :foreground yellow)
    (org-column :background base1)
    (org-column-title :background base1 :bold t :underline t)
-   (org-date :foreground cyan)
+   (org-date :foreground cyan :weight 'medium)
    ((org-document-title &override) :inherit 'variable-pitch :height 2.0 :weight 'light :slant 'italic)
    ((org-document-info &override) :foreground blue :inherit 'variable-pitch)
    ((org-document-info-keyword &override) :foreground comments)
