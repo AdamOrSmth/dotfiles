@@ -12,6 +12,7 @@
       files.enable = true;
       fish.enable = true;
       git.enable = true;
+      git-annex.enable = true;
       nix = {
         autoGc = true;
         autoOptimise = true;

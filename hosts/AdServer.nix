@@ -5,6 +5,7 @@
   my = {
     cli = {
       git.enable = true;
+      git-annex.enable = true;
       nix = {
         autoGc = true;
         autoOptimise = true;

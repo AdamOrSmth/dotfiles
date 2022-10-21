@@ -21,6 +21,7 @@
         aliases = { };
       };
       git.enable = false;
+      git-annex.enable = false;
       nix = {
         autoGc = false;
         autoOptimise = false;
