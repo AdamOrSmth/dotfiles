@@ -33,6 +33,7 @@
   };
 
   # Custom per-host configuration options
+  environment.systemPackages = [ pkgs.rsync ];
 
   # Hardware configuration options
   # (copy from /etc/nixos/hardware-configuration.nix)
